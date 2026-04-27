@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お問い合わせ | 樹木医ツール</title>
+<meta name="description" content="樹木医ツールへのお問い合わせ。バグ報告・機能要望・樹木に関するご相談はこちらから。">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Noto+Serif+JP:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1A1208;--bark:#2C1A0E;--moss:#3D5A3E;--moss-l:#5A7A5B;--leaf:#7AAE6E;--cream:#F5F0E8;--pale:#E8F0E1;--mist:#D4DFD0;--amber:#C8842A;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--cream);color:var(--ink);font-family:'Noto Serif JP',serif;}
+.site-header{background:var(--bark);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;}
+.site-header a{color:#E8F0E1;text-decoration:none;font-family:'Shippori Mincho',serif;font-size:16px;font-weight:700;}
+.back-link{font-size:12px;color:rgba(232,240,225,0.7);text-decoration:none;font-family:'DM Mono',monospace;letter-spacing:0.1em;}
+.back-link:hover{color:#E8F0E1;}
+.wrap{max-width:680px;margin:0 auto;padding:52px 24px 80px;}
+.page-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--moss);margin-bottom:10px;display:block;}
+h1{font-family:'Shippori Mincho',serif;font-size:clamp(24px,4vw,32px);font-weight:800;color:var(--bark);margin-bottom:12px;}
+.sub{font-size:13px;color:var(--moss);line-height:1.8;margin-bottom:36px;}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;}
+@media(max-width:480px){.cat-grid{grid-template-columns:1fr;}}
+.cat-card{padding:16px 18px;border:2px solid var(--mist);border-radius:4px;cursor:pointer;transition:all 0.15s;background:white;text-align:left;user-select:none;}
+.cat-card:hover{border-color:var(--moss-l);background:var(--pale);}
+.cat-card.selected{border-color:var(--moss);background:var(--pale);}
+.cat-icon{font-size:22px;display:block;margin-bottom:6px;}
+.cat-name{font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;color:var(--bark);margin-bottom:3px;}
+.cat-desc{font-size:11px;color:#6b7e6b;line-height:1.5;}
+.form-wrap{background:rgba(255,255,255,0.7);border:1px solid var(--mist);border-radius:6px;padding:28px;backdrop-filter:blur(4px);}
+.field{margin-bottom:20px;}
+.field label{display:block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--moss);margin-bottom:8px;}
+.field input,.field select,.field textarea{width:100%;padding:11px 14px;font-family:'Noto Serif JP',serif;font-size:13px;color:var(--ink);background:var(--cream);border:1px solid var(--mist);border-radius:3px;transition:border-color 0.2s,box-shadow 0.2s;}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--moss);box-shadow:0 0 0 3px rgba(61,90,62,0.1);}
+.field textarea{resize:vertical;min-height:120px;line-height:1.7;}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%233D5A3E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:480px){.field-row{grid-template-columns:1fr;}}
+.required-star{color:var(--amber);margin-left:3px;}
+.char-count{font-family:'DM Mono',monospace;font-size:10px;color:#8fa085;text-align:right;margin-top:4px;}
+.btn-submit{width:100%;padding:16px;background:var(--bark);color:var(--cream);border:none;border-radius:3px;font-family:'Shippori Mincho',serif;font-size:16px;font-weight:600;cursor:pointer;transition:all 0.2s;margin-top:4px;}
+.btn-submit:hover{background:var(--moss);transform:translateY(-1px);box-shadow:0 4px 16px rgba(44,26,14,0.2);}
+.btn-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+#success{display:none;text-align:center;padding:48px 24px;animation:up 0.4s ease;}
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.success-icon{font-size:52px;display:block;margin-bottom:16px;}
+#success h2{font-family:'Shippori Mincho',serif;font-size:22px;font-weight:800;color:var(--bark);margin-bottom:10px;}
+#success p{font-size:13px;color:#5a6e5a;line-height:1.8;margin-bottom:24px;}
+.btn-back{display:inline-block;padding:11px 24px;background:var(--bark);color:var(--cream);font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;border-radius:3px;text-decoration:none;transition:background 0.2s;}
+.btn-back:hover{background:var(--moss);}
+.note-box{background:var(--pale);border:1px solid var(--mist);border-left:4px solid var(--amber);border-radius:3px;padding:14px 18px;margin-bottom:28px;font-size:12px;color:#5a5a3a;line-height:1.8;}
+.github-box{background:var(--bark);color:var(--cream);border-radius:4px;padding:20px 24px;margin-bottom:28px;display:flex;align-items:center;gap:16px;}
+.github-box .gh-icon{font-size:28px;flex-shrink:0;}
+.github-box h3{font-family:'Shippori Mincho',serif;font-size:14px;font-weight:700;margin-bottom:4px;}
+.github-box p{font-size:12px;opacity:0.75;line-height:1.6;}
+.github-box a{color:var(--leaf);text-decoration:none;font-weight:600;}
+.cat-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--moss);margin-bottom:10px;display:block;}
+footer{background:var(--bark);color:var(--cream);padding:28px 24px;text-align:center;}
+footer p{font-family:'DM Mono',monospace;font-size:10px;opacity:0.5;letter-spacing:0.05em;line-height:2;}
+footer a{color:rgba(232,240,225,0.7);text-decoration:none;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a href="index.html">🌿 樹木医ツール</a>
+  <a href="index.html" class="back-link">← トップへ戻る</a>
+</header>
+<div class="wrap">
+  <span class="page-label">Contact</span>
+  <h1>お問い合わせ</h1>
+  <p class="sub">バグ報告・機能要望・樹種の追加リクエスト・樹木に関するご相談など、<br>お気軽にご連絡ください。</p>
+
+  <div class="github-box">
+    <span class="gh-icon">🐙</span>
+    <div>
+      <h3>開発者・技術者の方へ</h3>
+      <p>バグ報告・機能要望は <a href="https://github.com/YOUR_USERNAME/arborist-tools/issues" target="_blank" rel="noopener">GitHub Issues</a> からも受け付けています。Pull Requestも歓迎します。</p>
+    </div>
+  </div>
+
+  <div class="note-box">
+    ⚠️ 個別の樹木診断・処置計画の作成は専門的な現地調査が必要です。安全性に関わる緊急のご相談は、お近くの樹木医・造園業者・自治体の担当窓口にご連絡ください。
+  </div>
+
+  <span class="cat-label">お問い合わせの種類</span>
+  <div class="cat-grid" id="cat-grid">
+    <button class="cat-card" onclick="selectCat(this,'bug')">
+      <span class="cat-icon">🐛</span>
+      <div class="cat-name">バグ報告</div>
+      <div class="cat-desc">ツールの不具合・エラー</div>
+    </button>
+    <button class="cat-card" onclick="selectCat(this,'feature')">
+      <span class="cat-icon">💡</span>
+      <div class="cat-name">機能要望・改善提案</div>
+      <div class="cat-desc">新機能・樹種追加リクエスト</div>
+    </button>
+    <button class="cat-card" onclick="selectCat(this,'data')">
+      <span class="cat-icon">🌿</span>
+      <div class="cat-name">データの誤り指摘</div>
+      <div class="cat-desc">診断内容・剪定時期の修正提案</div>
+    </button>
+    <button class="cat-card" onclick="selectCat(this,'other')">
+      <span class="cat-icon">✉️</span>
+      <div class="cat-name">その他</div>
+      <div class="cat-desc">一般的なご質問・ご相談</div>
+    </button>
+  </div>
+
+  <div class="form-wrap" id="form-wrap">
+    <div class="field-row">
+      <div class="field">
+        <label>お名前 <span class="required-star">*</span></label>
+        <input type="text" id="name" placeholder="山田 太郎" oninput="validate()">
+      </div>
+      <div class="field">
+        <label>メールアドレス <span class="required-star">*</span></label>
+        <input type="email" id="email" placeholder="example@mail.com" oninput="validate()">
+      </div>
+    </div>
+    <div class="field">
+      <label>職種・立場（任意）</label>
+      <select id="role">
+        <option value="">— 選択してください —</option>
+        <option>樹木医</option>
+        <option>造園・緑化業者</option>
+        <option>自治体・公共機関</option>
+        <option>一般（ホームオーナー）</option>
+        <option>研究者・学生</option>
+        <option>その他</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>件名 <span class="required-star">*</span></label>
+      <input type="text" id="subject" placeholder="例：サクラの剪定カレンダーについて" oninput="validate()">
+    </div>
+    <div class="field">
+      <label>お問い合わせ内容 <span class="required-star">*</span></label>
+      <textarea id="message" placeholder="詳しい内容をご記入ください。バグ報告の場合は、使用ブラウザ・操作手順・発生した症状をできるだけ詳しくお書きください。" oninput="countChars();validate()"></textarea>
+      <div class="char-count" id="char-count">0 文字</div>
+    </div>
+    <button class="btn-submit" id="submit-btn" onclick="submitForm()" disabled>送信する →</button>
+  </div>
+
+  <div id="success">
+    <span class="success-icon">✅</span>
+    <h2>送信が完了しました</h2>
+    <p>お問い合わせありがとうございます。<br>内容を確認の上、数日以内にご返信いたします。</p>
+    <a href="index.html" class="btn-back">← トップページへ戻る</a>
+  </div>
+</div>
+
+<footer>
+  <p><a href="index.html">トップ</a> &nbsp;|&nbsp; <a href="diagnosis.html">病害虫診断</a> &nbsp;|&nbsp; <a href="pruning.html">剪定カレンダー</a> &nbsp;|&nbsp; <a href="checklist.html">チェックリスト</a> &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a></p>
+  <p style="margin-top:8px;">© 2025 樹木医ツール — ARBORIST TOOLS</p>
+</footer>
+
+<script>
+let selectedCat='';
+function selectCat(el,cat){
+  document.querySelectorAll('.cat-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedCat=cat;
+  const hints={bug:'[バグ報告] ',feature:'[機能要望] ',data:'[データ修正] ',other:''};
+  const sub=document.getElementById('subject');
+  if(!sub.value||Object.values(hints).some(h=>sub.value.startsWith(h))){sub.value=hints[cat];}
+  validate();
+}
+function countChars(){
+  const len=document.getElementById('message').value.length;
+  document.getElementById('char-count').textContent=len+' 文字';
+}
+function validate(){
+  const name=document.getElementById('name').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const subject=document.getElementById('subject').value.trim();
+  const message=document.getElementById('message').value.trim();
+  const emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  document.getElementById('submit-btn').disabled=!(name&&emailOk&&subject&&message.length>=10);
+}
+function submitForm(){
+  // 本番環境ではFormspree/Netlify Formsに差し替え
+  document.getElementById('form-wrap').style.display='none';
+  document.getElementById('cat-grid').style.display='none';
+  document.getElementById('success').style.display='block';
+  document.getElementById('success').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>

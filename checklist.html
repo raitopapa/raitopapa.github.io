@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>樹木健全度チェックリスト | 樹木医監修</title>
+<meta name="description" content="樹木医監修。現地で使える樹木の健全度チェックリスト。根元・幹・枝・葉の状態を記録し、総合スコアと対処優先度を即算出。">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Noto+Serif+JP:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1A1208;
+  --bark: #2C1A0E;
+  --moss: #3D5A3E;
+  --moss-l: #5A7A5B;
+  --leaf: #7AAE6E;
+  --cream: #F5F0E8;
+  --pale: #E8F0E1;
+  --mist: #D4DFD0;
+  --amber: #C8842A;
+  --rust: #8B3A2A;
+  --score-a: #2E6B30;
+  --score-b: #7AAE6E;
+  --score-c: #C8842A;
+  --score-d: #8B3A2A;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Noto Serif JP', serif;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(90,122,91,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(44,26,14,0.05) 0%, transparent 50%);
+}
+
+.wrap { max-width: 800px; margin: 0 auto; padding: 40px 20px 80px; }
+
+header {
+  margin-bottom: 40px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--mist);
+}
+
+.badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.2em;
+  color: var(--moss); border: 1px solid var(--moss-l);
+  padding: 3px 10px; border-radius: 2px;
+  display: inline-block; margin-bottom: 14px; text-transform: uppercase;
+}
+
+h1 {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(22px, 4.5vw, 34px);
+  font-weight: 800; color: var(--bark);
+  line-height: 1.35; margin-bottom: 10px;
+}
+
+.sub { font-size: 13px; color: var(--moss); line-height: 1.8; }
+
+/* Tree info bar */
+.info-bar {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px; margin-bottom: 28px;
+}
+@media(max-width:540px){ .info-bar { grid-template-columns: 1fr; } }
+
+.info-field { background: rgba(255,255,255,0.6); border: 1px solid var(--mist); border-radius: 3px; padding: 12px 14px; }
+.info-field label { display: block; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; color: var(--moss); text-transform: uppercase; margin-bottom: 6px; }
+.info-field input, .info-field select {
+  width: 100%; font-family: 'Noto Serif JP', serif; font-size: 13px; color: var(--ink);
+  background: var(--cream); border: 1px solid var(--mist); border-radius: 2px; padding: 7px 10px;
+  appearance: none;
+}
+.info-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%233D5A3E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center;
+}
+.info-field input:focus, .info-field select:focus { outline: none; border-color: var(--moss); }
+
+/* Progress */
+.progress-wrap { margin-bottom: 28px; }
+.progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.progress-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--moss); letter-spacing: 0.1em; }
+.progress-count { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--moss); }
+.bar { height: 4px; background: var(--mist); border-radius: 2px; overflow: hidden; }
+.bar-fill { height: 100%; background: linear-gradient(90deg, var(--moss), var(--leaf)); border-radius: 2px; transition: width 0.4s ease; }
+
+/* Section */
+.section {
+  background: rgba(255,255,255,0.6); border: 1px solid var(--mist);
+  border-radius: 4px; margin-bottom: 16px; overflow: hidden;
+  backdrop-filter: blur(4px);
+}
+
+.section-header {
+  padding: 16px 20px; display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid var(--mist); cursor: pointer;
+  user-select: none; transition: background 0.15s;
+}
+.section-header:hover { background: var(--pale); }
+
+.section-icon {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+
+.section-title-wrap { flex: 1; }
+.section-name { font-family: 'Shippori Mincho', serif; font-size: 15px; font-weight: 600; color: var(--bark); }
+.section-meta { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--moss-l); margin-top: 2px; }
+
+.section-score-badge {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  padding: 3px 10px; border-radius: 2px; font-weight: 500;
+  transition: all 0.3s;
+}
+
+.chevron { font-size: 12px; color: var(--moss-l); transition: transform 0.2s; }
+.section.open .chevron { transform: rotate(180deg); }
+
+.section-body { display: none; padding: 4px 0; }
+.section.open .section-body { display: block; }
+
+/* Check items */
+.check-item {
+  display: flex; gap: 14px; padding: 13px 20px;
+  border-bottom: 1px solid rgba(212,223,208,0.5);
+  cursor: pointer; transition: background 0.12s; align-items: flex-start;
+  user-select: none;
+}
+.check-item:last-child { border-bottom: none; }
+.check-item:hover { background: rgba(232,240,225,0.4); }
+
+.check-item.checked { background: rgba(61,90,62,0.06); }
+
+.custom-cb {
+  width: 20px; height: 20px; border: 1.5px solid var(--mist);
+  border-radius: 3px; flex-shrink: 0; margin-top: 1px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; background: white;
+}
+.check-item.checked .custom-cb {
+  background: var(--moss); border-color: var(--moss);
+}
+.custom-cb::after {
+  content: ''; display: none; width: 5px; height: 9px;
+  border: 2px solid white; border-top: none; border-left: none;
+  transform: rotate(45deg) translateY(-1px);
+}
+.check-item.checked .custom-cb::after { display: block; }
+
+.check-content { flex: 1; }
+.check-main { font-size: 13px; line-height: 1.5; color: var(--ink); margin-bottom: 3px; }
+.check-detail { font-size: 11px; color: #6b7e6b; line-height: 1.6; }
+
+.severity-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 6px;
+}
+.sev-high { background: var(--rust); }
+.sev-mid  { background: var(--amber); }
+.sev-low  { background: var(--leaf); }
+
+/* Ad */
+.ad-slot {
+  background: var(--mist); border: 1px dashed #b0bfaa; border-radius: 3px;
+  padding: 18px; text-align: center; font-family: 'DM Mono', monospace;
+  font-size: 10px; color: #8fa085; letter-spacing: 0.1em; margin: 20px 0;
+}
+
+/* Result */
+#result { display: none; animation: up 0.45s ease; margin-top: 24px; }
+@keyframes up { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+.score-display {
+  background: var(--bark); color: var(--cream);
+  border-radius: 4px 4px 0 0; padding: 28px;
+  display: flex; align-items: center; gap: 24px;
+}
+
+.score-circle {
+  width: 80px; height: 80px; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  flex-shrink: 0; border: 3px solid rgba(255,255,255,0.25);
+}
+.score-num { font-family: 'DM Mono', monospace; font-size: 26px; font-weight: 500; line-height: 1; }
+.score-max { font-family: 'DM Mono', monospace; font-size: 11px; opacity: 0.6; margin-top: 2px; }
+
+.score-right h2 { font-family: 'Shippori Mincho', serif; font-size: 20px; margin-bottom: 6px; }
+.score-right p { font-size: 13px; opacity: 0.8; line-height: 1.7; }
+
+.rank-a .score-circle { background: var(--score-a); }
+.rank-b .score-circle { background: var(--score-b); }
+.rank-c .score-circle { background: var(--score-c); }
+.rank-d .score-circle { background: var(--score-d); }
+
+.result-body { border: 1px solid var(--mist); border-top: none; border-radius: 0 0 4px 4px; }
+
+.result-card { padding: 20px 24px; border-bottom: 1px solid var(--mist); background: white; }
+.result-card:last-child { border-bottom: none; }
+.result-card h3 { font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 600; color: var(--bark); margin-bottom: 12px; }
+
+.priority-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.priority-item {
+  display: flex; gap: 10px; padding: 10px 14px; border-radius: 3px;
+  font-size: 12px; line-height: 1.6; align-items: flex-start;
+}
+.priority-item.p-high { background: #FFF0ED; border-left: 3px solid var(--rust); }
+.priority-item.p-mid  { background: #FFF8EE; border-left: 3px solid var(--amber); }
+.priority-item.p-low  { background: var(--pale); border-left: 3px solid var(--leaf); }
+
+.p-tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; padding: 2px 6px; border-radius: 1px; flex-shrink: 0; margin-top: 2px; color: white; }
+.p-high .p-tag { background: var(--rust); }
+.p-mid  .p-tag { background: var(--amber); }
+.p-low  .p-tag { background: var(--moss); }
+
+.section-scores { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+@media(max-width:480px){ .section-scores { grid-template-columns: repeat(2,1fr); } }
+
+.sec-score-card {
+  padding: 12px; border: 1px solid var(--mist); border-radius: 3px;
+  text-align: center; background: var(--cream);
+}
+.sec-score-name { font-size: 11px; color: var(--moss); margin-bottom: 4px; }
+.sec-score-val { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; color: var(--bark); }
+.sec-score-max { font-family: 'DM Mono', monospace; font-size: 10px; color: #8fa085; }
+
+.cta-box {
+  background: linear-gradient(135deg, var(--moss) 0%, var(--bark) 100%);
+  color: var(--cream); padding: 26px 28px; border-radius: 4px; text-align: center; margin-top: 20px;
+}
+.cta-box h3 { font-family: 'Shippori Mincho', serif; font-size: 17px; margin-bottom: 6px; }
+.cta-box p { font-size: 12px; opacity: 0.85; margin-bottom: 14px; line-height: 1.7; }
+.btn-p { display: inline-block; padding: 11px 24px; background: var(--cream); color: var(--bark); font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 600; border-radius: 2px; border: none; cursor: pointer; transition: opacity 0.2s; margin: 4px; }
+.btn-p:hover { opacity: 0.9; }
+.btn-o { display: inline-block; padding: 11px 20px; background: transparent; color: var(--cream); font-family: 'Noto Serif JP', serif; font-size: 13px; border: 1px solid rgba(255,255,255,0.35); border-radius: 2px; cursor: pointer; transition: background 0.2s; margin: 4px; }
+.btn-o:hover { background: rgba(255,255,255,0.1); }
+
+.btn-calc {
+  width: 100%; padding: 17px; background: var(--bark); color: var(--cream);
+  border: none; border-radius: 3px; font-family: 'Shippori Mincho', serif;
+  font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-top: 8px;
+}
+.btn-calc:hover { background: var(--moss); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(44,26,14,0.2); }
+
+footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--mist); font-family: 'DM Mono', monospace; font-size: 10px; color: #8fa085; letter-spacing: 0.05em; text-align: center; line-height: 2; }
+
+@media(max-width:480px){
+  .score-display { flex-direction: column; text-align: center; }
+  .section-scores { grid-template-columns: repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="badge">🌿 樹木医監修ツール</div>
+  <h1>樹木健全度<br>チェックリスト</h1>
+  <p class="sub">現地調査で使える診断シート。根元・幹・枝・葉の状態を記録し、<br>総合スコアと対処優先度を自動算出します。</p>
+</header>
+
+<!-- Tree info -->
+<div class="info-bar">
+  <div class="info-field">
+    <label>樹木名・管理番号</label>
+    <input type="text" id="tree-name" placeholder="例：正門前クスノキ">
+  </div>
+  <div class="info-field">
+    <label>調査日</label>
+    <input type="date" id="survey-date">
+  </div>
+  <div class="info-field">
+    <label>樹高の目安</label>
+    <select id="tree-height">
+      <option value="">— 選択 —</option>
+      <option value="low">低木（〜3m）</option>
+      <option value="mid">中木（3〜10m）</option>
+      <option value="high">高木（10m以上）</option>
+    </select>
+  </div>
+</div>
+
+<!-- Progress -->
+<div class="progress-wrap">
+  <div class="progress-top">
+    <span class="progress-label">CHECK PROGRESS</span>
+    <span class="progress-count" id="prog-count">0 / 32 項目</span>
+  </div>
+  <div class="bar"><div class="bar-fill" id="bar-fill" style="width:0%"></div></div>
+</div>
+
+<div class="ad-slot">Google AdSense — レスポンシブ広告（チェック開始前）</div>
+
+<!-- SECTION 1: 根元・根系 -->
+<div class="section open" id="sec-root">
+  <div class="section-header" onclick="toggleSection('sec-root')">
+    <div class="section-icon" style="background:#E8F0E1;">🌱</div>
+    <div class="section-title-wrap">
+      <div class="section-name">根元・根系</div>
+      <div class="section-meta">ROOT ZONE — 8項目</div>
+    </div>
+    <div class="section-score-badge" id="badge-root" style="background:var(--mist);color:#6b7e6b;">0/8</div>
+    <div class="chevron">▾</div>
+  </div>
+  <div class="section-body">
+    <div class="check-item" onclick="toggle(this,'root',3)" data-pts="3">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">根元部分の隆起・盛り上がりがない</div>
+        <div class="check-detail">根系の発達と支持力の基本。地際の変形は根腐れや風倒リスクのサイン。</div>
+      </div>
+      <div class="severity-dot sev-high"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'root',3)" data-pts="3">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">根元周辺の土壌に空洞・陥没がない</div>
+        <div class="check-detail">地下部の根腐れや土壌流失のサイン。踏み込んで確認する。</div>
+      </div>
+      <div class="severity-dot sev-high"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'root',2)" data-pts="2">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">根張り（露出根）が放射状に広がっている</div>
+        <div class="check-detail">一方向にのみ根が集中する場合、反対側の根系が欠損している可能性がある。</div>
+      </div>
+      <div class="severity-dot sev-mid"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'root',2)" data-pts="2">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">根元周辺に十分な土壌スペースがある</div>
+        <div class="check-detail">根圏の直径は樹高の1/3が目安。舗装や構造物による根圏制限がないか確認。</div>
+      </div>
+      <div class="severity-dot sev-mid"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'root',2)" data-pts="2">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">根元にキノコ・菌核が発生していない</div>
+        <div class="check-detail">ナラタケ・シロアミタケ等の発生は根系の腐朽を強く示唆する危険信号。</div>
+      </div>
+      <div class="severity-dot sev-high"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'root',2)" data-pts="2">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">土壌が過度に踏み固められていない</div>
+        <div class="check-detail">根圏内の土壌硬度が高いと通気性・透水性が低下し、細根の発達を妨げる。</div>
+      </div>
+      <div class="severity-dot sev-mid"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'root',1)" data-pts="1">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">根元に除草剤・薬剤散布の痕跡がない</div>
+        <div class="check-detail">薬剤の根圏への流入は根系に深刻なダメージを与える場合がある。</div>
+      </div>
+      <div class="severity-dot sev-low"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'root',1)" data-pts="1">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">根元に適切なマルチング（有機物被覆）がある</div>
+        <div class="check-detail">マルチングは土壌水分の保持・温度緩和・微生物活性の向上に有効。</div>
+      </div>
+      <div class="severity-dot sev-low"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: 幹・樹皮 -->
+<div class="section" id="sec-trunk">
+  <div class="section-header" onclick="toggleSection('sec-trunk')">
+    <div class="section-icon" style="background:#EDE8E0;">🪵</div>
+    <div class="section-title-wrap">
+      <div class="section-name">幹・樹皮</div>
+      <div class="section-meta">TRUNK & BARK — 8項目</div>
+    </div>
+    <div class="section-score-badge" id="badge-trunk" style="background:var(--mist);color:#6b7e6b;">0/8</div>
+    <div class="chevron">▾</div>
+  </div>
+  <div class="section-body">
+    <div class="check-item" onclick="toggle(this,'trunk',3)" data-pts="3">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">幹に大きな空洞・腐朽部位がない</div>
+        <div class="check-detail">打音診断（木槌で叩く）で空洞音がしないか確認。空洞は倒木・落枝の重大リスク。</div>
+      </div>
+      <div class="severity-dot sev-high"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'trunk',3)" data-pts="3">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">幹にキノコ（子実体）が発生していない</div>
+        <div class="check-detail">サルノコシカケ類・ツリガネタケ等の発生は内部腐朽の証拠。発生部位の上側の折損リスクが高い。</div>
+      </div>
+      <div class="severity-dot sev-high"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'trunk',2)" data-pts="2">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">樹皮に深刻なひび割れ・剥離がない</div>
+        <div class="check-detail">自然な樹皮の剥離は問題ないが、縦に深く割れる場合は凍害・腐朽の可能性。</div>
+      </div>
+      <div class="severity-dot sev-mid"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'trunk',2)" data-pts="2">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">幹に異常なヤニ・樹液の滲出がない</div>
+        <div class="check-detail">大量のヤニ滲出は穿孔虫（カミキリムシ等）の加害・病害の可能性を示す。</div>
+      </div>
+      <div class="severity-dot sev-mid"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'trunk',2)" data-pts="2">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">幹の傾きが許容範囲内（垂直±15°以内）</div>
+        <div class="check-detail">傾きが大きい場合、重心の偏りによる倒木リスクがある。根系の発達状況と合わせて評価。</div>
+      </div>
+      <div class="severity-dot sev-high"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'trunk',2)" data-pts="2">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">過去の剪定・損傷による腐朽が進行していない</div>
+        <div class="check-detail">古い切り口の腐朽進行度をチェック。適切に愈傷組織（カルス）が形成されているか確認。</div>
+      </div>
+      <div class="severity-dot sev-mid"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'trunk',1)" data-pts="1">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">幹への固縛物（針金・ロープ等）による締め付けがない</div>
+        <div class="check-detail">針金食い込みは通導組織を遮断し、樹木を衰弱・枯死させる。</div>
+      </div>
+      <div class="severity-dot sev-mid"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'trunk',1)" data-pts="1">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">低い位置での地際腐朽（白色・褐色腐朽）がない</div>
+        <div class="check-detail">地際の腐朽は支持機能を著しく低下させる。プローブ等で深度を確認することが望ましい。</div>
+      </div>
+      <div class="severity-dot sev-high"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: 枝・樹冠 -->
+<div class="section" id="sec-branch">
+  <div class="section-header" onclick="toggleSection('sec-branch')">
+    <div class="section-icon" style="background:#E8F0E1;">🌿</div>
+    <div class="section-title-wrap">
+      <div class="section-name">枝・樹冠</div>
+      <div class="section-meta">BRANCH & CROWN — 8項目</div>
+    </div>
+    <div class="section-score-badge" id="badge-branch" style="background:var(--mist);color:#6b7e6b;">0/8</div>
+    <div class="chevron">▾</div>
+  </div>
+  <div class="section-body">
+    <div class="check-item" onclick="toggle(this,'branch',3)" data-pts="3">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">枯れ枝（枯死枝・ハンギングブランチ）がない</div>
+        <div class="check-detail">枯れ枝は腐朽が進み、強風・降雪時に落下する危険がある。特に人が通る場所では即対応必須。</div>
+      </div>
+      <div class="severity-dot sev-high"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'branch',3)" data-pts="3">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">枝の折損・裂け（コドミナントステム等）がない</div>
+        <div class="check-detail">二またに分岐した等太の幹（コドミナント）は、内部に樹皮が挟まる「包含樹皮」になりやすく、折損リスクが高い。</div>
+      </div>
+      <div class="severity-dot sev-high"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'branch',2)" data-pts="2">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">樹冠が均等に発達しており偏りがない</div>
+        <div class="check-detail">一方向に樹冠が偏っている場合、重心の偏りによる傾倒リスクがある。</div>
+      </div>
+      <div class="severity-dot sev-mid"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'branch',2)" data-pts="2">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">樹冠内部に光が適切に届いている</div>
+        <div class="check-detail">過密な樹冠は病害虫の温床になりやすい。透かし剪定で通気・採光を確保することが樹勢維持の基本。</div>
+      </div>
+      <div class="severity-dot sev-mid"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'branch',2)" data-pts="2">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">前年の枝の伸長量が通常範囲内（著しい衰退がない）</div>
+        <div class="check-detail">新梢の伸長量が例年の50%以下に低下している場合、樹勢の著しい低下を示す。</div>
+      </div>
+      <div class="severity-dot sev-mid"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'branch',2)" data-pts="2">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">枝に胴枯れ・流れ枯れが広がっていない</div>
+        <div class="check-detail">特定の枝から広がる枯れ込みは、胴枯病・腐朽菌・穿孔性害虫の加害を示す場合がある。</div>
+      </div>
+      <div class="severity-dot sev-mid"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'branch',1)" data-pts="1">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">支柱・添え木が適切に機能しており樹木を傷めていない</div>
+        <div class="check-detail">支柱の当たり部分が樹皮を圧迫・損傷していないか定期的に確認。緩み・腐朽の確認も必要。</div>
+      </div>
+      <div class="severity-dot sev-low"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'branch',1)" data-pts="1">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">周辺構造物・電線への接触・危険な越境がない</div>
+        <div class="check-detail">建物・電線・フェンス等への接触は損害のリスク。定期的な点検と適切な間隔の確保が必要。</div>
+      </div>
+      <div class="severity-dot sev-low"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: 葉・生育状態 -->
+<div class="section" id="sec-leaf">
+  <div class="section-header" onclick="toggleSection('sec-leaf')">
+    <div class="section-icon" style="background:#E8F0E1;">🍃</div>
+    <div class="section-title-wrap">
+      <div class="section-name">葉・生育状態</div>
+      <div class="section-meta">FOLIAGE & VIGOR — 8項目</div>
+    </div>
+    <div class="section-score-badge" id="badge-leaf" style="background:var(--mist);color:#6b7e6b;">0/8</div>
+    <div class="chevron">▾</div>
+  </div>
+  <div class="section-body">
+    <div class="check-item" onclick="toggle(this,'leaf',3)" data-pts="3">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">葉の色・サイズが樹種の標準的な状態にある</div>
+        <div class="check-detail">黄化（クロロシス）・小葉化・葉の縮小は栄養障害・根系障害の典型的なサイン。</div>
+      </div>
+      <div class="severity-dot sev-high"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'leaf',3)" data-pts="3">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">時期外れの大量落葉・早期落葉がない</div>
+        <div class="check-detail">夏季の落葉は深刻な水分ストレス・根系障害・病害を示す。速やかな原因究明が必要。</div>
+      </div>
+      <div class="severity-dot sev-high"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'leaf',2)" data-pts="2">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">葉に顕著な病斑・斑点・変色がない</div>
+        <div class="check-detail">葉の病変は糸状菌・細菌・ウイルスによる病害の可能性。複数の枝で確認される場合は特に注意。</div>
+      </div>
+      <div class="severity-dot sev-mid"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'leaf',2)" data-pts="2">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">葉に著しい食害（虫食い・網目状・白化）がない</div>
+        <div class="check-detail">ハバチ・ハモグリムシ・ハダニ等の加害。大発生時は樹勢を大きく低下させる。</div>
+      </div>
+      <div class="severity-dot sev-mid"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'leaf',2)" data-pts="2">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">葉の密度が適正（著しい葉の量の減少がない）</div>
+        <div class="check-detail">全樹冠の30%以上で葉密度の低下が見られる場合、樹勢の著しい低下と評価される。</div>
+      </div>
+      <div class="severity-dot sev-mid"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'leaf',2)" data-pts="2">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">葉に白い粉状物（うどんこ病）・すす状物（すす病）がない</div>
+        <div class="check-detail">うどんこ病は光合成を阻害。すす病はカイガラムシ・アブラムシの排泄物に発生し、見た目の悪化以上に光合成障害を引き起こす。</div>
+      </div>
+      <div class="severity-dot sev-mid"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'leaf',1)" data-pts="1">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">害虫（毛虫・カイガラムシ・アブラムシ等）の顕著な寄生がない</div>
+        <div class="check-detail">葉裏・新芽・枝の分岐部を中心に確認。チャドクガ等の毒毛虫は素手での確認を避ける。</div>
+      </div>
+      <div class="severity-dot sev-mid"></div>
+    </div>
+    <div class="check-item" onclick="toggle(this,'leaf',1)" data-pts="1">
+      <div class="custom-cb"></div>
+      <div class="check-content">
+        <div class="check-main">周辺の大気汚染・塩害の影響が少ない</div>
+        <div class="check-detail">道路沿い（排気ガス・融雪剤）・海岸部（塩害）では、葉縁の焦げや枝枯れが発生しやすい。</div>
+      </div>
+      <div class="severity-dot sev-low"></div>
+    </div>
+  </div>
+</div>
+
+<div class="ad-slot">Google AdSense — チェック中間位置（高滞在時間帯・高単価）</div>
+
+<button class="btn-calc" onclick="calcScore()">📊　健全度スコアを算出する</button>
+
+<!-- Result -->
+<div id="result">
+  <div class="score-display" id="score-display">
+    <div class="score-circle">
+      <div class="score-num" id="score-num">—</div>
+      <div class="score-max">/100</div>
+    </div>
+    <div class="score-right">
+      <h2 id="score-title">—</h2>
+      <p id="score-desc">—</p>
+    </div>
+  </div>
+  <div class="result-body">
+    <div class="result-card">
+      <h3>📊 部位別スコア</h3>
+      <div class="section-scores" id="sec-scores"></div>
+    </div>
+    <div class="result-card">
+      <h3>🚨 対処優先度リスト</h3>
+      <ul class="priority-list" id="priority-list"></ul>
+    </div>
+    <div class="result-card">
+      <h3>📝 総合所見</h3>
+      <p id="overall-note" style="font-size:13px;line-height:1.9;color:#4a5e4a;"></p>
+    </div>
+  </div>
+
+  <div class="ad-slot" style="margin-top:16px;">Google AdSense — 診断結果下部（リワード広告推奨）</div>
+
+  <div class="cta-box">
+    <h3>🌲 この診断結果を記録・共有する</h3>
+    <p>Notionやスプレッドシートへの記録、樹木医への報告資料としてご活用ください。<br>詳細な診断・処置計画は専門家にご相談ください。</p>
+    <button class="btn-p" onclick="window.print()">🖨 印刷・PDF保存</button>
+    <button class="btn-o" onclick="resetAll()">↩ 新しい樹木を診断</button>
+  </div>
+</div>
+
+<footer>
+  <p>本ツールは一般的な情報提供を目的としており、専門的な診断の代替ではありません。</p>
+  <p>© 2025 樹木健全度チェックリスト — 樹木医監修 | ARBORIST TOOLS v1.0</p>
+</footer>
+
+</div>
+<script>
+const scores = { root: 0, trunk: 0, branch: 0, leaf: 0 };
+const maxes  = { root: 16, trunk: 16, branch: 16, leaf: 16 };
+let totalChecked = 0;
+const TOTAL_ITEMS = 32;
+
+// Set today's date
+document.getElementById('survey-date').value = new Date().toISOString().split('T')[0];
+
+function toggle(el, section, pts) {
+  el.classList.toggle('checked');
+  if (el.classList.contains('checked')) {
+    scores[section] += pts;
+    totalChecked++;
+  } else {
+    scores[section] -= pts;
+    totalChecked--;
+  }
+  updateProgress();
+  updateSectionBadge(section);
+}
+
+function updateProgress() {
+  const pct = (totalChecked / TOTAL_ITEMS) * 100;
+  document.getElementById('bar-fill').style.width = pct + '%';
+  document.getElementById('prog-count').textContent = totalChecked + ' / ' + TOTAL_ITEMS + ' 項目';
+}
+
+function updateSectionBadge(section) {
+  const badge = document.getElementById('badge-' + section);
+  const max = maxes[section];
+  const val = scores[section];
+  const pct = val / max;
+  badge.textContent = val + '/' + max;
+  if (pct >= 0.75) { badge.style.background = '#D4F0D5'; badge.style.color = '#2E6B30'; }
+  else if (pct >= 0.5) { badge.style.background = '#FFF8EE'; badge.style.color = '#8a5a00'; }
+  else { badge.style.background = '#FFF0ED'; badge.style.color = '#8B3A2A'; }
+}
+
+function toggleSection(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function calcScore() {
+  const total = scores.root + scores.trunk + scores.branch + scores.leaf;
+  const maxTotal = 64;
+  const normalized = Math.round((total / maxTotal) * 100);
+
+  let rank, title, desc, rankClass;
+  if (normalized >= 80) {
+    rank = 'A'; rankClass = 'rank-a';
+    title = '健全（Healthy）';
+    desc = '現時点で重大な問題は確認されません。定期的な観察と予防的管理を継続してください。';
+  } else if (normalized >= 60) {
+    rank = 'B'; rankClass = 'rank-b';
+    title = '概ね健全（Fair）';
+    desc = '軽微な問題が見られます。早めに対処することで健全な状態を維持できます。';
+  } else if (normalized >= 40) {
+    rank = 'C'; rankClass = 'rank-c';
+    title = '要管理（Poor）';
+    desc = '複数の問題が確認されます。速やかな対処と樹木医への相談を推奨します。';
+  } else {
+    rank = 'D'; rankClass = 'rank-d';
+    title = '危険・要緊急対応（Critical）';
+    desc = '深刻な問題が確認されます。倒木・落枝リスクの評価と緊急対応が必要です。';
+  }
+
+  // Display
+  const display = document.getElementById('score-display');
+  display.className = 'score-display ' + rankClass;
+  document.getElementById('score-num').textContent = normalized;
+  document.getElementById('score-title').textContent = rank + 'ランク：' + title;
+  document.getElementById('score-desc').textContent = desc;
+
+  // Section scores
+  const secScores = document.getElementById('sec-scores');
+  const labels = { root:'根元・根系', trunk:'幹・樹皮', branch:'枝・樹冠', leaf:'葉・生育' };
+  secScores.innerHTML = Object.keys(scores).map(k => {
+    const pct = Math.round((scores[k] / maxes[k]) * 100);
+    return `
+      <div class="sec-score-card">
+        <div class="sec-score-name">${labels[k]}</div>
+        <div class="sec-score-val">${pct}<span class="sec-score-max">%</span></div>
+      </div>
+    `;
+  }).join('');
+
+  // Priority list
+  const priorities = [];
+  const items = document.querySelectorAll('.check-item:not(.checked)');
+  items.forEach(item => {
+    const dot = item.querySelector('.severity-dot');
+    const main = item.querySelector('.check-main').textContent;
+    let p = 'low';
+    if (dot.classList.contains('sev-high')) p = 'high';
+    else if (dot.classList.contains('sev-mid')) p = 'mid';
+    priorities.push({ p, text: main });
+  });
+
+  // Sort: high > mid > low
+  priorities.sort((a, b) => {
+    const order = { high: 0, mid: 1, low: 2 };
+    return order[a.p] - order[b.p];
+  });
+
+  const pList = document.getElementById('priority-list');
+  if (priorities.length === 0) {
+    pList.innerHTML = '<li class="priority-item p-low"><span class="p-tag">OK</span><span>すべての項目をクリアしています。</span></li>';
+  } else {
+    pList.innerHTML = priorities.slice(0, 8).map(pr => `
+      <li class="priority-item p-${pr.p}">
+        <span class="p-tag">${pr.p === 'high' ? '緊急' : pr.p === 'mid' ? '要対応' : '推奨'}</span>
+        <span>${pr.text}</span>
+      </li>
+    `).join('');
+  }
+
+  // Overall note
+  const treeName = document.getElementById('tree-name').value || '対象樹木';
+  const date = document.getElementById('survey-date').value;
+  document.getElementById('overall-note').textContent =
+    `【${treeName}】調査日：${date}。総合健全度スコア ${normalized}点（${rank}ランク）。` +
+    `根元・根系 ${Math.round(scores.root/maxes.root*100)}%、幹・樹皮 ${Math.round(scores.trunk/maxes.trunk*100)}%、` +
+    `枝・樹冠 ${Math.round(scores.branch/maxes.branch*100)}%、葉・生育 ${Math.round(scores.leaf/maxes.leaf*100)}%。` +
+    `${desc}`;
+
+  // Show
+  const res = document.getElementById('result');
+  res.style.display = 'block';
+  res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function resetAll() {
+  document.querySelectorAll('.check-item.checked').forEach(el => el.classList.remove('checked'));
+  scores.root = scores.trunk = scores.branch = scores.leaf = 0;
+  totalChecked = 0;
+  updateProgress();
+  ['root','trunk','branch','leaf'].forEach(s => {
+    const badge = document.getElementById('badge-' + s);
+    badge.textContent = '0/8';
+    badge.style.background = 'var(--mist)';
+    badge.style.color = '#6b7e6b';
+  });
+  document.getElementById('result').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

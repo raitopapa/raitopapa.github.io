@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>樹木病害虫リスク診断 | 樹木医監修</title>
+<meta name="description" content="樹木医が監修した無料の病害虫リスク診断ツール。症状を選択するだけで、考えられる病害虫と対処法をすぐに確認できます。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Shippori+Mincho:wght@400;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bark: #2C1A0E;
+    --moss: #3D5A3E;
+    --moss-light: #5A7A5B;
+    --leaf: #7AAE6E;
+    --pale: #E8F0E1;
+    --cream: #F5F0E8;
+    --amber: #C8842A;
+    --rust: #8B3A2A;
+    --mist: #D4DFD0;
+    --ink: #1A1208;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Noto Serif JP', serif;
+    min-height: 100vh;
+    background-image: 
+      radial-gradient(ellipse at 10% 20%, rgba(90,122,91,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 80%, rgba(44,26,14,0.06) 0%, transparent 50%);
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--mist);
+    position: relative;
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--moss);
+    border: 1px solid var(--moss-light);
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(24px, 5vw, 38px);
+    font-weight: 800;
+    color: var(--bark);
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: var(--moss);
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* Tree icon decorative */
+  .tree-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 16px;
+    display: block;
+  }
+
+  /* Progress */
+  .progress-bar {
+    width: 100%;
+    height: 3px;
+    background: var(--mist);
+    border-radius: 2px;
+    margin-bottom: 36px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--moss), var(--leaf));
+    border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+
+  .step-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--moss-light);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  /* Sections */
+  .section {
+    background: rgba(255,255,255,0.6);
+    border: 1px solid var(--mist);
+    border-radius: 4px;
+    padding: 28px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(4px);
+    transition: border-color 0.2s;
+  }
+
+  .section:hover {
+    border-color: var(--moss-light);
+  }
+
+  .section-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--bark);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title .num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--moss);
+    background: var(--pale);
+    padding: 2px 7px;
+    border-radius: 2px;
+  }
+
+  .section-desc {
+    font-size: 12px;
+    color: #6B7E6B;
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+
+  /* Select dropdown */
+  select {
+    width: 100%;
+    padding: 12px 16px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--cream);
+    border: 1px solid var(--mist);
+    border-radius: 3px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%233D5A3E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  select:focus {
+    outline: none;
+    border-color: var(--moss);
+    box-shadow: 0 0 0 3px rgba(61,90,62,0.1);
+  }
+
+  /* Checkbox grid */
+  .symptom-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+
+  .symptom-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--mist);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 13px;
+    background: white;
+    user-select: none;
+  }
+
+  .symptom-item:hover {
+    border-color: var(--moss-light);
+    background: var(--pale);
+  }
+
+  .symptom-item.selected {
+    border-color: var(--moss);
+    background: var(--pale);
+    color: var(--bark);
+    font-weight: 500;
+  }
+
+  .symptom-item input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    accent-color: var(--moss);
+    flex-shrink: 0;
+  }
+
+  /* CTA Button */
+  .btn-diagnose {
+    width: 100%;
+    padding: 18px;
+    background: var(--bark);
+    color: var(--cream);
+    border: none;
+    border-radius: 3px;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-diagnose::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.05));
+  }
+
+  .btn-diagnose:hover {
+    background: var(--moss);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(44,26,14,0.2);
+  }
+
+  .btn-diagnose:active {
+    transform: translateY(0);
+  }
+
+  .btn-diagnose:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Result section */
+  #result {
+    display: none;
+    animation: fadeIn 0.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-header {
+    background: var(--bark);
+    color: var(--cream);
+    padding: 24px 28px;
+    border-radius: 4px 4px 0 0;
+  }
+
+  .result-header h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+
+  .result-header .risk-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    opacity: 0.7;
+  }
+
+  .risk-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 8px;
+  }
+
+  .risk-high { background: var(--rust); color: white; }
+  .risk-mid { background: var(--amber); color: white; }
+  .risk-low { background: var(--moss); color: white; }
+
+  .result-body {
+    border: 1px solid var(--mist);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+  }
+
+  .result-card {
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--mist);
+    background: white;
+  }
+
+  .result-card:last-child { border-bottom: none; }
+
+  .result-card h3 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--bark);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .result-card h3 .icon {
+    width: 18px;
+    height: 18px;
+    background: var(--pale);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+
+  .pest-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .pest-item {
+    padding: 12px 16px;
+    background: var(--cream);
+    border-radius: 3px;
+    border-left: 3px solid var(--moss-light);
+  }
+
+  .pest-item .pest-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--bark);
+    margin-bottom: 3px;
+  }
+
+  .pest-item .pest-desc {
+    font-size: 12px;
+    color: #6B7E6B;
+    line-height: 1.6;
+  }
+
+  .action-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .action-list li {
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--pale);
+    align-items: flex-start;
+  }
+
+  .action-list li:last-child { border-bottom: none; }
+
+  .action-list li::before {
+    content: '→';
+    color: var(--moss);
+    font-family: 'DM Mono', monospace;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* AdSense placeholder */
+  .adsense-slot {
+    background: var(--mist);
+    border: 1px dashed #b0bfaa;
+    border-radius: 3px;
+    padding: 24px;
+    text-align: center;
+    margin: 24px 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #8fa085;
+    letter-spacing: 0.1em;
+  }
+
+  /* CTA after result */
+  .cta-box {
+    background: linear-gradient(135deg, var(--moss) 0%, var(--bark) 100%);
+    color: var(--cream);
+    padding: 28px;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  .cta-box h3 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .cta-box p {
+    font-size: 13px;
+    opacity: 0.85;
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+
+  .btn-cta {
+    display: inline-block;
+    padding: 12px 28px;
+    background: var(--cream);
+    color: var(--bark);
+    font-family: 'Shippori Mincho', serif;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 2px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s;
+  }
+
+  .btn-cta:hover { opacity: 0.9; }
+
+  .btn-reset {
+    display: block;
+    margin: 16px auto 0;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: var(--cream);
+    padding: 8px 20px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-reset:hover { background: rgba(255,255,255,0.1); }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--mist);
+    font-size: 11px;
+    color: #8fa085;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+    line-height: 2;
+  }
+
+  @media (max-width: 600px) {
+    .symptom-grid { grid-template-columns: 1fr 1fr; }
+    .section { padding: 20px 16px; }
+    .result-card { padding: 20px 16px; }
+    .result-header { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <div class="badge">🌿 樹木医監修ツール</div>
+    <svg class="tree-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="24" cy="18" rx="14" ry="13" fill="#3D5A3E" opacity="0.9"/>
+      <ellipse cx="16" cy="24" rx="10" ry="9" fill="#5A7A5B" opacity="0.8"/>
+      <ellipse cx="32" cy="26" rx="10" ry="8" fill="#5A7A5B" opacity="0.7"/>
+      <rect x="21" y="32" width="6" height="12" rx="1" fill="#2C1A0E"/>
+    </svg>
+    <h1>樹木病害虫<br>リスク診断</h1>
+    <p class="subtitle">樹木医が監修。症状を選択するだけで、考えられる病害虫と<br>初期対処法を即座に確認できます。</p>
+  </header>
+
+  <!-- Form -->
+  <div id="form-section">
+    <div class="step-label">STEP 01 — 樹種の選択</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress" style="width:20%"></div></div>
+
+    <!-- Tree species -->
+    <div class="section">
+      <div class="section-title">
+        <span class="num">Q1</span>
+        対象の樹木を選択してください
+      </div>
+      <p class="section-desc">最も近いものを選択してください</p>
+      <select id="tree-type" onchange="updateProgress()">
+        <option value="">— 選択してください —</option>
+        <optgroup label="針葉樹">
+          <option value="pine">マツ類（クロマツ・アカマツ）</option>
+          <option value="cedar">スギ・ヒノキ</option>
+          <option value="spruce">トドマツ・エゾマツ</option>
+        </optgroup>
+        <optgroup label="広葉樹（落葉）">
+          <option value="cherry">サクラ類</option>
+          <option value="zelkova">ケヤキ</option>
+          <option value="oak">コナラ・クヌギ（カシ類）</option>
+          <option value="maple">カエデ・モミジ</option>
+          <option value="ginkgo">イチョウ</option>
+        </optgroup>
+        <optgroup label="広葉樹（常緑）">
+          <option value="camellia">ツバキ・サザンカ</option>
+          <option value="camphor">クスノキ</option>
+          <option value="holly">モチノキ・ソヨゴ</option>
+        </optgroup>
+        <optgroup label="果樹">
+          <option value="citrus">カンキツ類（ミカン・ユズ）</option>
+          <option value="persimmon">カキ・クリ</option>
+          <option value="plum">ウメ・モモ・カキ</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <!-- Season -->
+    <div class="section">
+      <div class="section-title">
+        <span class="num">Q2</span>
+        症状が現れた時期
+      </div>
+      <p class="section-desc">症状を最初に確認した季節を選択してください</p>
+      <select id="season" onchange="updateProgress()">
+        <option value="">— 選択してください —</option>
+        <option value="spring">春（3〜5月）</option>
+        <option value="summer">夏（6〜8月）</option>
+        <option value="autumn">秋（9〜11月）</option>
+        <option value="winter">冬（12〜2月）</option>
+      </select>
+    </div>
+
+    <!-- Symptoms -->
+    <div class="section">
+      <div class="section-title">
+        <span class="num">Q3</span>
+        確認できる症状（複数選択可）
+      </div>
+      <p class="section-desc">当てはまるものをすべて選択してください</p>
+      <div class="symptom-grid" id="symptom-grid">
+        <label class="symptom-item" onclick="this.classList.toggle('selected'); updateProgress()">
+          <input type="checkbox" value="leaf-yellow"> 葉が黄変・褐変
+        </label>
+        <label class="symptom-item" onclick="this.classList.toggle('selected'); updateProgress()">
+          <input type="checkbox" value="leaf-fall"> 時期外れの落葉
+        </label>
+        <label class="symptom-item" onclick="this.classList.toggle('selected'); updateProgress()">
+          <input type="checkbox" value="leaf-spot"> 葉に斑点・病斑
+        </label>
+        <label class="symptom-item" onclick="this.classList.toggle('selected'); updateProgress()">
+          <input type="checkbox" value="leaf-wilt"> 葉のしおれ・萎縮
+        </label>
+        <label class="symptom-item" onclick="this.classList.toggle('selected'); updateProgress()">
+          <input type="checkbox" value="leaf-hole"> 葉に穴・食害痕
+        </label>
+        <label class="symptom-item" onclick="this.classList.toggle('selected'); updateProgress()">
+          <input type="checkbox" value="leaf-powder"> 葉に白い粉状物
+        </label>
+        <label class="symptom-item" onclick="this.classList.toggle('selected'); updateProgress()">
+          <input type="checkbox" value="branch-dead"> 枝枯れ・胴枯れ
+        </label>
+        <label class="symptom-item" onclick="this.classList.toggle('selected'); updateProgress()">
+          <input type="checkbox" value="bark-crack"> 樹皮の亀裂・剥離
+        </label>
+        <label class="symptom-item" onclick="this.classList.toggle('selected'); updateProgress()">
+          <input type="checkbox" value="resin"> ヤニ・樹液の滲出
+        </label>
+        <label class="symptom-item" onclick="this.classList.toggle('selected'); updateProgress()">
+          <input type="checkbox" value="insect"> 虫・卵・糞の確認
+        </label>
+        <label class="symptom-item" onclick="this.classList.toggle('selected'); updateProgress()">
+          <input type="checkbox" value="mushroom"> キノコ・子実体の発生
+        </label>
+        <label class="symptom-item" onclick="this.classList.toggle('selected'); updateProgress()">
+          <input type="checkbox" value="growth-slow"> 生長の著しい停滞
+        </label>
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="section">
+      <div class="section-title">
+        <span class="num">Q4</span>
+        立地環境
+      </div>
+      <p class="section-desc">樹木が置かれている環境を選択してください</p>
+      <select id="location" onchange="updateProgress()">
+        <option value="">— 選択してください —</option>
+        <option value="urban">市街地（舗装・建物に囲まれた環境）</option>
+        <option value="park">公園・緑地</option>
+        <option value="garden">住宅庭園</option>
+        <option value="forest">林・山地</option>
+        <option value="coast">沿岸部・海沿い</option>
+        <option value="farm">農地・果樹園</option>
+      </select>
+    </div>
+
+    <!-- AdSense placeholder top -->
+    <div class="adsense-slot">Google AdSense 広告スロット（728×90 or レスポンシブ）</div>
+
+    <button class="btn-diagnose" id="diagnose-btn" onclick="diagnose()" disabled>
+      🔍　診断する
+    </button>
+  </div>
+
+  <!-- Result -->
+  <div id="result">
+    <div class="adsense-slot">Google AdSense 広告スロット（診断結果上部 — 高エンゲージメント位置）</div>
+
+    <div class="result-header">
+      <div class="risk-label">DIAGNOSIS RESULT</div>
+      <h2 id="result-title">診断結果</h2>
+      <div id="risk-level"></div>
+    </div>
+
+    <div class="result-body">
+      <div class="result-card">
+        <h3><span class="icon">🦠</span>疑われる病害虫</h3>
+        <ul class="pest-list" id="pest-list"></ul>
+      </div>
+
+      <div class="result-card">
+        <h3><span class="icon">📋</span>推奨される初期対処</h3>
+        <ul class="action-list" id="action-list"></ul>
+      </div>
+
+      <div class="result-card">
+        <h3><span class="icon">⚠️</span>注意事項</h3>
+        <p id="caution" style="font-size:13px;line-height:1.8;color:#5a6e5a;"></p>
+      </div>
+    </div>
+
+    <!-- AdSense placeholder result bottom -->
+    <div class="adsense-slot" style="margin-top:16px;">Google AdSense 広告スロット（診断結果下部 — リワード広告推奨）</div>
+
+    <div class="cta-box">
+      <h3>🌲 より詳しい診断が必要ですか？</h3>
+      <p>本ツールは初期スクリーニングです。正確な診断と処置計画には、<br>樹木医による現地調査をお勧めします。</p>
+      <button class="btn-cta">📞 樹木医に相談する</button>
+      <button class="btn-reset" onclick="resetForm()">↩ もう一度診断する</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>本ツールは一般的な情報提供を目的としており、専門的な診断の代替ではありません。</p>
+    <p>© 2025 樹木病害虫リスク診断ツール — 樹木医監修</p>
+    <p style="margin-top:8px; opacity:0.6">ARBORIST TOOLS v1.0</p>
+  </footer>
+
+</div>
+
+<script>
+// Diagnosis database
+const diagnosisDB = {
+  pine: {
+    "leaf-yellow,resin": {
+      risk: "high",
+      title: "マツ類の診断結果",
+      pests: [
+        { name: "マツノザイセンチュウ（松枯れ病）", desc: "マツノマダラカミキリを媒介とした線虫被害。発症後の治療は困難で、速やかな対応が必要。" },
+        { name: "マツカレハ（松毛虫）", desc: "葉を食害し、大発生すると全落葉・枯死に至る。春・秋に発生ピーク。" }
+      ],
+      actions: [
+        "速やかに樹木医または森林組合に連絡",
+        "感染確認のため伐倒・解剖診断の検討",
+        "周辺樹木への予防的殺虫剤（ネオニコチノイド系）の樹幹注射",
+        "枯死した場合は材の拡散防止のため速やかに除去・焼却"
+      ],
+      caution: "マツノザイセンチュウ病は都道府県に届出義務がある場合があります。自治体の担当部署への報告もご確認ください。感染が疑われる段階での早期対応が被害拡大を防ぎます。"
+    },
+    "leaf-hole,insect": {
+      risk: "mid",
+      title: "マツ類の診断結果",
+      pests: [
+        { name: "マツカレハ（松毛虫）", desc: "幼虫が葉を食害。大きな幼虫は越冬後に再び活動する。" },
+        { name: "マツノシラホシゾウムシ", desc: "成虫が新梢の皮を食害。被害枝は赤変・枯死する。" }
+      ],
+      actions: [
+        "被害枝の早期除去と焼却処分",
+        "幼虫・成虫の手作業による捕殺",
+        "薬剤散布（ディプテレックス乳剤等）",
+        "樹勢回復のための施肥・水管理の改善"
+      ],
+      caution: "薬剤使用の際は周辺への影響（ミツバチ等への毒性）を考慮し、使用基準を厳守してください。"
+    }
+  },
+  cherry: {
+    "leaf-spot,branch-dead": {
+      risk: "high",
+      title: "サクラ類の診断結果",
+      pests: [
+        { name: "てんぐ巣病（Taphrina wiesneri）", desc: "糸状菌による感染。感染枝に多数の細枝が叢生（魔女のほうき状）する特徴的症状。" },
+        { name: "胴枯病", desc: "傷口・剪定口から菌が侵入し、樹皮下が腐敗。木部が白・褐変する。" }
+      ],
+      actions: [
+        "てんぐ巣病罹患枝は健全部から20cm以上下で切除",
+        "切り口にトップジンMペーストを塗布（保護・殺菌）",
+        "胴枯れ部分の切除後、傷口の保護処理",
+        "剪定は樹液流動期（花後〜6月）を避け、落葉期に実施"
+      ],
+      caution: "「サクラを切るな」という格言がある通り、サクラは傷口からの腐朽菌侵入リスクが高い樹種です。不必要な剪定を避け、切除後は必ず保護剤を塗布してください。"
+    },
+    "leaf-hole,insect": {
+      risk: "mid",
+      title: "サクラ類の診断結果",
+      pests: [
+        { name: "アメリカシロヒトリ", desc: "網幕を張りながら集団で食害。夏（第1世代）・秋（第2世代）に発生。" },
+        { name: "モンクロシャチホコ", desc: "幼虫が群生して食害。発生すると数日で全落葉することもある。" }
+      ],
+      actions: [
+        "幕巣の早期発見・除去（幕ごと焼却）",
+        "幼齢幼虫期の薬剤散布が効果的（BT剤、スミチオン乳剤等）",
+        "街路樹の場合は市区町村への通報",
+        "落葉の適切な処分（蛹の越冬阻止）"
+      ],
+      caution: "アメリカシロヒトリは特定外来生物ではありませんが、大発生は周辺住民への影響も大きいため、自治体への報告を検討してください。"
+    }
+  },
+  oak: {
+    "leaf-wilt,branch-dead,resin": {
+      risk: "high",
+      title: "コナラ・クヌギの診断結果",
+      pests: [
+        { name: "ナラ枯れ（カシノナガキクイムシ媒介）", desc: "カシノナガキクイムシが媒介するナラ菌（Raffaelea quercivora）による萎凋病。夏期に急速な葉の赤変・枯死が起きる。近年被害が急増中。" }
+      ],
+      actions: [
+        "樹幹への粘着テープ・シート巻きつけ（カシナガの脱出防止）",
+        "被害木の伐倒・薫蒸処理（自治体への届出確認）",
+        "健全木への予防的な薫煙剤・テープ巻き付け（6月頃）",
+        "速やかに都道府県・市区町村の林務担当部署に連絡"
+      ],
+      caution: "ナラ枯れは広域的な被害を引き起こす深刻な問題です。個人での対応には限界があり、自治体や専門機関との連携が不可欠です。被害木の放置は周辺への急速な拡大を招きます。"
+    }
+  },
+  default: {
+    default: {
+      risk: "mid",
+      title: "診断結果",
+      pests: [
+        { name: "複合的な病害虫の可能性", desc: "選択された症状の組み合わせから、特定の病害虫を断定するには追加情報が必要です。" },
+        { name: "環境ストレス（非生物的要因）", desc: "水不足、過湿、土壌圧密、根圏の損傷なども同様の症状を引き起こします。" }
+      ],
+      actions: [
+        "被害部位のサンプル（葉・枝10〜15cm程度）を採取・保存",
+        "発生時期・進行速度を記録（写真撮影を推奨）",
+        "近隣に同じ症状を示す樹木がないか確認",
+        "樹木医または都道府県の農業・林業試験場に相談"
+      ],
+      caution: "本ツールで確定診断ができない場合は、専門家による現地診断が最も確実です。症状の進行が速い場合は早急に専門家にご相談ください。"
+    }
+  }
+};
+
+function updateProgress() {
+  const treeType = document.getElementById('tree-type').value;
+  const season = document.getElementById('season').value;
+  const location = document.getElementById('location').value;
+  const checkedSymptoms = document.querySelectorAll('#symptom-grid input:checked').length;
+
+  let filled = 0;
+  if (treeType) filled++;
+  if (season) filled++;
+  if (location) filled++;
+  if (checkedSymptoms > 0) filled++;
+
+  const progress = 20 + (filled / 4) * 75;
+  document.getElementById('progress').style.width = progress + '%';
+
+  const canDiagnose = treeType && season && checkedSymptoms > 0;
+  document.getElementById('diagnose-btn').disabled = !canDiagnose;
+}
+
+function diagnose() {
+  const treeType = document.getElementById('tree-type').value;
+  const checkedSymptoms = Array.from(document.querySelectorAll('#symptom-grid input:checked'))
+    .map(cb => cb.value)
+    .sort()
+    .join(',');
+
+  // Find best match in DB
+  let result = null;
+
+  if (diagnosisDB[treeType]) {
+    // Try to find symptom match
+    for (const [symptomKey, data] of Object.entries(diagnosisDB[treeType])) {
+      const keySymptoms = symptomKey.split(',');
+      const matchCount = keySymptoms.filter(s => checkedSymptoms.includes(s)).length;
+      if (matchCount >= Math.min(2, keySymptoms.length)) {
+        result = data;
+        break;
+      }
+    }
+  }
+
+  // Fallback
+  if (!result) {
+    result = diagnosisDB.default.default;
+  }
+
+  renderResult(result, treeType);
+
+  // Scroll to result
+  document.getElementById('form-section').style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+  document.getElementById('progress').style.width = '100%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderResult(result, treeType) {
+  document.getElementById('result-title').textContent = result.title;
+
+  const riskMap = { high: ['高リスク', 'risk-high'], mid: ['要注意', 'risk-mid'], low: ['低リスク', 'risk-low'] };
+  const [label, cls] = riskMap[result.risk];
+  document.getElementById('risk-level').innerHTML = 
+    `リスクレベル: <span class="risk-badge ${cls}">${label}</span>`;
+
+  const pestList = document.getElementById('pest-list');
+  pestList.innerHTML = result.pests.map(p => `
+    <li class="pest-item">
+      <div class="pest-name">🔬 ${p.name}</div>
+      <div class="pest-desc">${p.desc}</div>
+    </li>
+  `).join('');
+
+  const actionList = document.getElementById('action-list');
+  actionList.innerHTML = result.actions.map(a => `<li>${a}</li>`).join('');
+
+  document.getElementById('caution').textContent = result.caution;
+}
+
+function resetForm() {
+  document.getElementById('form-section').style.display = 'block';
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('progress').style.width = '20%';
+
+  document.getElementById('tree-type').value = '';
+  document.getElementById('season').value = '';
+  document.getElementById('location').value = '';
+  document.querySelectorAll('#symptom-grid input').forEach(cb => {
+    cb.checked = false;
+    cb.parentElement.classList.remove('selected');
+  });
+  document.getElementById('diagnose-btn').disabled = true;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
