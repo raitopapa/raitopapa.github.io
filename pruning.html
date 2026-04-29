@@ -6,6 +6,7 @@
 <title>剪定適期カレンダー | 樹木医監修</title>
 <meta name="description" content="樹木医監修。樹種と目的を選ぶだけで、最適な剪定時期・注意事項を月別カレンダーで確認できます。">
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Noto+Serif+JP:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8180543096745567" crossorigin="anonymous"></script>
 <style>
 :root {
   --ink: #1A1208;
@@ -416,7 +417,40 @@ footer {
   text-align: center;
   line-height: 2;
 }
+
+.pdf-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 11px 24px; background: var(--cream); color: var(--bark);
+  font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 600;
+  border-radius: 2px; border: none; cursor: pointer; transition: opacity 0.2s; margin: 4px;
+}
+.pdf-btn:hover { opacity: 0.85; }
+
+.print-header { display: none; }
+
+@media print {
+  .ad-slot, .selector-row, .no-print { display: none !important; }
+  .wrap { padding: 0 !important; max-width: 100% !important; }
+  body { background: white !important; font-size: 11px; }
+  #calendar-section { display: block !important; }
+  .month-cell { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .best-period-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .detail-card { break-inside: avoid; }
+  .cta-box { display: none; }
+  .print-header { display: block !important; text-align: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #2C1A0E; }
+  .print-header h2 { font-family: 'Shippori Mincho', serif; font-size: 16px; color: #2C1A0E; margin-bottom: 4px; }
+  .print-header p { font-size: 10px; color: #6b7e6b; }
+  footer { margin-top: 20px; }
+  .legend-dot { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
 </style>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2C1A0E">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="樹木医ツール">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 <div class="wrap">
@@ -427,6 +461,11 @@ footer {
   <p class="sub">樹種と目的を選ぶだけで、月別の剪定適否と注意事項を即表示。<br>樹木医の知識をベースにした判断基準です。</p>
 </header>
 
+<div class="print-header" id="print-header">
+  <h2>🌿 剪定適期カレンダー — 管理記録</h2>
+  <p>樹木医監修 | raitopapa.github.io | 印刷日：<span id="print-date"></span></p>
+</div>
+
 <div class="selector-row">
   <div class="field">
     <label>樹種</label>
@@ -436,6 +475,9 @@ footer {
         <option value="pine">マツ類（クロマツ・アカマツ）</option>
         <option value="cedar">スギ・ヒノキ</option>
         <option value="juniper">カイヅカイブキ・ビャクシン</option>
+        <option value="fir">モミ・ウラジロモミ</option>
+        <option value="hemlock">ツガ・コメツガ</option>
+        <option value="larch">カラマツ</option>
       </optgroup>
       <optgroup label="広葉樹（落葉）">
         <option value="cherry">サクラ類</option>
@@ -443,15 +485,25 @@ footer {
         <option value="maple">カエデ・モミジ</option>
         <option value="ginkgo">イチョウ</option>
         <option value="plum">ウメ</option>
+        <option value="magnolia">コブシ・ハクモクレン</option>
+        <option value="dogwood">ハナミズキ・ヤマボウシ</option>
+        <option value="chestnut">クリ</option>
+        <option value="rowan">ナナカマド</option>
+        <option value="hornbeam">イヌシデ・アカシデ</option>
       </optgroup>
       <optgroup label="広葉樹（常緑）">
         <option value="camellia">ツバキ・サザンカ</option>
         <option value="camphor">クスノキ</option>
         <option value="holly">モチノキ類</option>
+        <option value="shirakashi">シラカシ・アラカシ</option>
+        <option value="tabunoki">タブノキ</option>
+        <option value="yamamomo">ヤマモモ</option>
       </optgroup>
       <optgroup label="果樹">
         <option value="citrus">カンキツ類</option>
         <option value="persimmon">カキ</option>
+        <option value="apple">リンゴ・ナシ</option>
+        <option value="grape">ブドウ</option>
       </optgroup>
       <optgroup label="生垣">
         <option value="hedge-box">ツゲ・イヌツゲ</option>
@@ -505,6 +557,7 @@ footer {
   <div class="cta-box">
     <h3>🌲 剪定を安全に進めたい方へ</h3>
     <p>大木の剪定・強剪定は樹木へのダメージが大きく、誤った時期・方法は枯死の原因になります。<br>プロの樹木医・造園業者への相談をお勧めします。</p>
+    <button class="pdf-btn" onclick="exportPDF()">📄 PDF・印刷で保存</button>
     <button class="btn-primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">📅 別の樹種を調べる</button>
     <button class="btn-outline">📞 専門家に相談する</button>
   </div>
@@ -512,7 +565,7 @@ footer {
 
 <footer>
   <p>本ツールは一般的な剪定の目安を提供するものです。地域・気候・樹木の状態により最適時期は異なります。</p>
-  <p>© 2025 剪定適期カレンダー — 樹木医監修 | ARBORIST TOOLS v1.0</p>
+  <p>© 2025 剪定適期カレンダー — 樹木医監修 | ARBORIST TOOL v1.0</p>
 </footer>
 
 </div>
@@ -710,6 +763,167 @@ const DB = {
       tools: '刈り込み鋏・電動ヘッジトリマー。刃に病原菌が付着するため、作業前後にアルコール消毒を推奨。',
       quality: '年3〜4回の軽い刈り込みで常に鮮やかな新葉を維持できます。刈り込み後に液肥（窒素系）を施すと効果的。'
     }
+  },
+  fir: {
+    shape:  ['neutral','neutral','good','best','neutral','neutral','neutral','neutral','best','good','neutral','neutral'],
+    size:   ['neutral','neutral','good','good','neutral','neutral','neutral','neutral','best','good','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '3〜4月（萌芽前）・9月',
+      reason: 'モミ類は春の萌芽前と秋が剪定適期。常緑針葉樹で一年を通じてある程度の剪定が可能ですが、強剪定は萌芽力が弱いため避けてください。',
+      caution: '枝を切りすぎると再生が難しい樹種です。必要最小限の剪定にとどめてください。',
+      tools: '剪定鋏・高枝切り。切り口保護剤を必ず塗布。',
+      quality: 'モミ類は下枝が美しい樹形の特徴。下枝を不必要に除去する「枝下げ」は樹形を損ないます。'
+    }
+  },
+  hemlock: {
+    shape:  ['neutral','neutral','best','good','neutral','neutral','neutral','neutral','best','good','neutral','neutral'],
+    size:   ['neutral','neutral','best','good','neutral','neutral','neutral','neutral','good','neutral','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '3月（萌芽前）・9月',
+      reason: 'ツガ類は春の萌芽前が最適。耐陰性が高く、刈り込みにも比較的よく耐えます。',
+      caution: '夏の強剪定は乾燥との相乗効果で樹勢を著しく弱めます。避けてください。',
+      tools: '剪定鋏・刈り込み鋏。ツガカイガラムシの発生に注意しながら作業。',
+      quality: '自然な垂れ下がる枝ぶりがツガの美しさ。過度な剪定を避け、自然樹形を活かした管理を推奨。'
+    }
+  },
+  larch: {
+    shape:  ['neutral','neutral','best','good','neutral','neutral','neutral','neutral','good','best','good','neutral'],
+    size:   ['neutral','neutral','best','good','neutral','neutral','neutral','neutral','neutral','best','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '3月（萌芽前）・10月（落葉後）',
+      reason: 'カラマツは落葉針葉樹。萌芽前の春と落葉後の秋〜冬が剪定適期です。',
+      caution: 'カラマツは秋に黄葉・落葉しますが、これは正常です。夏の落葉は異常のサイン。',
+      tools: '剪定鋏・ノコギリ。切り口保護剤を塗布すること。',
+      quality: '直幹性が強い樹種。自然な樹形を維持するため、頂部への強剪定は避けてください。'
+    }
+  },
+  magnolia: {
+    shape:  ['neutral','neutral','neutral','neutral','best','best','neutral','neutral','neutral','neutral','neutral','neutral'],
+    size:   ['neutral','neutral','neutral','neutral','best','good','neutral','neutral','neutral','neutral','neutral','neutral'],
+    flower: ['neutral','neutral','neutral','neutral','best','best','neutral','neutral','neutral','neutral','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '5〜6月（花後すぐ）',
+      reason: 'コブシ・モクレン類は花後すぐが最適。花芽は夏頃から形成されるため、遅い剪定は翌年の開花に影響します。',
+      caution: '秋〜冬の剪定は翌年の花芽を落とすリスクがあります。開花を楽しみたい場合は花後すぐに剪定を。',
+      tools: '剪定鋏。大枝の切除は必ず保護剤を塗布。',
+      quality: '自然樹形が美しい樹種。強剪定より間引き剪定を優先し、自然な広がりを活かした管理が理想。'
+    }
+  },
+  dogwood: {
+    shape:  ['neutral','neutral','neutral','neutral','best','best','neutral','neutral','neutral','neutral','neutral','neutral'],
+    size:   ['neutral','neutral','neutral','neutral','best','good','neutral','neutral','neutral','neutral','neutral','neutral'],
+    flower: ['neutral','neutral','neutral','neutral','best','best','neutral','neutral','neutral','neutral','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '5〜6月（花後すぐ）',
+      reason: 'ハナミズキ・ヤマボウシは花後すぐが最適。秋には美しい紅葉と実を楽しめるため、夏以降の剪定は控えめに。',
+      caution: '炭疽病の発生が増加しています。剪定鋏を作業前後にアルコール消毒することで病原菌の拡散を防げます。',
+      tools: 'よく切れる剪定鋏。消毒をしっかり行うこと。',
+      quality: '水平に広がる枝が特徴的な樹形。この横枝を活かした自然樹形剪定が基本です。'
+    }
+  },
+  chestnut: {
+    shape:  ['best','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+    size:   ['best','good','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+    fruit:  ['best','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '1〜2月（完全落葉・休眠期）',
+      reason: 'クリは落葉後の休眠期が最適。結果母枝の管理が翌年の収量に直結します。',
+      caution: 'クリタマバチの虫えいが見られる場合は剪定より専門家への相談を優先してください。',
+      tools: '剪定鋏・ノコギリ。切り口にはトップジンMペーストを塗布。',
+      quality: '主幹を明確にし、開心形（杯状）の樹形に仕立てると採光・風通しが改善し収量が向上します。'
+    }
+  },
+  rowan: {
+    shape:  ['best','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good','good'],
+    size:   ['best','good','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '1〜2月（落葉休眠期）',
+      reason: 'ナナカマドは落葉後の休眠期が最適。秋の紅葉・赤い実を楽しむなら夏以降の剪定は避けてください。',
+      caution: '赤星病が発生しやすい樹種。近隣にビャクシン類（カイヅカイブキ等）がある場合は特に注意。',
+      tools: '剪定鋏。切り口保護剤を塗布。',
+      quality: '自然樹形が美しい樹種。必要最小限の整枝にとどめ、実や紅葉を楽しめる樹形を維持しましょう。'
+    }
+  },
+  hornbeam: {
+    shape:  ['best','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good','good'],
+    size:   ['best','good','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '12〜2月（落葉休眠期）',
+      reason: 'イヌシデ・アカシデは落葉後の休眠期が最適。自然樹形が美しいため、最小限の整枝が基本です。',
+      caution: '萌芽力は比較的高いですが、強剪定後は樹形回復に時間がかかります。段階的な剪定を推奨。',
+      tools: '剪定鋏。',
+      quality: '株立ち樹形が多く、自然な枝ぶりを活かした雑木風の管理が人気です。不要な内向き枝の整理が主な作業。'
+    }
+  },
+  shirakashi: {
+    shape:  ['neutral','neutral','neutral','neutral','best','best','neutral','neutral','best','good','neutral','neutral'],
+    size:   ['neutral','neutral','neutral','neutral','best','good','neutral','neutral','best','good','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '5〜6月・9月（萌芽旺盛な時期）',
+      reason: 'カシ類は萌芽力が強く、初夏と初秋の剪定後の回復が早い。常緑樹のため年間を通じてある程度剪定可能。',
+      caution: 'ナラ枯れ・クビアカツヤカミキリの被害が増加しています。定期的な幹の観察を怠らないこと。',
+      tools: '剪定鋏・刈り込み鋏（生垣の場合）。大径木は専門業者に依頼。',
+      quality: '萌芽力が強いため、年1〜2回の刈り込みで生垣としても利用できます。'
+    }
+  },
+  tabunoki: {
+    shape:  ['neutral','neutral','neutral','best','best','good','neutral','neutral','neutral','neutral','neutral','neutral'],
+    size:   ['neutral','neutral','neutral','best','good','neutral','neutral','neutral','neutral','neutral','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '4〜5月（新葉展開後）',
+      reason: 'タブノキは春の新葉展開後が萌芽力が最も強く、剪定後の回復が早い。',
+      caution: '春（3〜4月頃）に旧葉が大量に落葉しますが、これは正常な生理現象です。病気と混同しないよう注意。',
+      tools: '剪定鋏・高枝切り。大木になりやすいため高所作業には注意。',
+      quality: '自然樹形が美しい樹種。強剪定より間引き剪定を優先し、樹形の自然な広がりを活かした管理が理想。'
+    }
+  },
+  yamamomo: {
+    shape:  ['neutral','neutral','neutral','best','best','good','neutral','neutral','neutral','neutral','neutral','neutral'],
+    size:   ['neutral','neutral','neutral','best','good','neutral','neutral','neutral','neutral','neutral','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '4〜5月（新葉展開後）',
+      reason: 'ヤマモモは春の新葉展開後が剪定適期。萌芽力があり、剪定後の回復が早い時期です。',
+      caution: 'ヤマモモは雌雄異株。実を楽しむなら雌株の花芽を残すよう配慮した剪定を。',
+      tools: '剪定鋏・ノコギリ。',
+      quality: '自然な丸みのある樹形が美しい。樹冠内部の枯れ枝・込み枝を中心に整理し、外観の樹形は大きく変えないことが基本。'
+    }
+  },
+  apple: {
+    shape:  ['best','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+    size:   ['best','good','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+    fruit:  ['best','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '1〜2月（完全落葉・休眠期）',
+      reason: 'リンゴ・ナシは落葉後の休眠期が最適。結果母枝の管理が収量・品質に直結します。',
+      caution: '病害虫（黒星病・赤星病等）の防除と連動して剪定計画を立てることが重要。',
+      tools: '剪定鋏・ノコギリ。切り口には必ず保護剤を塗布。使用後の剪定鋏は消毒を。',
+      quality: '開心形（杯状）に仕立て、樹冠内部への日照・通気を確保することが高品質果実生産の基本です。'
+    }
+  },
+  grape: {
+    shape:  ['neutral','neutral','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+    size:   ['neutral','neutral','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+    fruit:  ['neutral','neutral','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '3月（萌芽前）・12月（落葉後）',
+      reason: 'ブドウは落葉後〜萌芽前が剪定適期。前年枝の結果習性を理解した上での剪定が必要です。',
+      caution: '萌芽期以降の剪定は切り口から樹液が大量に流出し（泣き）、樹勢を弱めます。必ず避けてください。',
+      tools: '剪定鋏。使用前後にアルコール消毒を行い、病原菌の伝播を防ぐ。',
+      quality: '品種ごとの結果習性（短梢・長梢）を把握し、適切な剪定法を選択することが高品質生産の鍵です。'
+    }
   }
 };
 
@@ -726,16 +940,29 @@ const TREE_LABELS = {
   pine: 'マツ類（クロマツ・アカマツ）',
   cedar: 'スギ・ヒノキ',
   juniper: 'カイヅカイブキ・ビャクシン',
+  fir: 'モミ・ウラジロモミ',
+  hemlock: 'ツガ・コメツガ',
+  larch: 'カラマツ',
   cherry: 'サクラ類',
   zelkova: 'ケヤキ',
   maple: 'カエデ・モミジ',
   ginkgo: 'イチョウ',
   plum: 'ウメ',
+  magnolia: 'コブシ・ハクモクレン',
+  dogwood: 'ハナミズキ・ヤマボウシ',
+  chestnut: 'クリ',
+  rowan: 'ナナカマド',
+  hornbeam: 'イヌシデ・アカシデ',
   camellia: 'ツバキ・サザンカ',
   camphor: 'クスノキ',
   holly: 'モチノキ類',
+  shirakashi: 'シラカシ・アラカシ',
+  tabunoki: 'タブノキ',
+  yamamomo: 'ヤマモモ',
   citrus: 'カンキツ類',
   persimmon: 'カキ',
+  apple: 'リンゴ・ナシ',
+  grape: 'ブドウ',
   'hedge-box': 'ツゲ・イヌツゲ（生垣）',
   'hedge-photo': 'レッドロビン・カナメモチ（生垣）'
 };
@@ -815,6 +1042,24 @@ function generate() {
   const sec = document.getElementById('calendar-section');
   sec.style.display = 'block';
   sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function exportPDF() {
+  const now = new Date();
+  const dateStr = now.getFullYear() + '年' + (now.getMonth()+1) + '月' + now.getDate() + '日';
+  document.getElementById('print-date').textContent = dateStr;
+  setTimeout(() => { window.print(); }, 200);
+}
+
+document.getElementById('print-date').textContent = new Date().toLocaleDateString('ja-JP');
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js")
+      .then(reg => console.log("[PWA] SW registered:", reg.scope))
+      .catch(err => console.log("[PWA] SW failed:", err));
+  });
 }
 </script>
 </body>

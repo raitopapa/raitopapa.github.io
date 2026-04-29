@@ -7,6 +7,7 @@
 <meta name="description" content="樹木医が監修した無料の病害虫リスク診断ツール。症状を選択するだけで、考えられる病害虫と対処法をすぐに確認できます。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Shippori+Mincho:wght@400;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8180543096745567" crossorigin="anonymous"></script>
 <style>
   :root {
     --bark: #2C1A0E;
@@ -498,6 +499,13 @@
     .result-header { padding: 20px 16px; }
   }
 </style>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2C1A0E">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="樹木医ツール">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 <div class="container">
@@ -533,6 +541,9 @@
           <option value="pine">マツ類（クロマツ・アカマツ）</option>
           <option value="cedar">スギ・ヒノキ</option>
           <option value="spruce">トドマツ・エゾマツ</option>
+          <option value="fir">モミ・ウラジロモミ</option>
+          <option value="hemlock">ツガ・コメツガ</option>
+          <option value="larch">カラマツ</option>
         </optgroup>
         <optgroup label="広葉樹（落葉）">
           <option value="cherry">サクラ類</option>
@@ -540,16 +551,26 @@
           <option value="oak">コナラ・クヌギ（カシ類）</option>
           <option value="maple">カエデ・モミジ</option>
           <option value="ginkgo">イチョウ</option>
+          <option value="magnolia">コブシ・ハクモクレン</option>
+          <option value="dogwood">ハナミズキ・ヤマボウシ</option>
+          <option value="chestnut">クリ</option>
+          <option value="rowan">ナナカマド</option>
+          <option value="hornbeam">イヌシデ・アカシデ</option>
         </optgroup>
         <optgroup label="広葉樹（常緑）">
           <option value="camellia">ツバキ・サザンカ</option>
           <option value="camphor">クスノキ</option>
           <option value="holly">モチノキ・ソヨゴ</option>
+          <option value="shirakashi">シラカシ・アラカシ</option>
+          <option value="tabunoki">タブノキ</option>
+          <option value="yamamomo">ヤマモモ</option>
         </optgroup>
         <optgroup label="果樹">
           <option value="citrus">カンキツ類（ミカン・ユズ）</option>
-          <option value="persimmon">カキ・クリ</option>
-          <option value="plum">ウメ・モモ・カキ</option>
+          <option value="persimmon">カキ</option>
+          <option value="plum">ウメ・モモ</option>
+          <option value="apple">リンゴ・ナシ</option>
+          <option value="grape">ブドウ</option>
         </optgroup>
       </select>
     </div>
@@ -684,7 +705,7 @@
   <footer>
     <p>本ツールは一般的な情報提供を目的としており、専門的な診断の代替ではありません。</p>
     <p>© 2025 樹木病害虫リスク診断ツール — 樹木医監修</p>
-    <p style="margin-top:8px; opacity:0.6">ARBORIST TOOLS v1.0</p>
+    <p style="margin-top:8px; opacity:0.6">ARBORIST TOOL v1.0</p>
   </footer>
 
 </div>
@@ -770,6 +791,229 @@ const diagnosisDB = {
         "速やかに都道府県・市区町村の林務担当部署に連絡"
       ],
       caution: "ナラ枯れは広域的な被害を引き起こす深刻な問題です。個人での対応には限界があり、自治体や専門機関との連携が不可欠です。被害木の放置は周辺への急速な拡大を招きます。"
+    }
+  },
+  fir: {
+    "leaf-yellow,branch-dead": {
+      risk: "mid",
+      title: "モミ類の診断結果",
+      pests: [
+        { name: "モミアカマルカイガラムシ", desc: "枝・幹に寄生し樹液を吸汁。大発生すると枝枯れを引き起こす。" },
+        { name: "モミハダニ", desc: "葉に微細な黄白色の斑点を生じ、重症化すると落葉する。乾燥時に多発。" }
+      ],
+      actions: [
+        "カイガラムシはブラシでの物理的除去＋マシン油乳剤散布",
+        "ハダニは殺ダニ剤（ケルセン乳剤等）を葉裏を中心に散布",
+        "樹勢回復のため適切な施肥・灌水を実施",
+        "通気性改善のため混み枝の透かし剪定を検討"
+      ],
+      caution: "モミ類は根系が浅く乾燥に弱いため、土壌水分管理が重要です。"
+    }
+  },
+  hemlock: {
+    "leaf-yellow,growth-slow": {
+      risk: "mid",
+      title: "ツガ類の診断結果",
+      pests: [
+        { name: "ツガカイガラムシ（ヘムロックウーリーアデルジッド）", desc: "北米原産の外来害虫。枝の基部に白い綿状物を形成し樹液を吸汁。放置すると枯死する。" },
+        { name: "ツガハダニ", desc: "葉に銀白色の斑点を生じ、葉色が悪化する。高温乾燥期に多発。" }
+      ],
+      actions: [
+        "白い綿状物を確認したら速やかに専門家に相談",
+        "浸透移行性殺虫剤（樹幹注射）が有効",
+        "罹患枝の早期除去と焼却処分",
+        "乾燥ストレスを避けるため十分な灌水を実施"
+      ],
+      caution: "ヘムロックウーリーアデルジッドは近年日本でも分布拡大が懸念されています。発見した場合は都道府県の林務担当部署に報告してください。"
+    }
+  },
+  larch: {
+    "leaf-yellow,leaf-fall": {
+      risk: "mid",
+      title: "カラマツの診断結果",
+      pests: [
+        { name: "カラマツハラアカハバチ", desc: "幼虫が葉を集団で食害。大発生すると全落葉に至る場合がある。" },
+        { name: "カラマツ落葉病", desc: "糸状菌による病害。梅雨期以降に葉が褐変・落葉する。" }
+      ],
+      actions: [
+        "ハバチ幼虫の早期発見・捕殺または薬剤散布（スミチオン乳剤等）",
+        "落葉病は罹患葉の収集・焼却で越冬菌量を減少させる",
+        "春の萌芽後に予防的殺菌剤散布を検討",
+        "カラマツは落葉針葉樹のため秋の落葉は正常"
+      ],
+      caution: "カラマツは日本固有の落葉針葉樹で、秋の黄葉・落葉は正常です。時期外れの落葉・黄化のみ要注意です。"
+    }
+  },
+  magnolia: {
+    "leaf-spot,leaf-yellow": {
+      risk: "low",
+      title: "コブシ・モクレン類の診断結果",
+      pests: [
+        { name: "モクレンクロカイガラムシ", desc: "枝に寄生し樹液を吸汁。すす病を誘発することがある。" },
+        { name: "うどんこ病", desc: "葉に白粉状のカビが発生。美観を損ねるが樹木全体への影響は軽微。" }
+      ],
+      actions: [
+        "カイガラムシはマシン油乳剤を冬季に散布",
+        "うどんこ病は罹患葉の除去＋殺菌剤（トリフミン水和剤等）散布",
+        "密植を避け通気性を確保",
+        "落葉後に不要枝を整理し樹冠内の採光を改善"
+      ],
+      caution: "コブシ・モクレン類は比較的病害虫への抵抗性が高い樹種です。深刻な被害は少ないですが、カイガラムシの早期発見が重要です。"
+    }
+  },
+  dogwood: {
+    "leaf-spot,branch-dead": {
+      risk: "mid",
+      title: "ハナミズキ・ヤマボウシの診断結果",
+      pests: [
+        { name: "炭疽病（Elsinoe corni）", desc: "葉に褐色の病斑を生じ、重症化すると早期落葉・枝枯れを起こす。近年ハナミズキでの被害が増加。" },
+        { name: "ウドンコ病", desc: "葉表面に白粉状のカビが広がる。樹勢低下につながる場合がある。" }
+      ],
+      actions: [
+        "罹患葉・枝の早期除去と焼却処分",
+        "殺菌剤（ベンレート水和剤・トリフミン水和剤等）の定期散布",
+        "通気性確保のための剪定（落葉後が最適）",
+        "窒素過多を避けた適正施肥"
+      ],
+      caution: "ハナミズキ炭疽病は近年全国的に被害が拡大しています。発生地域では予防的散布が効果的です。"
+    }
+  },
+  chestnut: {
+    "bark-crack,resin": {
+      risk: "high",
+      title: "クリの診断結果",
+      pests: [
+        { name: "クリタマバチ", desc: "虫えい（ゴール）を形成し新梢・葉に寄生。大発生すると結実不能になる。特定外来生物ではないが深刻な害虫。" },
+        { name: "胴枯病（クリ疫病）", desc: "樹皮に褐色病斑を生じ、樹皮が剥離・枯死する。日本のクリに壊滅的被害を与えた歴史がある。" }
+      ],
+      actions: [
+        "クリタマバチは天敵（チュウゴクオナガコバチ）の放飼が有効",
+        "胴枯病は罹患部の切除＋傷口保護処理",
+        "抵抗性品種への更新を長期的に検討",
+        "速やかに最寄りの農業試験場・森林組合に相談"
+      ],
+      caution: "クリ胴枯病は法定防除対象病害です。発生確認時は都道府県への報告義務があります。"
+    }
+  },
+  rowan: {
+    "leaf-spot,leaf-yellow": {
+      risk: "low",
+      title: "ナナカマドの診断結果",
+      pests: [
+        { name: "ナナカマドハバチ", desc: "幼虫が葉を食害。集団発生時には短期間で全落葉することがある。" },
+        { name: "赤星病（Gymnosporangium属）", desc: "葉に橙黄色の病斑が生じる。ビャクシン類が中間宿主となるため、近隣にビャクシン類があると発病しやすい。" }
+      ],
+      actions: [
+        "ハバチ幼虫は発見次第捕殺または薬剤散布",
+        "赤星病は発病初期に殺菌剤（ミネラシン水和剤等）散布",
+        "近隣のビャクシン類の除去が根本的予防策",
+        "罹患落葉の収集・焼却"
+      ],
+      caution: "ナナカマドの赤星病はビャクシン類との共存で発生サイクルが維持されます。植栽の組み合わせに注意してください。"
+    }
+  },
+  hornbeam: {
+    "leaf-yellow,growth-slow": {
+      risk: "low",
+      title: "イヌシデ・アカシデの診断結果",
+      pests: [
+        { name: "テングス病（てんぐ巣病）", desc: "枝に多数の細枝が叢生する。サクラほど深刻ではないが樹形を乱す。" },
+        { name: "シデ類カイガラムシ", desc: "枝・幹に寄生し樹液を吸汁。排泄物ですす病を誘発することがある。" }
+      ],
+      actions: [
+        "てんぐ巣病罹患枝は冬季に除去・焼却",
+        "カイガラムシはマシン油乳剤を冬季散布",
+        "自然樹形を活かした最小限の剪定を心がける",
+        "日当たり・通気性の確保"
+      ],
+      caution: "イヌシデ・アカシデは比較的病害虫の被害が少ない樹種です。適切な立地環境の維持が予防の基本です。"
+    }
+  },
+  shirakashi: {
+    "leaf-wilt,branch-dead": {
+      risk: "high",
+      title: "シラカシ・アラカシの診断結果",
+      pests: [
+        { name: "ナラ枯れ（カシノナガキクイムシ媒介）", desc: "コナラ同様、カシ類もナラ枯れの被害を受ける。夏期に急速な葉の赤変・枯死が起きる。" },
+        { name: "クビアカツヤカミキリ", desc: "特定外来生物。幼虫が幹内部を食害し、フラス（木屑と糞の混合物）を排出する。放置すると数年で枯死。" }
+      ],
+      actions: [
+        "フラス（木屑・糞）を幹周辺で発見したら即座に専門機関に連絡",
+        "クビアカツヤカミキリは特定外来生物のため都道府県への報告義務あり",
+        "ナラ枯れ対策は粘着テープ巻き付けと伐倒処理",
+        "予防的な樹幹注射（殺虫剤）の検討"
+      ],
+      caution: "クビアカツヤカミキリは特定外来生物です。発見した場合は必ず都道府県・市区町村の担当部署に連絡してください。無断での防除は法律で制限される場合があります。"
+    }
+  },
+  tabunoki: {
+    "leaf-yellow,leaf-fall": {
+      risk: "low",
+      title: "タブノキの診断結果",
+      pests: [
+        { name: "タブノキカイガラムシ類", desc: "枝・葉に寄生し樹液を吸汁。すす病を誘発することがある。" },
+        { name: "潮風害（塩害）", desc: "沿岸部での潮風による葉の焦げ・落葉。病害虫ではないが症状が類似することがある。" }
+      ],
+      actions: [
+        "カイガラムシはブラシ除去＋マシン油乳剤散布",
+        "塩害の場合は散水による塩分洗い流し",
+        "潮風が強い場所では防風対策を検討",
+        "樹勢回復のための適切な施肥"
+      ],
+      caution: "タブノキは常緑樹で春に旧葉が一斉に落葉するのは正常です。この時期の落葉は病気ではありません。"
+    }
+  },
+  yamamomo: {
+    "leaf-yellow,branch-dead": {
+      risk: "mid",
+      title: "ヤマモモの診断結果",
+      pests: [
+        { name: "ヤマモモシロカイガラムシ", desc: "枝・幹に白色の貝殻状のカイガラムシが寄生。大発生すると枝枯れを起こす。" },
+        { name: "テッポウムシ（カミキリムシ幼虫）", desc: "幹内部を食害し、根元に木屑（フラス）を排出する。大径木ほど被害が深刻になりやすい。" }
+      ],
+      actions: [
+        "カイガラムシはマシン油乳剤を冬季に散布",
+        "テッポウムシは木屑発見時に針金で幼虫を捕殺または殺虫剤注入",
+        "幹への産卵防止にネット巻き付けが有効",
+        "樹勢維持のための施肥・適切な水管理"
+      ],
+      caution: "ヤマモモは雌雄異株です。実をつけないからといって病気とは限りません。雄株の可能性をご確認ください。"
+    }
+  },
+  apple: {
+    "leaf-spot,leaf-yellow": {
+      risk: "high",
+      title: "リンゴ・ナシの診断結果",
+      pests: [
+        { name: "黒星病（Venturia属）", desc: "葉・果実に黒褐色の病斑が生じる。リンゴ・ナシの最重要病害で、無防除では壊滅的被害になる。" },
+        { name: "赤星病", desc: "葉に橙黄色の病斑。ビャクシン類が中間宿主。病斑部の裏に毛状の胞子形成体が発生する。" },
+        { name: "モモシンクイガ", desc: "幼虫が果実内部を食害する重要害虫。被害果は早期落果する。" }
+      ],
+      actions: [
+        "黒星病は発芽前から展葉期の殺菌剤散布が重要（ベンレート水和剤等）",
+        "赤星病予防のため近隣のビャクシン類を除去",
+        "モモシンクイガはフェロモントラップで発生予測・薬剤散布",
+        "罹患果・葉の早期除去と適切な処分"
+      ],
+      caution: "リンゴ・ナシの病害虫防除は体系的な防除プログラムが必要です。地域の農業試験場・JA等の防除暦に従った管理を強く推奨します。"
+    }
+  },
+  grape: {
+    "leaf-spot,leaf-powder": {
+      risk: "high",
+      title: "ブドウの診断結果",
+      pests: [
+        { name: "べと病（Plasmopara viticola）", desc: "葉に油浸状の黄色病斑が生じ、裏面に白色カビが発生。雨が多い時期に急速に拡大する最重要病害。" },
+        { name: "うどんこ病", desc: "葉・果実に白粉状のカビが発生。果実への感染は収量・品質に直結する。" },
+        { name: "ブドウスカシバ", desc: "幼虫が幹・主枝内部を食害。フラスの排出で気づくことが多い。" }
+      ],
+      actions: [
+        "べと病は雨前の予防的殺菌剤散布が最も有効（ボルドー液等）",
+        "うどんこ病はイオウ水和剤または専用殺菌剤を散布",
+        "ブドウスカシバは針金での幼虫捕殺または殺虫剤注入",
+        "棚・支柱の通気性確保と適切な摘葉管理"
+      ],
+      caution: "ブドウの病害虫防除は品種・地域・栽培形態によって大きく異なります。地域のJA・農業試験場の指導のもとで防除プログラムを組むことを強く推奨します。"
     }
   },
   default: {
@@ -882,6 +1126,15 @@ function resetForm() {
   });
   document.getElementById('diagnose-btn').disabled = true;
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js")
+      .then(reg => console.log("[PWA] SW registered:", reg.scope))
+      .catch(err => console.log("[PWA] SW failed:", err));
+  });
 }
 </script>
 </body>
