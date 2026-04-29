@@ -492,6 +492,18 @@
     line-height: 2;
   }
 
+  /* 出典・根拠スタイル */
+  .ref-section { margin-top: 40px; padding: 24px; background: rgba(255,255,255,0.5); border: 1px solid var(--mist); border-radius: 4px; backdrop-filter: blur(4px); }
+  .ref-section h2 { font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 700; color: var(--bark); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--mist); display: flex; align-items: center; gap: 6px; }
+  .ref-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .ref-item { font-size: 11px; line-height: 1.7; color: #5a6e5a; padding-left: 20px; position: relative; }
+  .ref-item::before { content: "[" attr(data-num) "]"; position: absolute; left: 0; font-family: 'DM Mono', monospace; color: var(--moss); font-size: 10px; }
+  .ref-item a { color: var(--moss); text-decoration: none; border-bottom: 1px solid rgba(61,90,62,0.3); }
+  .ref-item a:hover { border-bottom-color: var(--moss); }
+  .ref-note { font-size: 11px; color: #8fa085; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--mist); line-height: 1.7; }
+  .cite-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--moss); border: 1px solid var(--moss-light); padding: 1px 5px; border-radius: 2px; margin-left: 4px; vertical-align: middle; cursor: help; }
+  @media print { .ref-section { display: none; } }
+
   @media (max-width: 600px) {
     .symptom-grid { grid-template-columns: 1fr 1fr; }
     .section { padding: 20px 16px; }
@@ -712,6 +724,25 @@
       <button class="btn-cta">📞 樹木医に相談する</button>
       <button class="btn-reset" onclick="resetForm()">↩ もう一度診断する</button>
     </div>
+  </div>
+
+  <!-- 出典・根拠 -->
+  <div class="ref-section">
+    <h2>📚 診断情報の根拠・出典</h2>
+    <ul class="ref-list">
+      <li class="ref-item" data-num="1">農林水産省「<a href="https://www.maff.go.jp/j/syouan/syokubo/keneki/k_syokubutsu/attach/pdf/index-81.pdf" target="_blank" rel="noopener">病害虫防除所情報・主要病害虫の防除対策</a>」農林水産省消費・安全局（参照：2025年）</li>
+      <li class="ref-item" data-num="2">森林総合研究所「<a href="https://www.ffpri.affrc.go.jp/research/scienceworld/2021/20211026.html" target="_blank" rel="noopener">ナラ枯れ被害の現状と防除技術</a>」国立研究開発法人 森林研究・整備機構</li>
+      <li class="ref-item" data-num="3">農林水産省「<a href="https://www.maff.go.jp/j/syouan/syokubo/keneki/k_syokubutsu/attach/pdf/index-80.pdf" target="_blank" rel="noopener">マツ材線虫病（松くい虫）防除指針</a>」農林水産省（最終改正：2022年）</li>
+      <li class="ref-item" data-num="4">日本植物病理学会「<a href="https://www.ppsj.org/" target="_blank" rel="noopener">日本植物病名目録</a>」（2000年・逐次更新）</li>
+      <li class="ref-item" data-num="5">環境省「<a href="https://www.env.go.jp/nature/intro/2outline/invasive/jyokyo.html" target="_blank" rel="noopener">特定外来生物（クビアカツヤカミキリ等）の防除について</a>」環境省自然環境局</li>
+      <li class="ref-item" data-num="6">都道府県病害虫防除所「各地域の防除暦・病害虫発生予察情報」（農業試験場・JA各地域の知見を参照）</li>
+      <li class="ref-item" data-num="7">日本樹木医会「樹木医学テキスト」日本樹木医会（樹木医資格取得教材）</li>
+    </ul>
+    <p class="ref-note">
+      本ツールの診断情報は、上記の公的機関・学術機関の資料および樹木医資格保有者の専門的知見に基づいています。
+      ただし、実際の病害虫の確定診断には現地調査・検体分析が必要です。本ツールはあくまで初期スクリーニングを目的としており、
+      医療行為・法的手続きの根拠となるものではありません。特定外来生物が疑われる場合は、必ず管轄の都道府県機関にご連絡ください。
+    </p>
   </div>
 
   <footer>

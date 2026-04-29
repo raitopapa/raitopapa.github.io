@@ -249,6 +249,17 @@ h1 {
 
 footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--mist); font-family: 'DM Mono', monospace; font-size: 10px; color: #8fa085; letter-spacing: 0.05em; text-align: center; line-height: 2; }
 
+/* 出典・根拠スタイル */
+.ref-section { margin-top: 40px; padding: 24px; background: rgba(255,255,255,0.5); border: 1px solid var(--mist); border-radius: 4px; backdrop-filter: blur(4px); }
+.ref-section h2 { font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 700; color: var(--bark); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--mist); display: flex; align-items: center; gap: 6px; }
+.ref-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.ref-item { font-size: 11px; line-height: 1.7; color: #5a6e5a; padding-left: 20px; position: relative; }
+.ref-item::before { content: "[" attr(data-num) "]"; position: absolute; left: 0; font-family: 'DM Mono', monospace; color: var(--moss); font-size: 10px; }
+.ref-item a { color: var(--moss); text-decoration: none; border-bottom: 1px solid rgba(61,90,62,0.3); }
+.ref-item a:hover { border-bottom-color: var(--moss); }
+.ref-note { font-size: 11px; color: #8fa085; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--mist); line-height: 1.7; }
+@media print { .ref-section { display: none; } }
+
 @media(max-width:480px){
   .score-display { flex-direction: column; text-align: center; }
   .section-scores { grid-template-columns: repeat(2,1fr); }
@@ -721,6 +732,25 @@ footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--mist);
     <button class="pdf-btn" onclick="exportPDF()">📄 PDF・印刷で保存</button>
     <button class="btn-o" onclick="resetAll()">↩ 新しい樹木を診断</button>
   </div>
+</div>
+
+<!-- 出典・根拠 -->
+<div class="ref-section">
+  <h2>📚 チェック基準の根拠・出典</h2>
+  <ul class="ref-list">
+    <li class="ref-item" data-num="1">国土交通省「<a href="https://www.mlit.go.jp/road/sisaku/jutaku/jutaku.html" target="_blank" rel="noopener">街路樹の点検・診断指針（案）</a>」国土交通省道路局（2019年）— 倒木・落枝リスク評価の基準として参照</li>
+    <li class="ref-item" data-num="2">ISA（国際樹木学会）"<a href="https://www.isa-arbor.com/education/resources/tree-risk-assessment" target="_blank" rel="noopener">Tree Risk Assessment Manual</a>" 2nd ed. International Society of Arboriculture (2017) — リスク評価の国際標準</li>
+    <li class="ref-item" data-num="3">日本樹木医会「樹木診断マニュアル」一般社団法人 日本樹木医会（樹木医資格取得教材）— 幹・根系・樹冠の診断基準</li>
+    <li class="ref-item" data-num="4">Mattheck, C., Breloer, H. "The Body Language of Trees: A Handbook for Failure Analysis" HMSO (1994) — 樹木の構造的欠陥評価の古典的文献</li>
+    <li class="ref-item" data-num="5">Shigo, A.L. "A New Tree Biology" Shigo and Trees Associates (1986) — CODIT理論（区画化）に基づく腐朽評価</li>
+    <li class="ref-item" data-num="6">農林水産省「<a href="https://www.maff.go.jp/j/syouan/syokubo/" target="_blank" rel="noopener">植物防疫に関する情報</a>」農林水産省消費・安全局植物防疫課 — 病害虫・特定外来生物の防除基準</li>
+    <li class="ref-item" data-num="7">Smiley, E.T., Matheny, N., Lilly, S. "Best Management Practices: Tree Risk Assessment" ISA (2011) — A〜Dランク評価体系の参考</li>
+  </ul>
+  <p class="ref-note">
+    本チェックリストのスコアリング基準は、上記の国際標準・国内指針および樹木医資格保有者の実務経験に基づいて設計されています。
+    総合スコアはあくまで参考値であり、倒木・落枝等の安全性に関わる最終判断には、資格を持つ専門家による現地診断が必要です。
+    スコアが低い場合（C・Dランク）は速やかに樹木医・造園業者・自治体担当部署にご相談ください。
+  </p>
 </div>
 
 <footer>
