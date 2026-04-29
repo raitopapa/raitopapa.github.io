@@ -40,6 +40,13 @@ footer{background:var(--bark);color:var(--cream);padding:28px 24px;text-align:ce
 footer p{font-family:'DM Mono',monospace;font-size:10px;opacity:0.5;letter-spacing:0.05em;line-height:2;}
 footer a{color:rgba(232,240,225,0.7);text-decoration:none;}
 </style>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2C1A0E">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="樹木医ツール">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 <header class="site-header">
@@ -152,5 +159,14 @@ footer a{color:rgba(232,240,225,0.7);text-decoration:none;}
   <p><a href="index.html">トップ</a> &nbsp;|&nbsp; <a href="diagnosis.html">病害虫診断</a> &nbsp;|&nbsp; <a href="pruning.html">剪定カレンダー</a> &nbsp;|&nbsp; <a href="checklist.html">チェックリスト</a> &nbsp;|&nbsp; <a href="contact.html">お問い合わせ</a></p>
   <p style="margin-top:8px;">© 2025 樹木医ツール — ARBORIST TOOLS</p>
 </footer>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js")
+      .then(reg => console.log("[PWA] SW registered:", reg.scope))
+      .catch(err => console.log("[PWA] SW failed:", err));
+  });
+}
+</script>
 </body>
 </html>
