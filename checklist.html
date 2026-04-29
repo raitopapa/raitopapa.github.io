@@ -6,6 +6,7 @@
 <title>樹木健全度チェックリスト | 樹木医監修</title>
 <meta name="description" content="樹木医監修。現地で使える樹木の健全度チェックリスト。根元・幹・枝・葉の状態を記録し、総合スコアと対処優先度を即算出。">
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Noto+Serif+JP:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8180543096745567" crossorigin="anonymous"></script>
 <style>
 :root {
   --ink: #1A1208;
@@ -252,7 +253,59 @@ footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--mist);
   .score-display { flex-direction: column; text-align: center; }
   .section-scores { grid-template-columns: repeat(2,1fr); }
 }
+
+/* PDF出力・印刷スタイル */
+.pdf-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 11px 22px; background: var(--cream); color: var(--bark);
+  font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 600;
+  border-radius: 2px; border: none; cursor: pointer; transition: opacity 0.2s; margin: 4px;
+}
+.pdf-btn:hover { opacity: 0.85; }
+
+@media print {
+  .ad-slot, .btn-calc, .cta-box .btn-o, .no-print { display: none !important; }
+  .wrap { padding: 0 !important; max-width: 100% !important; }
+  body { background: white !important; font-size: 11px; }
+  .section { break-inside: avoid; }
+  .section-body { display: block !important; }
+  .chevron { display: none; }
+  #result { display: block !important; }
+  .score-display { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .priority-item { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .p-tag { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .rank-a .score-circle, .rank-b .score-circle,
+  .rank-c .score-circle, .rank-d .score-circle {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .print-header { display: block !important; }
+  footer { margin-top: 20px; }
+  .ad-slot { display: none !important; }
+  h1 { font-size: 18px; }
+  .info-bar { margin-bottom: 12px; }
+  .progress-wrap { display: none; }
+}
+
+.print-header {
+  display: none;
+  text-align: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--bark);
+}
+.print-header h2 {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 18px; color: var(--bark); margin-bottom: 4px;
+}
+.print-header p { font-size: 11px; color: #6b7e6b; }
 </style>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2C1A0E">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="樹木医ツール">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 <div class="wrap">
@@ -262,6 +315,12 @@ footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--mist);
   <h1>樹木健全度<br>チェックリスト</h1>
   <p class="sub">現地調査で使える診断シート。根元・幹・枝・葉の状態を記録し、<br>総合スコアと対処優先度を自動算出します。</p>
 </header>
+
+<!-- 印刷時のみ表示されるヘッダー -->
+<div class="print-header" id="print-header">
+  <h2>🌿 樹木健全度チェックリスト — 調査報告書</h2>
+  <p>樹木医監修 | raitopapa.github.io | 印刷日：<span id="print-date"></span></p>
+</div>
 
 <!-- Tree info -->
 <div class="info-bar">
@@ -647,14 +706,14 @@ footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--mist);
   <div class="cta-box">
     <h3>🌲 この診断結果を記録・共有する</h3>
     <p>Notionやスプレッドシートへの記録、樹木医への報告資料としてご活用ください。<br>詳細な診断・処置計画は専門家にご相談ください。</p>
-    <button class="btn-p" onclick="window.print()">🖨 印刷・PDF保存</button>
+    <button class="pdf-btn" onclick="exportPDF()">📄 PDF・印刷で保存</button>
     <button class="btn-o" onclick="resetAll()">↩ 新しい樹木を診断</button>
   </div>
 </div>
 
 <footer>
   <p>本ツールは一般的な情報提供を目的としており、専門的な診断の代替ではありません。</p>
-  <p>© 2025 樹木健全度チェックリスト — 樹木医監修 | ARBORIST TOOLS v1.0</p>
+  <p>© 2025 樹木健全度チェックリスト — 樹木医監修 | ARBORIST TOOL v1.0</p>
 </footer>
 
 </div>
@@ -803,6 +862,33 @@ function resetAll() {
   });
   document.getElementById('result').style.display = 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function exportPDF() {
+  // 印刷日をセット
+  const now = new Date();
+  const dateStr = now.getFullYear() + '年' + (now.getMonth()+1) + '月' + now.getDate() + '日';
+  document.getElementById('print-date').textContent = dateStr;
+
+  // 全セクションを展開
+  document.querySelectorAll('.section').forEach(s => s.classList.add('open'));
+
+  // 印刷ダイアログを開く（ブラウザのPDF保存機能を利用）
+  setTimeout(() => {
+    window.print();
+  }, 300);
+}
+
+// 印刷日の初期化
+document.getElementById('print-date').textContent = new Date().toLocaleDateString('ja-JP');
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js")
+      .then(reg => console.log("[PWA] SW registered:", reg.scope))
+      .catch(err => console.log("[PWA] SW failed:", err));
+  });
 }
 </script>
 </body>
