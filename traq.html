@@ -857,32 +857,122 @@ if ("serviceWorker" in navigator) {
 }
 
 // ===== i18n =====
+// ===== Complete i18n for TRAQ =====
 const TRAQ_I18N = {
   ja: {
     'page-title': '樹木リスク評価（ISA TRAQ準拠）| 樹木医ツール',
+    'nav-home': '🌿 樹木医ツール', 'nav-back': '← ホームへ',
     'page-label': 'Professional Tool — ISA TRAQ Level II',
     'h1': '樹木リスク評価<br>Tree Risk Assessment',
     'sub': 'ISA（国際樹木学会）Tree Risk Assessment Qualification（TRAQ）Level IIに準拠した<br>専門家向けリスク評価ツール。評価結果はISA標準リスクマトリクスで判定されます。',
-    'btn-calc': '📊　ISAリスクマトリクスで評価する',
-    'btn-pdf': '🖨 PDF・印刷で保存',
-    'btn-reset': '↩ 新規評価を開始',
-    'p1-title': '破損可能性（Likelihood of Failure）',
-    'p2-title': '衝突可能性（Likelihood of Impact）',
-    'p3-title': '結果の重大性（Consequences of Failure）',
-    'p4-title': 'リスク軽減措置（Risk Mitigation）',
+    'isa-badge': '🌐 ISA TRAQ Level II準拠 | ANSI A300 Part 9準拠',
+    // Info fields
+    'lbl-treeid': '樹木ID / 管理番号', 'ph-treeid': '例：A-001',
+    'lbl-date': '評価日',
+    'lbl-evaluator': '評価者（樹木医）', 'ph-evaluator': '氏名・資格番号',
+    'lbl-species': '樹種', 'ph-species': '例：ソメイヨシノ（Cerasus × yedoensis）',
+    'lbl-dbh': '胸高直径 DBH（cm）', 'ph-dbh': '例：45',
+    'lbl-height': '樹高（m）', 'ph-height': '例：12',
+    'lbl-crown': '樹冠直径（m）', 'ph-crown': '例：8',
+    'lbl-loc': '設置場所・立地', 'ph-loc': '例：○○公園 正門前 歩道沿い',
+    'lbl-notes': '現地所見メモ', 'ph-notes': '現地での観察事項・特記事項を記載してください',
+    // Parts
+    'p1-title': '破損可能性（Likelihood of Failure）', 'p1-meta': 'TRAQ Step 1 — 構造的欠陥・腐朽・根系の評価',
+    'p2-title': '衝突可能性（Likelihood of Impact）', 'p2-meta': 'TRAQ Step 2 — 破損部位の落下軌跡・対象物との距離',
+    'p3-title': '結果の重大性（Consequences of Failure）', 'p3-meta': 'TRAQ Step 3 — 破損が引き起こす被害の深刻度',
+    'p4-title': 'リスク軽減措置（Risk Mitigation）', 'p4-meta': 'TRAQ Step 4 — 推奨される処置・緊急度',
+    // Rating labels
+    'r1-label': '1-1. 幹の構造的欠陥', 'r1-desc': '空洞・腐朽・亀裂・コドミナントステム・包含樹皮（included bark）の有無と程度を評価します。',
+    'r2-label': '1-2. 根系・根元の健全性', 'r2-desc': '根の露出状況・根元の腐朽・土壌圧密・根圏制限・キノコ発生・傾斜の有無を評価します。',
+    'r3-label': '1-3. 枝・樹冠の構造', 'r3-desc': '枯死枝・ハンギングブランチ・過重な樹冠・非対称な重心・枝の折損リスクを評価します。',
+    'r4-label': '1-4. 樹勢・生命力', 'r4-desc': '葉密度・新梢伸長量・葉色・樹皮の状態から全体的な樹勢を評価します。',
+    'r5-label': '2-1. 対象物（Target）の種類', 'r5-desc': '破損した場合に衝突が予想される対象物を選択してください。',
+    'r6-label': '2-2. 対象物の占有率（Occupancy）', 'r6-desc': '対象エリアに人・物が存在する時間的割合を評価します。',
+    'r7-label': '2-3. 落下軌跡と対象物の距離', 'r7-desc': '破損部位から対象物への距離・障害物の有無を評価します。',
+    'r8-label': '3-1. 予想される被害規模', 'r8-desc': '破損した場合に想定される人的・物的被害の最大規模を評価します。',
+    'r9-label': '3-2. 樹木の価値・便益', 'r9-desc': '撤去した場合に失われる生態系サービス・景観価値・樹木価値を評価します。',
+    'r10-label': '4-1. 現在の軽減措置の有無', 'r10-desc': '既存の支柱・ワイヤーブレーシング・定期的な剪定等の措置を評価します。',
+    // Rating buttons
+    'trunk-1':'1 — 無し/軽微','trunk-2':'2 — 中程度','trunk-3':'3 — 著しい','trunk-4':'4 — 重大/即危険',
+    'root-1':'1 — 健全','root-2':'2 — 要注意','root-3':'3 — 著しい欠陥','root-4':'4 — 重大欠陥',
+    'occ-1':'1 — 稀（年数回）','occ-2':'2 — 時々（週〜月）','occ-3':'3 — 頻繁（日常的）','occ-4':'4 — 常時（24時間）',
+    'traj-1':'1 — 到達不可能','traj-2':'2 — 到達の可能性低','traj-3':'3 — 直接到達する','traj-4':'4 — 確実に到達する',
+    'cons-1':'1 — 軽微（物的損害のみ）','cons-2':'2 — 中程度（軽傷・中程度損害）','cons-3':'3 — 重大（重傷・大規模損害）','cons-4':'4 — 壊滅的（死亡・全壊）',
+    'val-1':'1 — 低（代替容易）','val-2':'2 — 中程度','val-3':'3 — 高（大径木・希少種）','val-4':'4 — 非常に高（天然記念物等）',
+    'mit-1':'1 — 十分な措置あり','mit-2':'2 — 部分的措置あり','mit-3':'3 — 措置なし','mit-4':'4 — 措置が機能していない',
+    // Dropdowns
+    'lbl-failure-part': '破損の可能性のある部位',
+    'lbl-decay': '腐朽の種類（確認できる場合）',
+    'lbl-target': '対象物の種類',
+    'lbl-fail-weight': '推定破損部位の重量（kg）', 'ph-fail-weight': '例：500',
+    'lbl-fall-dist': '破損時の予想落下距離（m）', 'ph-fall-dist': '例：8',
+    'lbl-mitigation': '推奨される軽減措置（複数選択可）',
+    'lbl-next': '次回点検推奨時期',
+    'm1':'枯死枝・危険枝の除去','m2':'樹冠の縮小剪定','m3':'ワイヤーブレーシング設置',
+    'm4':'支柱・添え木の設置','m5':'精密診断（音波断層・引っ張り試験）',
+    'm6':'根圏環境の改善','m7':'対象物の移動・立入禁止','m8':'伐採（代替植栽を含む）',
+    'btn-calc':'📊　ISAリスクマトリクスで評価する',
+    'btn-pdf':'🖨 PDF・印刷で保存','btn-reset':'↩ 新規評価を開始',
+    'result-sec1':'📊 ISAリスクマトリクス評価結果','result-sec2':'🚨 推奨アクション','result-sec3':'📝 評価サマリー',
+    'report-title':'評価記録',
+    'cta-title':'📄 評価レポートを出力する','cta-desc':'この評価結果を報告書・納品物・行政提出資料としてご活用ください。',
+    'ref-title':'📚 評価基準の根拠・出典',
+    'footer1':'本ツールはISA TRAQ Level IIを参照した専門家向けツールです。法的診断書の代替ではありません。',
   },
   en: {
     'page-title': 'Tree Risk Assessment (ISA TRAQ) | Arborist Tools Japan',
+    'nav-home': '🌿 Arborist Tools', 'nav-back': '← Home',
     'page-label': 'Professional Tool — ISA TRAQ Level II',
     'h1': 'Tree Risk Assessment<br>(ISA TRAQ Compliant)',
     'sub': 'A professional tree risk assessment tool based on ISA Tree Risk Assessment Qualification (TRAQ) Level II.<br>Results are rated using the ISA standard risk matrix.',
-    'btn-calc': '📊　Assess Risk with ISA Matrix',
-    'btn-pdf': '🖨 Save as PDF / Print',
-    'btn-reset': '↩ Start New Assessment',
-    'p1-title': 'Likelihood of Failure',
-    'p2-title': 'Likelihood of Impact',
-    'p3-title': 'Consequences of Failure',
-    'p4-title': 'Risk Mitigation',
+    'isa-badge': '🌐 ISA TRAQ Level II | ANSI A300 Part 9 Compliant',
+    'lbl-treeid': 'Tree ID / Reference No.', 'ph-treeid': 'e.g. A-001',
+    'lbl-date': 'Assessment Date',
+    'lbl-evaluator': 'Assessor (Arborist)', 'ph-evaluator': 'Name / Credential No.',
+    'lbl-species': 'Tree Species', 'ph-species': 'e.g. Somei Yoshino Cherry (Cerasus × yedoensis)',
+    'lbl-dbh': 'DBH — Diameter at Breast Height (cm)', 'ph-dbh': 'e.g. 45',
+    'lbl-height': 'Tree Height (m)', 'ph-height': 'e.g. 12',
+    'lbl-crown': 'Crown Diameter (m)', 'ph-crown': 'e.g. 8',
+    'lbl-loc': 'Location / Site Description', 'ph-loc': 'e.g. Main gate, XX Park, along footpath',
+    'lbl-notes': 'Field Observation Notes', 'ph-notes': 'Record site observations and notable findings here',
+    'p1-title': 'Likelihood of Failure', 'p1-meta': 'TRAQ Step 1 — Structural defects, decay, root system',
+    'p2-title': 'Likelihood of Impact', 'p2-meta': 'TRAQ Step 2 — Failure trajectory and target proximity',
+    'p3-title': 'Consequences of Failure', 'p3-meta': 'TRAQ Step 3 — Severity of potential damage',
+    'p4-title': 'Risk Mitigation', 'p4-meta': 'TRAQ Step 4 — Recommended actions and urgency',
+    'r1-label': '1-1. Trunk Structural Defects', 'r1-desc': 'Assess presence and severity of cavities, decay, cracks, codominant stems, and included bark.',
+    'r2-label': '1-2. Root System Health', 'r2-desc': 'Evaluate exposed root condition, basal decay, soil compaction, root zone restrictions, fungal presence, and lean.',
+    'r3-label': '1-3. Branch & Crown Structure', 'r3-desc': 'Assess deadwood, hanging branches, crown weight imbalance, asymmetry, and branch failure risk.',
+    'r4-label': '1-4. Tree Vigor / Vitality', 'r4-desc': 'Evaluate foliage density, new shoot growth, leaf color, and bark condition for overall vitality.',
+    'r5-label': '2-1. Target Type', 'r5-desc': 'Select the target most likely to be struck if a failure occurs.',
+    'r6-label': '2-2. Target Occupancy', 'r6-desc': 'Assess the proportion of time people or objects occupy the target zone.',
+    'r7-label': '2-3. Failure Trajectory & Target Distance', 'r7-desc': 'Evaluate the distance from the failure zone to the target and likelihood of impact.',
+    'r8-label': '3-1. Potential Consequences', 'r8-desc': 'Assess the maximum scale of injury or damage if failure occurs.',
+    'r9-label': '3-2. Tree Value & Benefits', 'r9-desc': 'Assess the ecosystem services, aesthetic value, and replacement cost if the tree is removed.',
+    'r10-label': '4-1. Existing Mitigation Measures', 'r10-desc': 'Evaluate existing support systems, cabling, bracing, and maintenance history.',
+    'trunk-1':'1 — None / Minor','trunk-2':'2 — Moderate','trunk-3':'3 — Significant','trunk-4':'4 — Severe / Imminent',
+    'root-1':'1 — Healthy','root-2':'2 — Monitor','root-3':'3 — Significant defect','root-4':'4 — Severe defect',
+    'occ-1':'1 — Rare (few times/year)','occ-2':'2 — Occasional (weekly/monthly)','occ-3':'3 — Frequent (daily)','occ-4':'4 — Constant (24 hours)',
+    'traj-1':'1 — Cannot reach target','traj-2':'2 — Unlikely to reach','traj-3':'3 — Will reach directly','traj-4':'4 — Certain to reach',
+    'cons-1':'1 — Minor (property damage only)','cons-2':'2 — Moderate (minor injury / moderate damage)','cons-3':'3 — Significant (serious injury / major damage)','cons-4':'4 — Catastrophic (death / total destruction)',
+    'val-1':'1 — Low (easily replaceable)','val-2':'2 — Moderate','val-3':'3 — High (large / rare tree)','val-4':'4 — Very High (heritage / monument tree)',
+    'mit-1':'1 — Adequate mitigation in place','mit-2':'2 — Partial mitigation in place','mit-3':'3 — No mitigation','mit-4':'4 — Existing mitigation is ineffective',
+    'lbl-failure-part': 'Most Likely Failure Part',
+    'lbl-decay': 'Decay Type (if identifiable)',
+    'lbl-target': 'Target Type',
+    'lbl-fail-weight': 'Estimated failure part weight (kg)', 'ph-fail-weight': 'e.g. 500',
+    'lbl-fall-dist': 'Expected fall distance (m)', 'ph-fall-dist': 'e.g. 8',
+    'lbl-mitigation': 'Recommended Mitigation Measures (multiple)',
+    'lbl-next': 'Next Inspection Recommendation',
+    'm1':'Remove deadwood / hazard branches','m2':'Crown reduction pruning','m3':'Install cable bracing',
+    'm4':'Install support stake / prop','m5':'Advanced diagnosis (sonic tomography / pull test)',
+    'm6':'Improve root zone conditions','m7':'Relocate target / restrict access','m8':'Removal (with replanting plan)',
+    'btn-calc':'📊　Assess Risk with ISA Matrix',
+    'btn-pdf':'🖨 Save as PDF / Print','btn-reset':'↩ Start New Assessment',
+    'result-sec1':'📊 ISA Risk Matrix Result','result-sec2':'🚨 Recommended Actions','result-sec3':'📝 Assessment Summary',
+    'report-title':'Assessment Record',
+    'cta-title':'📄 Export Assessment Report','cta-desc':'Use this result as a formal report, deliverable, or submission to authorities.',
+    'ref-title':'📚 References & Standards',
+    'footer1':'This tool references ISA TRAQ Level II for professional use. It is not a substitute for a legally binding assessment report.',
   }
 };
 
@@ -892,17 +982,107 @@ function setLang(lang) {
   document.documentElement.lang = lang;
   const t = TRAQ_I18N[lang];
   document.title = t['page-title'];
-  document.querySelector('.page-label').innerHTML = t['page-label'];
-  document.querySelector('h1').innerHTML = t['h1'];
-  document.querySelector('.sub').innerHTML = t['sub'];
-  document.querySelector('.btn-calc').textContent = t['btn-calc'];
+
+  const set = (sel, html) => { const el = document.querySelector(sel); if(el) el.innerHTML = html; };
+  const setText = (sel, txt) => { const el = document.querySelector(sel); if(el) el.textContent = txt; };
+  const setAttr = (id, attr, val) => { const el = document.getElementById(id); if(el) el[attr] = val; };
+  const setLabel = (lbl, txt) => { if(lbl) lbl.textContent = txt; };
+
+  set('.page-label', t['page-label']);
+  set('h1', t['h1']);
+  set('.sub', t['sub']);
+  set('.isa-badge', t['isa-badge']);
+
+  // Nav
+  const navHome = document.querySelector('nav a:first-child');
+  const navBack = document.querySelector('nav a.nav-back');
+  if(navHome) navHome.textContent = t['nav-home'];
+  if(navBack) navBack.textContent = t['nav-back'];
+
+  // Info field labels & placeholders
+  const fLabels = document.querySelectorAll('.info-field label');
+  const fKeys = ['lbl-treeid','lbl-date','lbl-evaluator','lbl-species','lbl-dbh','lbl-height','lbl-crown','lbl-loc','lbl-notes'];
+  fLabels.forEach((lbl,i) => { if(t[fKeys[i]]) lbl.textContent = t[fKeys[i]]; });
+  const fPHs = [['tree-id','ph-treeid'],['evaluator','ph-evaluator'],['tree-species','ph-species'],['dbh','ph-dbh'],['tree-height-m','ph-height'],['crown-diam','ph-crown'],['location-desc','ph-loc'],['field-notes','ph-notes']];
+  fPHs.forEach(([id,k]) => setAttr(id,'placeholder', t[k]||''));
+
+  // PART titles & metas
+  const partTitles = document.querySelectorAll('.traq-title');
+  const partMetas  = document.querySelectorAll('.traq-meta');
+  [['p1-title','p1-meta'],['p2-title','p2-meta'],['p3-title','p3-meta'],['p4-title','p4-meta']].forEach(([tk,mk],i) => {
+    if(partTitles[i]) partTitles[i].textContent = t[tk];
+    if(partMetas[i])  partMetas[i].textContent  = t[mk];
+  });
+
+  // Rating labels & descs
+  const ratingLabels = document.querySelectorAll('.rating-label');
+  const ratingDescs  = document.querySelectorAll('.rating-desc');
+  const rKeys = ['r1-label','r2-label','r3-label','r4-label','r5-label','r6-label','r7-label','r8-label','r9-label','r10-label'];
+  const dKeys = ['r1-desc','r2-desc','r3-desc','r4-desc','r5-desc','r6-desc','r7-desc','r8-desc','r9-desc','r10-desc'];
+  ratingLabels.forEach((el,i) => { if(t[rKeys[i]]) el.innerHTML = t[rKeys[i]] + (el.querySelector('.isa-ref') ? ' <span class="isa-ref">' + el.querySelector('.isa-ref').textContent + '</span>' : ''); });
+  ratingDescs.forEach((el,i) => { if(t[dKeys[i]]) el.textContent = t[dKeys[i]]; });
+
+  // Rating buttons
+  const rBtns = (id, keys) => { const c = document.getElementById(id); if(!c) return; c.querySelectorAll('.rating-btn').forEach((b,i) => { if(t[keys[i]]) b.textContent = t[keys[i]]; }); };
+  rBtns('r-trunk-defect',['trunk-1','trunk-2','trunk-3','trunk-4']);
+  rBtns('r-root',['root-1','root-2','root-3','root-4']);
+  rBtns('r-crown',['root-1','root-2','root-3','root-4']);
+  rBtns('r-vigor',['root-1','root-2','root-3','root-4']);
+  rBtns('r-occupancy',['occ-1','occ-2','occ-3','occ-4']);
+  rBtns('r-trajectory',['traj-1','traj-2','traj-3','traj-4']);
+  rBtns('r-consequence',['cons-1','cons-2','cons-3','cons-4']);
+  rBtns('r-tree-value',['val-1','val-2','val-3','val-4']);
+  rBtns('r-existing-mitigation',['mit-1','mit-2','mit-3','mit-4']);
+
+  // Field labels in bodies
+  document.querySelectorAll('.field-label').forEach(el => {
+    const txt = el.textContent.trim();
+    const map = {
+      '破損の可能性のある部位': t['lbl-failure-part'],
+      '腐朽の種類（確認できる場合）': t['lbl-decay'],
+      '推定破損部位の重量（kg）': t['lbl-fail-weight'],
+      '破損時の予想落下距離（m）': t['lbl-fall-dist'],
+      '推奨される軽減措置（複数選択可）': t['lbl-mitigation'],
+      '次回点検推奨時期': t['lbl-next'],
+    };
+    if(map[txt]) el.textContent = map[txt];
+  });
+
+  // Mitigation checkboxes
+  ['m1','m2','m3','m4','m5','m6','m7','m8'].forEach(k => {
+    const lbl = document.querySelector(`label[for="${k}"]`) || document.querySelector(`label:has(#${k})`);
+    if(lbl && t[k]) {
+      const cb = lbl.querySelector('input');
+      if(cb) lbl.innerHTML = ''; // clear
+      if(cb) { lbl.appendChild(cb); lbl.append(' ' + t[k]); }
+    }
+  });
+
+  // Buttons
+  const calcBtn = document.querySelector('.btn-calc');
+  if(calcBtn) calcBtn.textContent = t['btn-calc'];
   document.querySelectorAll('.btn-pdf').forEach(b => b.textContent = t['btn-pdf']);
   document.querySelectorAll('.btn-reset').forEach(b => b.textContent = t['btn-reset']);
-  // Section titles
-  const titles = document.querySelectorAll('.traq-title');
-  const keys = ['p1-title','p2-title','p3-title','p4-title'];
-  titles.forEach((el, i) => { if (keys[i]) el.textContent = t[keys[i]]; });
-  if (navigator.language && lang === 'ja') document.documentElement.lang = 'ja';
+
+  // Result section titles
+  const rSecH3 = document.querySelectorAll('.result-card h3');
+  if(rSecH3[0]) rSecH3[0].textContent = t['result-sec1'];
+  if(rSecH3[1]) rSecH3[1].textContent = t['result-sec2'];
+  if(rSecH3[2]) rSecH3[2].textContent = t['result-sec3'];
+
+  // Report box title
+  const repH4 = document.querySelector('.report-box h4');
+  if(repH4) repH4.textContent = t['report-title'];
+
+  // CTA
+  set('.cta-box h3', t['cta-title']);
+  set('.cta-box p', t['cta-desc']);
+
+  // Ref & Footer
+  const refH = document.querySelector('.ref-section h2');
+  if(refH) refH.textContent = t['ref-title'];
+  const footerP = document.querySelector('footer p');
+  if(footerP) footerP.textContent = t['footer1'];
 }
 
 if (navigator.language && navigator.language.startsWith('en')) setLang('en');
