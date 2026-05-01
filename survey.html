@@ -681,26 +681,118 @@ if ("serviceWorker" in navigator) {
 }
 
 // ===== i18n =====
+// ===== Complete i18n for Survey =====
 const SURVEY_I18N = {
   ja: {
     'page-title': '現地調査・複数樹木記録 | 樹木医ツール',
+    'nav-home': '🌿 樹木医ツール', 'nav-back': '← ホームへ',
     'page-label': 'Field Survey Tool — Multi-Tree Recording',
     'h1': '現地調査・複数樹木記録<br>フィールドワークシート',
     'sub': '現地で複数本の樹木を連続記録し、調査レポートを自動生成します。<br>オフライン対応・PWA対応のため、電波のない現場でもご利用いただけます。',
-    'btn-add': '＋ 樹木を追加',
-    'btn-report': '📄 調査レポートを生成',
-    'btn-clear': '🗑 全削除',
+    'lbl-date': '調査日', 'lbl-surveyor': '調査者（樹木医）', 'ph-surveyor': '氏名・資格番号',
+    'lbl-weather': '天候', 'lbl-location': '調査場所・施設名',
+    'ph-location': '例：○○公園 / ××小学校 / △△マンション敷地',
+    'weather-opts': ['— 選択 —','晴れ','曇り','雨','強風'],
+    'stat-total': '本記録済み', 'stat-high': '高リスク', 'stat-moderate': '要注意', 'stat-low': '低リスク',
+    'btn-add': '＋ 樹木を追加', 'btn-report': '📄 調査レポートを生成', 'btn-clear': '🗑 全削除',
     'empty-msg': '「＋ 樹木を追加」ボタンを押して<br>現地調査を開始してください。',
+    'footer1': 'データはこのブラウザのみに保存されます。サーバーには送信されません。',
+    'footer2': '© 2025 樹木医ツール — ARBORIST TOOLS PRO | Field Survey',
+    // Card fields
+    'card-lbl-tid': '樹木ID / 管理番号', 'card-ph-tid': '例：A-{n}',
+    'card-lbl-species': '樹種', 'card-ph-species': '例：ケヤキ',
+    'card-lbl-dbh': '胸高直径 DBH（cm）', 'card-ph-dbh': '45',
+    'card-lbl-height': '樹高（m）', 'card-ph-height': '12',
+    'card-lbl-age': '樹齢（年・推定可）', 'card-ph-age': '例：推定50年',
+    'card-lbl-pos': '位置・管理番号', 'card-ph-pos': '例：北側入口から3本目',
+    'card-lbl-checks': '現地チェック項目（複数選択可）',
+    'card-lbl-vigor': '樹勢・外観', 'card-lbl-action': '推奨処置',
+    'card-lbl-risk': '総合リスク評価',
+    'card-lbl-notes': '所見・特記事項', 'card-ph-notes': '現地での観察事項・写真番号・特記事項を記録してください',
+    'btn-save': '✓ 記録を保存', 'btn-delete': '削除',
+    'risk-low': '🟢 低リスク', 'risk-moderate': '🟡 要注意', 'risk-high': '🔴 高リスク',
+    'risk-none': '未評価',
+    'vigor-opts': ['— 選択 —','旺盛（良好）','普通','衰退気味','著しく衰退','枯死寸前'],
+    'action-opts': ['— 選択 —','経過観察','定期点検（年1回）','剪定（枯れ枝除去）','精密診断が必要','緊急処置が必要','伐採・撤去'],
+    // Quick checks
+    'qc-trunk-cavity': '幹に空洞・腐朽あり',
+    'qc-mushroom': 'キノコ・子実体の発生',
+    'qc-lean': '著しい傾斜（>15°）',
+    'qc-dead-branch': '枯死枝・落下危険枝あり',
+    'qc-root-damage': '根系の著しい損傷・腐朽',
+    'qc-pest': '病害虫の顕著な発生',
+    'qc-crack': '樹皮の亀裂・剥離',
+    'qc-wire': '固縛物による締め付け',
+    'qc-leaf-pale': '葉の著しい黄化・小葉化',
+    'qc-soil-compact': '土壌の過度な踏み固め',
+    'qc-mulch': '適切なマルチングあり',
+    'qc-support': '支柱設置あり',
+    // Report
+    'report-title': 'TREE SURVEY REPORT',
+    'report-summary': '調査サマリー',
+    'report-total': '調査本数', 'report-high': '高リスク',
+    'report-moderate': '要注意', 'report-low': '低リスク',
+    'report-list': '全樹木一覧',
+    'report-th': ['ID','樹種','DBH','樹勢','リスク','推奨処置','確認事項'],
+    'report-urgent': '要対応樹木の詳細',
+    'report-disclaimer': '免責事項',
+    'report-disclaimer-txt': '本調査レポートは樹木医ツール（raitopapa.github.io）を使用して作成されました。本ツールは一般的な情報提供を目的としており、法的拘束力を持つ診断書・鑑定書の代替ではありません。',
+    'btn-print': '🖨 PDF・印刷で保存', 'btn-close': '閉じる',
+    'not-rated': '未評価',
   },
   en: {
     'page-title': 'Field Survey — Multi-Tree Recording | Arborist Tools Japan',
+    'nav-home': '🌿 Arborist Tools', 'nav-back': '← Home',
     'page-label': 'Field Survey Tool — Multi-Tree Recording',
     'h1': 'Field Survey<br>Multi-Tree Recording Sheet',
     'sub': 'Record multiple trees consecutively on site and auto-generate a survey report.<br>PWA & offline capable — works without internet in the field.',
-    'btn-add': '＋ Add Tree',
-    'btn-report': '📄 Generate Survey Report',
-    'btn-clear': '🗑 Clear All',
+    'lbl-date': 'Survey Date', 'lbl-surveyor': 'Surveyor (Arborist)', 'ph-surveyor': 'Name / Credential No.',
+    'lbl-weather': 'Weather', 'lbl-location': 'Survey Location / Site Name',
+    'ph-location': 'e.g. XX Park / YY Elementary School / ZZ Building grounds',
+    'weather-opts': ['— Select —','Sunny','Cloudy','Rain','Strong Wind'],
+    'stat-total': 'trees recorded', 'stat-high': 'High Risk', 'stat-moderate': 'Caution', 'stat-low': 'Low Risk',
+    'btn-add': '＋ Add Tree', 'btn-report': '📄 Generate Survey Report', 'btn-clear': '🗑 Clear All',
     'empty-msg': 'Press "＋ Add Tree" to begin<br>your field survey.',
+    'footer1': 'Data is stored in this browser only. Nothing is sent to a server.',
+    'footer2': '© 2025 Arborist Tools Japan — Field Survey Tool',
+    'card-lbl-tid': 'Tree ID / Reference No.', 'card-ph-tid': 'e.g. A-{n}',
+    'card-lbl-species': 'Tree Species', 'card-ph-species': 'e.g. Zelkova',
+    'card-lbl-dbh': 'DBH (cm)', 'card-ph-dbh': '45',
+    'card-lbl-height': 'Tree Height (m)', 'card-ph-height': '12',
+    'card-lbl-age': 'Tree Age (est.)', 'card-ph-age': 'e.g. est. 50 years',
+    'card-lbl-pos': 'Position / Location', 'card-ph-pos': 'e.g. 3rd tree from north entrance',
+    'card-lbl-checks': 'Field Check Items (multiple selection)',
+    'card-lbl-vigor': 'Tree Vigor', 'card-lbl-action': 'Recommended Action',
+    'card-lbl-risk': 'Overall Risk Rating',
+    'card-lbl-notes': 'Field Notes', 'card-ph-notes': 'Observations, photo numbers, and notable findings',
+    'btn-save': '✓ Save Record', 'btn-delete': 'Delete',
+    'risk-low': '🟢 Low Risk', 'risk-moderate': '🟡 Caution', 'risk-high': '🔴 High Risk',
+    'risk-none': 'Not Rated',
+    'vigor-opts': ['— Select —','Vigorous (Good)','Normal','Slightly Declining','Significantly Declining','Near Death'],
+    'action-opts': ['— Select —','Monitor','Regular inspection (annual)','Pruning (deadwood removal)','Advanced diagnosis required','Urgent action required','Removal / Felling'],
+    'qc-trunk-cavity': 'Trunk cavity / decay present',
+    'qc-mushroom': 'Fungal fruiting bodies present',
+    'qc-lean': 'Significant lean (>15°)',
+    'qc-dead-branch': 'Deadwood / hanging branch present',
+    'qc-root-damage': 'Significant root damage / decay',
+    'qc-pest': 'Significant pest / disease infestation',
+    'qc-crack': 'Bark cracking / peeling',
+    'qc-wire': 'Constricting material on trunk',
+    'qc-leaf-pale': 'Significant leaf yellowing / small leaves',
+    'qc-soil-compact': 'Excessive soil compaction',
+    'qc-mulch': 'Appropriate mulching present',
+    'qc-support': 'Support stake installed',
+    'report-title': 'TREE SURVEY REPORT',
+    'report-summary': 'Survey Summary',
+    'report-total': 'Trees Surveyed', 'report-high': 'High Risk',
+    'report-moderate': 'Caution', 'report-low': 'Low Risk',
+    'report-list': 'All Trees',
+    'report-th': ['ID','Species','DBH','Vigor','Risk','Recommended Action','Findings'],
+    'report-urgent': 'Trees Requiring Action — Details',
+    'report-disclaimer': 'Disclaimer',
+    'report-disclaimer-txt': 'This report was generated using Arborist Tools Japan (raitopapa.github.io). This tool is for general informational purposes only and is not a substitute for a legally binding arborist report or certified assessment.',
+    'btn-print': '🖨 Save as PDF / Print', 'btn-close': 'Close',
+    'not-rated': 'Not Rated',
   }
 };
 
@@ -710,15 +802,125 @@ function setLang(lang) {
   document.documentElement.lang = lang;
   const t = SURVEY_I18N[lang];
   document.title = t['page-title'];
-  document.querySelector('.page-label').innerHTML = t['page-label'];
-  document.querySelector('h1').innerHTML = t['h1'];
-  document.querySelector('.sub').innerHTML = t['sub'];
-  document.querySelector('.btn-add').textContent = t['btn-add'];
-  document.querySelector('.btn-report').textContent = t['btn-report'];
-  document.querySelector('.btn-clear').textContent = t['btn-clear'];
-  const empty = document.getElementById('empty-state');
-  if (empty) empty.querySelector('p').innerHTML = t['empty-msg'];
+  window._SURVEY_LANG = lang;
+  window._SURVEY_T = t;
+
+  const set = (sel, html) => { const el = document.querySelector(sel); if(el) el.innerHTML = html; };
+  const setText = (sel, txt) => { const el = document.querySelector(sel); if(el) el.textContent = txt; };
+  const setOpts = (id, opts) => { const s = document.getElementById(id); if(s) opts.forEach((o,i) => { if(s.options[i]) s.options[i].text = o; }); };
+
+  set('.page-label', t['page-label']);
+  set('h1', t['h1']);
+  set('.sub', t['sub']);
+
+  // Nav
+  const navHome = document.querySelector('nav a:first-child');
+  const navBack = document.querySelector('nav a.nav-back');
+  if(navHome) navHome.textContent = t['nav-home'];
+  if(navBack) navBack.textContent = t['nav-back'];
+
+  // Meta labels
+  const metaLabels = document.querySelectorAll('.meta-field label');
+  const lblKeys = ['lbl-date','lbl-surveyor','lbl-weather','lbl-location'];
+  metaLabels.forEach((lbl, i) => { if(t[lblKeys[i]]) lbl.textContent = t[lblKeys[i]]; });
+
+  const surveyorEl = document.getElementById('surveyor');
+  const locationEl = document.getElementById('survey-location');
+  if(surveyorEl) surveyorEl.placeholder = t['ph-surveyor'];
+  if(locationEl) locationEl.placeholder = t['ph-location'];
+  setOpts('weather', t['weather-opts']);
+
+  // Stats
+  const statPills = document.querySelectorAll('.stat-pill');
+  if(statPills[0]) { const n = statPills[0].querySelector('.sp-num'); if(n) statPills[0].innerHTML = `🌳 <span class="sp-num">${n.textContent}</span> ${t['stat-total']}`; }
+  if(statPills[1]) { const n = statPills[1].querySelector('.sp-num'); if(n) statPills[1].innerHTML = `🔴 <span class="sp-num">${n.textContent}</span> ${t['stat-high']}`; }
+  if(statPills[2]) { const n = statPills[2].querySelector('.sp-num'); if(n) statPills[2].innerHTML = `🟡 <span class="sp-num">${n.textContent}</span> ${t['stat-moderate']}`; }
+  if(statPills[3]) { const n = statPills[3].querySelector('.sp-num'); if(n) statPills[3].innerHTML = `🟢 <span class="sp-num">${n.textContent}</span> ${t['stat-low']}`; }
+
+  // Action buttons
+  const btnAdd = document.querySelector('.btn-add'); if(btnAdd) btnAdd.textContent = t['btn-add'];
+  const btnReport = document.querySelector('.btn-report'); if(btnReport) btnReport.textContent = t['btn-report'];
+  const btnClear = document.querySelector('.btn-clear'); if(btnClear) btnClear.textContent = t['btn-clear'];
+
+  // Empty state
+  const emptyP = document.querySelector('#empty-state p');
+  if(emptyP) emptyP.innerHTML = t['empty-msg'];
+
+  // Footer
+  const fps = document.querySelectorAll('footer p');
+  if(fps[0]) fps[0].textContent = t['footer1'];
+  if(fps[1]) fps[1].textContent = t['footer2'];
+
+  // Report modal buttons
+  const btnPrint = document.querySelector('.btn-print-report');
+  const btnClose = document.querySelector('.btn-close-report');
+  if(btnPrint) btnPrint.textContent = t['btn-print'];
+  if(btnClose) btnClose.textContent = t['btn-close'];
+
+  // Update existing tree cards if any
+  document.querySelectorAll('.tree-card').forEach(card => {
+    const id = parseInt(card.id.replace('card-',''));
+    if(!id) return;
+    // Labels
+    const fLabels = card.querySelectorAll('.f-group label');
+    const lKeys = ['card-lbl-tid','card-lbl-species','card-lbl-dbh','card-lbl-height','card-lbl-age','card-lbl-pos'];
+    fLabels.forEach((lbl,i) => { if(t[lKeys[i]]) lbl.textContent = t[lKeys[i]]; });
+    // Check label
+    const checkLbl = card.querySelector('.rating-item label, div[style*="margin-bottom:10px"] > label');
+    if(checkLbl && checkLbl.textContent.includes('チェック')) checkLbl.textContent = t['card-lbl-checks'];
+    // Quick check labels
+    QUICK_CHECKS.forEach(c => {
+      const qEl = card.querySelector(`#qc-wrap-${id}-${c.id} span`);
+      if(qEl && t[c.id]) qEl.textContent = t[c.id];
+    });
+    // Vigor/action labels
+    const selLabels = card.querySelectorAll('.f-group label');
+    selLabels.forEach(lbl => {
+      if(lbl.textContent.trim()==='樹勢・外観'||lbl.textContent.trim()==='Tree Vigor') lbl.textContent = t['card-lbl-vigor'];
+      if(lbl.textContent.trim()==='推奨処置'||lbl.textContent.trim()==='Recommended Action') lbl.textContent = t['card-lbl-action'];
+    });
+    // Vigor/action options
+    const vigorSel = document.getElementById(`vigor-${id}`);
+    const actionSel = document.getElementById(`action-${id}`);
+    if(vigorSel) t['vigor-opts'].forEach((o,i) => { if(vigorSel.options[i]) vigorSel.options[i].text = o; });
+    if(actionSel) t['action-opts'].forEach((o,i) => { if(actionSel.options[i]) actionSel.options[i].text = o; });
+    // Risk selector label
+    const riskLbl = card.querySelector('.f-group label');
+    // Save/delete buttons
+    const saveBtn = card.querySelector('.btn-save-card'); if(saveBtn) saveBtn.textContent = t['btn-save'];
+    const delBtn = card.querySelector('.btn-delete-card'); if(delBtn) delBtn.textContent = t['btn-delete'];
+    // Risk badges
+    const badge = document.getElementById(`risk-badge-${id}`);
+    if(badge) {
+      const tree = trees.find(tr => tr.id === id);
+      if(tree && tree.risk) {
+        const rl = { low: t['risk-low'], moderate: t['risk-moderate'], high: t['risk-high'] };
+        badge.textContent = rl[tree.risk] || t['risk-none'];
+      }
+    }
+  });
 }
+
+// Override QUICK_CHECKS labels dynamically
+const _origAddTree = addTree;
+window.addTree = function() {
+  _origAddTree();
+  const lang = window._SURVEY_LANG || 'ja';
+  const t = SURVEY_I18N[lang];
+  // Translate newly added card
+  const lastTree = trees[trees.length - 1];
+  if(!lastTree) return;
+  const id = lastTree.id;
+  const card = document.getElementById(`card-${id}`);
+  if(!card) return;
+  // Quick check labels
+  QUICK_CHECKS.forEach(c => {
+    const qEl = card.querySelector(`#qc-wrap-${id}-${c.id} span`);
+    if(qEl && t[c.id]) qEl.textContent = t[c.id];
+  });
+  // Labels, options etc.
+  setLang(lang);
+};
 
 if (navigator.language && navigator.language.startsWith('en')) setLang('en');
 
