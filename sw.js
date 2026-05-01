@@ -1,5 +1,5 @@
 // 樹木医ツール Service Worker v1.3
-const CACHE_NAME = 'arborist-tools-v1.3';
+const CACHE_NAME = 'arborist-tools-v2.4';
 
 // オフラインでキャッシュするファイル
 const CACHE_FILES = [
@@ -8,13 +8,14 @@ const CACHE_FILES = [
   '/diagnosis.html',
   '/pruning.html',
   '/checklist.html',
+  '/traq.html',
+  '/ctla.html',
+  '/survey.html',
   '/privacy.html',
   '/contact.html',
   '/manifest.json',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
-  // Google Fonts（オフライン時はシステムフォントにフォールバック）
-  'https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Noto+Serif+JP:wght@400;500&family=DM+Mono:wght@400;500&display=swap'
 ];
 
 // インストール：キャッシュを構築
