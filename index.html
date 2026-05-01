@@ -25,8 +25,11 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--cream); color: var(--ink); font-family: 'Noto Serif JP', serif; min-height: 100vh; }
 
-/* HERO */
-.hero { background: var(--bark); color: var(--cream); padding: 72px 24px 64px; text-align: center; position: relative; overflow: hidden; }
+/* Language switcher */
+.lang-bar { background: rgba(44,26,14,0.95); padding: 6px 20px; display: flex; justify-content: flex-end; align-items: center; gap: 6px; position: sticky; top: 0; z-index: 200; }
+.lang-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 4px 10px; border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: rgba(232,240,225,0.6); cursor: pointer; transition: all 0.15s; letter-spacing: 0.05em; }
+.lang-btn.active { background: var(--leaf); color: var(--bark); border-color: var(--leaf); font-weight: 600; }
+.lang-btn:hover { color: var(--cream); } background: var(--bark); color: var(--cream); padding: 72px 24px 64px; text-align: center; position: relative; overflow: hidden; }
 .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(90,122,91,0.25) 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, rgba(122,174,110,0.12) 0%, transparent 45%); pointer-events: none; }
 .hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
 .hero-badge { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--leaf); border: 1px solid rgba(122,174,110,0.4); padding: 4px 14px; border-radius: 2px; display: inline-block; margin-bottom: 24px; }
@@ -121,6 +124,12 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
 </head>
 <body>
 
+<!-- Language Bar -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('ja')" id="btn-ja">🇯🇵 日本語</button>
+  <button class="lang-btn" onclick="setLang('en')" id="btn-en">🇺🇸 English</button>
+</div>
+
 <!-- PWAインストールバナー -->
 <div id="pwa-banner" style="display:none; background:#3D5A3E; color:#F5F0E8; padding:12px 20px; text-align:center; font-family:'Noto Serif JP',serif; font-size:13px; position:sticky; top:0; z-index:100; align-items:center; justify-content:center; gap:12px;">
   <span>📲 ホーム画面に追加してオフラインでも使えます</span>
@@ -130,73 +139,125 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
 
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-badge">🌿 Arborist Tools</div>
-    <h1>樹木医が監修した<br><span>無料診断ツール</span>集</h1>
-    <p class="hero-sub">病害虫の早期発見から剪定適期の判断、現地調査まで。<br>樹木医の知識をウェブツールとして無料公開しています。</p>
+    <div class="hero-badge" data-i18n="hero-badge">🌿 Arborist Tools</div>
+    <h1 data-i18n="hero-h1">樹木医が監修した<br><span>無料診断ツール</span>集</h1>
+    <p class="hero-sub" data-i18n="hero-sub">病害虫の早期発見から剪定適期の判断、現地調査まで。<br>樹木医の知識をウェブツールとして無料公開しています。</p>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-num">3</span><span class="stat-label">専門ツール</span></div>
-      <div class="stat"><span class="stat-num">30+</span><span class="stat-label">対応樹種</span></div>
-      <div class="stat"><span class="stat-num">無料</span><span class="stat-label">すべて無償提供</span></div>
+      <div class="stat"><span class="stat-num">3</span><span class="stat-label" data-i18n="stat-tools">専門ツール</span></div>
+      <div class="stat"><span class="stat-num">40+</span><span class="stat-label" data-i18n="stat-species">対応樹種</span></div>
+      <div class="stat"><span class="stat-num" data-i18n="stat-free-num">無料</span><span class="stat-label" data-i18n="stat-free">すべて無償提供</span></div>
     </div>
-    <div class="hero-scroll">▾ ツールを見る</div>
+    <div class="hero-scroll" data-i18n="scroll-hint">▾ ツールを見る</div>
   </div>
 </section>
 
 <div class="wrap">
 
   <div class="sec-head">
-    <span class="sec-label">Free Tools</span>
-    <div class="sec-title">3つの診断・管理ツール</div>
+    <span class="sec-label" data-i18n="free-label">Free Tools</span>
+    <div class="sec-title" data-i18n="free-title">3つの診断・管理ツール</div>
   </div>
 
   <div class="tool-grid">
     <a class="tool-card" href="diagnosis.html">
       <div class="card-thumb card-thumb-1">🦠</div>
       <div class="card-body">
-        <div class="card-tag">Tool 01 — Diagnosis</div>
-        <div class="card-title">病害虫<br>リスク診断</div>
-        <p class="card-desc">樹種・季節・症状を選択するだけで、疑われる病害虫と初期対処法を即表示します。</p>
+        <div class="card-tag" data-i18n="tool1-tag">Tool 01 — Diagnosis</div>
+        <div class="card-title" data-i18n="tool1-title">病害虫<br>リスク診断</div>
+        <p class="card-desc" data-i18n="tool1-desc">樹種・季節・症状を選択するだけで、疑われる病害虫と初期対処法を即表示します。</p>
         <ul class="card-features">
           <li>主要病害虫データベース収録</li>
           <li>リスクレベル（高・中・低）判定</li>
           <li>初期対処ステップ付き</li>
         </ul>
-        <span class="card-btn">診断を始める →</span>
+        <span class="card-btn" data-i18n="tool1-btn">診断を始める →</span>
       </div>
     </a>
     <a class="tool-card" href="pruning.html">
       <div class="card-thumb card-thumb-2">📅</div>
       <div class="card-body">
-        <div class="card-tag">Tool 02 — Calendar</div>
-        <div class="card-title">剪定適期<br>カレンダー</div>
-        <p class="card-desc">樹種と剪定目的を選択すると、月別の適否を色分けカレンダーで即表示。注意事項も確認できます。</p>
+        <div class="card-tag" data-i18n="tool2-tag">Tool 02 — Calendar</div>
+        <div class="card-title" data-i18n="tool2-title">剪定適期<br>カレンダー</div>
+        <p class="card-desc" data-i18n="tool2-desc">樹種と剪定目的を選択すると、月別の適否を色分けカレンダーで即表示。注意事項も確認できます。</p>
         <ul class="card-features">
           <li>15樹種 × 6目的に対応</li>
           <li>月別カラーコード表示</li>
           <li>ツール・品質向上ポイント付き</li>
         </ul>
-        <span class="card-btn">カレンダーを確認 →</span>
+        <span class="card-btn" data-i18n="tool2-btn">カレンダーを確認 →</span>
       </div>
     </a>
     <a class="tool-card" href="checklist.html">
       <div class="card-thumb card-thumb-3">📋</div>
       <div class="card-body">
-        <div class="card-tag">Tool 03 — Checklist</div>
-        <div class="card-title">樹木健全度<br>チェックリスト</div>
-        <p class="card-desc">現地調査で使える32項目のチェックシート。根元・幹・枝・葉を記録し、総合スコアを自動算出します。</p>
+        <div class="card-tag" data-i18n="tool3-tag">Tool 03 — Checklist</div>
+        <div class="card-title" data-i18n="tool3-title">樹木健全度<br>チェックリスト</div>
+        <p class="card-desc" data-i18n="tool3-desc">現地調査で使える32項目のチェックシート。根元・幹・枝・葉を記録し、総合スコアを自動算出します。</p>
         <ul class="card-features">
           <li>4部位 × 8項目 = 32チェック</li>
           <li>A〜Dランク総合評価</li>
           <li>対処優先度リスト付き・印刷対応</li>
         </ul>
-        <span class="card-btn">チェックを開始 →</span>
+        <span class="card-btn" data-i18n="tool3-btn">チェックを開始 →</span>
       </div>
     </a>
   </div>
 
   <div class="ad-slot">Google AdSense — レスポンシブ広告（ツール一覧下部）</div>
 
-  <div class="sec-head">
+  <!-- PRO Tools Section -->
+  <div class="sec-head" style="margin-top:48px;">
+    <span class="sec-label" style="color:#B87820;border-color:#B87820;" data-i18n="pro-label">Pro Tools</span>
+    <div class="sec-title" data-i18n="pro-title">樹木医・専門家向けプロツール</div>
+  </div>
+  <p style="font-size:13px;color:#6b7e6b;line-height:1.8;margin-bottom:24px;" data-i18n="pro-desc">ISA国際基準・CTLA方式に準拠した、樹木医・造園士・行政担当者向けの専門ツールです。</p>
+
+  <div class="tool-grid">
+    <a class="tool-card" href="traq.html" style="border-top:3px solid #8B2A1A;">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#1A2F1A,#2E5E2E);font-size:32px;display:flex;align-items:center;justify-content:center;height:120px;">⚠️</div>
+      <div class="card-body">
+        <div class="card-tag" style="color:#8B2A1A;border-color:#8B2A1A;" data-i18n="pro1-tag">Pro 01 — ISA TRAQ Level II</div>
+        <div class="card-title" data-i18n="pro1-title">樹木リスク評価<br>Tree Risk Assessment</div>
+        <p class="card-desc" data-i18n="pro1-desc">ISA TRAQ Level IIに準拠。破損可能性・衝突可能性・結果重大性からリスクマトリクスで判定します。</p>
+        <ul class="card-features">
+          <li>ISA TRAQ Level II準拠</li>
+          <li>ANSI A300 Part 9対応</li>
+          <li>評価レポートPDF出力</li>
+        </ul>
+        <span class="card-btn" style="background:#1A2F1A;" data-i18n="pro1-btn">リスク評価を開始 →</span>
+      </div>
+    </a>
+    <a class="tool-card" href="ctla.html" style="border-top:3px solid #B87820;">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#5A3A0A,#B87820);font-size:32px;display:flex;align-items:center;justify-content:center;height:120px;">💰</div>
+      <div class="card-body">
+        <div class="card-tag" style="color:#B87820;border-color:#B87820;" data-i18n="pro2-tag">Pro 02 — CTLA Method</div>
+        <div class="card-title" data-i18n="pro2-title">樹木価値算定<br>Tree Appraisal</div>
+        <p class="card-desc" data-i18n="pro2-desc">CTLA「Guide for Plant Appraisal」第10版準拠。移植補償・保険査定・訴訟支援に活用できます。</p>
+        <ul class="card-features">
+          <li>CTLA方式（国際標準）</li>
+          <li>種評価率・健全度・立地評価</li>
+          <li>樹木価値算定書PDF出力</li>
+        </ul>
+        <span class="card-btn" style="background:#B87820;" data-i18n="pro2-btn">価値算定を開始 →</span>
+      </div>
+    </a>
+    <a class="tool-card" href="survey.html" style="border-top:3px solid #2A5A8A;">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#0D2A4A,#2A5A8A);font-size:32px;display:flex;align-items:center;justify-content:center;height:120px;">📋</div>
+      <div class="card-body">
+        <div class="card-tag" style="color:#2A5A8A;border-color:#2A5A8A;" data-i18n="pro3-tag">Pro 03 — Field Survey</div>
+        <div class="card-title" data-i18n="pro3-title">現地調査記録<br>複数樹木フィールドシート</div>
+        <p class="card-desc" data-i18n="pro3-desc">1現場で複数本を連続記録。リスク別集計・調査レポートを自動生成します。オフライン対応。</p>
+        <ul class="card-features">
+          <li>複数樹木の一括記録</li>
+          <li>リスク別自動集計</li>
+          <li>現地調査レポートPDF出力</li>
+        </ul>
+        <span class="card-btn" style="background:#2A5A8A;" data-i18n="pro3-btn">調査を開始 →</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="sec-head" style="margin-top:48px;">
     <span class="sec-label">About</span>
     <div class="sec-title">このサイトについて</div>
   </div>
@@ -270,6 +331,9 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
         <li><a href="diagnosis.html">🦠 病害虫リスク診断</a></li>
         <li><a href="pruning.html">📅 剪定適期カレンダー</a></li>
         <li><a href="checklist.html">📋 樹木健全度チェックリスト</a></li>
+        <li><a href="traq.html">⚠️ 樹木リスク評価（TRAQ）</a></li>
+        <li><a href="ctla.html">💰 樹木価値算定（CTLA）</a></li>
+        <li><a href="survey.html">🗺 現地調査・複数樹木記録</a></li>
         <li><a href="privacy.html">📄 プライバシーポリシー</a></li>
         <li><a href="contact.html">✉️ お問い合わせ</a></li>
       </ul>
@@ -280,6 +344,133 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
 
 <script>
 function toggleFaq(el) { el.classList.toggle('open'); }
+
+// ===== i18n Language System =====
+const I18N = {
+  ja: {
+    'hero-badge':     '🌿 Arborist Tools',
+    'hero-h1':        '樹木医が監修した<br><span>無料診断ツール</span>集',
+    'hero-sub':       '病害虫の早期発見から剪定適期の判断、現地調査まで。<br>樹木医の知識をウェブツールとして無料公開しています。',
+    'stat-tools':     '専門ツール',
+    'stat-species':   '対応樹種',
+    'stat-free':      'すべて無償提供',
+    'stat-free-num':  '無料',
+    'scroll-hint':    '▾ ツールを見る',
+    'free-label':     'Free Tools',
+    'free-title':     '3つの診断・管理ツール',
+    'pro-label':      'Pro Tools',
+    'pro-title':      '樹木医・専門家向けプロツール',
+    'pro-desc':       'ISA国際基準・CTLA方式に準拠した、樹木医・造園士・行政担当者向けの専門ツールです。',
+    'about-label':    'About',
+    'about-title':    'このサイトについて',
+    'pwa-msg':        '📲 ホーム画面に追加してオフラインでも使えます',
+    'pwa-install':    'インストール',
+    // Tool cards
+    'tool1-tag':      'Tool 01 — Diagnosis',
+    'tool1-title':    '病害虫<br>リスク診断',
+    'tool1-desc':     '樹種・季節・症状を選択するだけで、疑われる病害虫と初期対処法を即表示します。',
+    'tool1-btn':      '診断を始める →',
+    'tool2-tag':      'Tool 02 — Calendar',
+    'tool2-title':    '剪定適期<br>カレンダー',
+    'tool2-desc':     '樹種と剪定目的を選択すると、月別の適否を色分けカレンダーで即表示。注意事項も確認できます。',
+    'tool2-btn':      'カレンダーを確認 →',
+    'tool3-tag':      'Tool 03 — Checklist',
+    'tool3-title':    '樹木健全度<br>チェックリスト',
+    'tool3-desc':     '現地調査で使える32項目のチェックシート。根元・幹・枝・葉を記録し、総合スコアを自動算出します。',
+    'tool3-btn':      'チェックを開始 →',
+    'pro1-tag':       'Pro 01 — ISA TRAQ Level II',
+    'pro1-title':     '樹木リスク評価<br>Tree Risk Assessment',
+    'pro1-desc':      'ISA TRAQ Level IIに準拠。破損可能性・衝突可能性・結果重大性からリスクマトリクスで判定します。',
+    'pro1-btn':       'リスク評価を開始 →',
+    'pro2-tag':       'Pro 02 — CTLA Method',
+    'pro2-title':     '樹木価値算定<br>Tree Appraisal',
+    'pro2-desc':      'CTLA「Guide for Plant Appraisal」第10版準拠。移植補償・保険査定・訴訟支援に活用できます。',
+    'pro2-btn':       '価値算定を開始 →',
+    'pro3-tag':       'Pro 03 — Field Survey',
+    'pro3-title':     '現地調査記録<br>複数樹木フィールドシート',
+    'pro3-desc':      '1現場で複数本を連続記録。リスク別集計・調査レポートを自動生成します。オフライン対応。',
+    'pro3-btn':       '調査を開始 →',
+    'footer-copy':    '© 2025 樹木医ツール — ARBORIST TOOLS | All tools are free to use.',
+    'page-title':     '樹木医ツール | 樹木医監修・無料診断・剪定カレンダー',
+  },
+  en: {
+    'hero-badge':     '🌿 Arborist Tools — Japan',
+    'hero-h1':        'Free Tree Care Tools<br><span>by a Certified Arborist</span>',
+    'hero-sub':       'From early pest detection to pruning timing and field surveys.<br>Professional arboricultural knowledge, freely available online.',
+    'stat-tools':     'Professional Tools',
+    'stat-species':   'Tree Species',
+    'stat-free':      'Completely Free',
+    'stat-free-num':  'FREE',
+    'scroll-hint':    '▾ View Tools',
+    'free-label':     'Free Tools',
+    'free-title':     '3 Diagnosis & Management Tools',
+    'pro-label':      'Pro Tools',
+    'pro-title':      'Professional Arborist Tools',
+    'pro-desc':       'Tools for certified arborists, landscape architects, and municipal officers — based on ISA and CTLA international standards.',
+    'about-label':    'About',
+    'about-title':    'About This Site',
+    'pwa-msg':        '📲 Add to Home Screen for offline access',
+    'pwa-install':    'Install',
+    // Tool cards
+    'tool1-tag':      'Tool 01 — Diagnosis',
+    'tool1-title':    'Pest & Disease<br>Risk Diagnosis',
+    'tool1-desc':     'Select species, season, and symptoms to instantly identify likely pests/diseases and initial response steps.',
+    'tool1-btn':      'Start Diagnosis →',
+    'tool2-tag':      'Tool 02 — Calendar',
+    'tool2-title':    'Pruning Season<br>Calendar',
+    'tool2-desc':     'Select species and pruning goal to see a color-coded monthly calendar with timing guidance and cautions.',
+    'tool2-btn':      'Check Calendar →',
+    'tool3-tag':      'Tool 03 — Checklist',
+    'tool3-title':    'Tree Health<br>Checklist',
+    'tool3-desc':     'A 32-item field inspection sheet. Record root, trunk, branch, and foliage conditions for an automatic health score.',
+    'tool3-btn':      'Start Checklist →',
+    'pro1-tag':       'Pro 01 — ISA TRAQ Level II',
+    'pro1-title':     'Tree Risk Assessment<br>(ISA TRAQ Compliant)',
+    'pro1-desc':      'Based on ISA TRAQ Level II. Evaluates likelihood of failure, impact, and consequences via the ISA risk matrix.',
+    'pro1-btn':       'Start Risk Assessment →',
+    'pro2-tag':       'Pro 02 — CTLA Method',
+    'pro2-title':     'Tree Appraisal<br>(CTLA Method)',
+    'pro2-desc':      'Based on CTLA Guide for Plant Appraisal 10th ed. Useful for transplant compensation, insurance, and litigation.',
+    'pro2-btn':       'Start Appraisal →',
+    'pro3-tag':       'Pro 03 — Field Survey',
+    'pro3-title':     'Field Survey<br>Multi-Tree Recording Sheet',
+    'pro3-desc':      'Record multiple trees consecutively on one site. Auto-generates a sortable risk report. Offline-capable.',
+    'pro3-btn':       'Start Survey →',
+    'footer-copy':    '© 2025 Arborist Tools Japan — All tools are free to use.',
+    'page-title':     'Arborist Tools Japan | Free Tree Diagnosis & Pruning Calendar',
+  }
+};
+
+let currentLang = 'ja';
+
+// Auto-detect browser language
+if (navigator.language && navigator.language.startsWith('en')) {
+  currentLang = 'en';
+  setLang('en');
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('btn-ja').classList.toggle('active', lang === 'ja');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.documentElement.lang = lang;
+
+  const t = I18N[lang];
+  document.title = t['page-title'];
+
+  // Apply all translations
+  Object.keys(t).forEach(key => {
+    const els = document.querySelectorAll(`[data-i18n="${key}"]`);
+    els.forEach(el => {
+      if (el.tagName === 'INPUT' || el.tagName === 'BUTTON') {
+        el.value = t[key];
+      } else {
+        el.innerHTML = t[key];
+      }
+    });
+  });
+}
+
 </script>
 <script>
 if ("serviceWorker" in navigator) {
