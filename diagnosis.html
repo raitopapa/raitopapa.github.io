@@ -510,6 +510,9 @@
     .result-card { padding: 20px 16px; }
     .result-header { padding: 20px 16px; }
   }
+  .lang-bar { background: rgba(44,26,14,0.95); padding: 5px 20px; display: flex; justify-content: flex-end; gap: 6px; }
+  .lang-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 3px 9px; border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: rgba(232,240,225,0.6); cursor: pointer; }
+  .lang-btn.active { background: var(--leaf); color: var(--bark); border-color: var(--leaf); font-weight: 600; }
 </style>
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#2C1A0E">
@@ -520,7 +523,10 @@
   <link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
-
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('ja')" id="btn-ja">🇯🇵 日本語</button>
+  <button class="lang-btn" onclick="setLang('en')" id="btn-en">🇺🇸 English</button>
+</div>
 <nav style="background:var(--bark);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;">
   <a href="index.html" style="color:#E8F0E1;text-decoration:none;font-family:'Shippori Mincho',serif;font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px;">
     🌿 樹木医ツール
@@ -570,7 +576,8 @@
           <option value="larch">カラマツ</option>
         </optgroup>
         <optgroup label="広葉樹（落葉）">
-          <option value="cherry">サクラ類</option>
+          <option value="cherry">サクラ類（ソメイヨシノ）</option>
+          <option value="yamazakura">ヤマザクラ・オオシマザクラ</option>
           <option value="zelkova">ケヤキ</option>
           <option value="oak">コナラ・クヌギ（カシ類）</option>
           <option value="maple">カエデ・モミジ</option>
@@ -580,6 +587,8 @@
           <option value="chestnut">クリ</option>
           <option value="rowan">ナナカマド</option>
           <option value="hornbeam">イヌシデ・アカシデ</option>
+          <option value="poplar">ポプラ・ヤナギ類</option>
+          <option value="rose">バラ類</option>
         </optgroup>
         <optgroup label="広葉樹（常緑）">
           <option value="camellia">ツバキ・サザンカ</option>
@@ -588,6 +597,12 @@
           <option value="shirakashi">シラカシ・アラカシ</option>
           <option value="tabunoki">タブノキ</option>
           <option value="yamamomo">ヤマモモ</option>
+          <option value="aucuba">アオキ</option>
+          <option value="fatsia">ヤツデ</option>
+        </optgroup>
+        <optgroup label="竹類">
+          <option value="bamboo">マダケ・モウソウチク</option>
+          <option value="kumazasa">クマザサ・ナンテンチク</option>
         </optgroup>
         <optgroup label="果樹">
           <option value="citrus">カンキツ類（ミカン・ユズ）</option>
@@ -595,6 +610,8 @@
           <option value="plum">ウメ・モモ</option>
           <option value="apple">リンゴ・ナシ</option>
           <option value="grape">ブドウ</option>
+          <option value="fig">イチジク</option>
+          <option value="blueberry">ブルーベリー</option>
         </optgroup>
       </select>
     </div>
@@ -1059,6 +1076,160 @@ const diagnosisDB = {
       caution: "ブドウの病害虫防除は品種・地域・栽培形態によって大きく異なります。地域のJA・農業試験場の指導のもとで防除プログラムを組むことを強く推奨します。"
     }
   },
+  yamazakura: {
+    "leaf-spot,branch-dead": {
+      risk: "mid",
+      title: "ヤマザクラ・オオシマザクラの診断結果",
+      pests: [
+        { name: "てんぐ巣病", desc: "糸状菌による感染。感染枝に多数の細枝が叢生する。ソメイヨシノより発生は少ないが注意が必要。" },
+        { name: "褐斑穿孔病", desc: "葉に褐色の病斑が生じ、後に穿孔する。落葉が早まる場合がある。" }
+      ],
+      actions: [
+        "罹患枝は健全部から20cm以上下で切除",
+        "切り口にトップジンMペーストを塗布",
+        "罹患落葉の収集・焼却処分",
+        "剪定は落葉期（冬季）に実施"
+      ],
+      caution: "ヤマザクラは自然林に自生する樹種で、過度な剪定は避けてください。病害虫への抵抗性はソメイヨシノより高い場合があります。"
+    }
+  },
+  poplar: {
+    "leaf-yellow,growth-slow": {
+      risk: "mid",
+      title: "ポプラ・ヤナギ類の診断結果",
+      pests: [
+        { name: "ポプラ葉さび病", desc: "葉の裏面にオレンジ色の胞子堆が形成される。大発生すると早期落葉を起こす。" },
+        { name: "カミキリムシ類（テッポウムシ）", desc: "幹内部を食害。根元に木屑（フラス）を排出する。大径木ほど被害が深刻。" }
+      ],
+      actions: [
+        "さび病は罹患葉の収集・焼却と殺菌剤散布",
+        "テッポウムシは木屑発見時に針金での幼虫捕殺または殺虫剤注入",
+        "樹勢回復のための施肥・灌水管理",
+        "枯れ枝の早期除去（落下危険）"
+      ],
+      caution: "ポプラ・ヤナギ類は成長が非常に速く、倒木時の被害が大きくなりやすいです。定期的な点検と適切な管理が重要です。"
+    }
+  },
+  rose: {
+    "leaf-spot,leaf-powder": {
+      risk: "mid",
+      title: "バラ類の診断結果",
+      pests: [
+        { name: "黒星病（黒点病）", desc: "葉に黒い斑点が生じ、黄化・落葉する。バラの最重要病害。雨が多い時期に多発。" },
+        { name: "うどんこ病", desc: "新芽・葉・蕾に白粉状のカビが発生。新梢の伸長を阻害する。" },
+        { name: "アブラムシ類", desc: "新芽・蕾に群生し樹液を吸汁。ウイルス病の媒介にもなる。" }
+      ],
+      actions: [
+        "黒星病は雨前の予防的殺菌剤散布が最も有効（ダコニール・サプロール等）",
+        "うどんこ病はカリグリーン・サンヨール等の殺菌剤を散布",
+        "アブラムシはオルトラン等の浸透移行性殺虫剤または天敵（テントウムシ）の活用",
+        "罹患葉の除去と処分（土に残さない）"
+      ],
+      caution: "バラの病害虫防除は定期的な予防散布が基本です。農薬ローテーション（異なる系統の薬剤を交互に使用）で耐性菌の発生を防いでください。"
+    }
+  },
+  aucuba: {
+    "leaf-yellow,leaf-spot": {
+      risk: "low",
+      title: "アオキの診断結果",
+      pests: [
+        { name: "アオキ炭疽病", desc: "葉に褐色〜灰白色の病斑が生じる。密植・通気不良の場所で多発。" },
+        { name: "カイガラムシ類", desc: "枝・葉に寄生し樹液を吸汁。すす病を誘発することがある。" }
+      ],
+      actions: [
+        "炭疽病は罹患葉の除去と殺菌剤散布（ベンレート水和剤等）",
+        "カイガラムシはマシン油乳剤を冬季に散布",
+        "通気性改善のための間引き剪定",
+        "過湿を避けた土壌管理"
+      ],
+      caution: "アオキは日陰に強い樹種ですが、密植すると通気性が悪化し病害虫が発生しやすくなります。適切な株間の確保が予防になります。"
+    }
+  },
+  fatsia: {
+    "leaf-yellow,leaf-spot": {
+      risk: "low",
+      title: "ヤツデの診断結果",
+      pests: [
+        { name: "ヤツデグンバイムシ", desc: "葉裏に寄生し樹液を吸汁。葉表に白い小斑点が密生する。" },
+        { name: "すす病", desc: "カイガラムシ・アブラムシの排泄物に発生する二次的病害。葉が黒くなる。" }
+      ],
+      actions: [
+        "グンバイムシは葉裏への殺虫剤散布（スミチオン乳剤等）",
+        "すす病は原因となる害虫の防除が根本的対策",
+        "罹患葉の除去と処分",
+        "通気性確保のための間引き"
+      ],
+      caution: "ヤツデは比較的病害虫に強い樹種です。適切な立地環境（日陰・適湿）を維持することが最大の予防策です。"
+    }
+  },
+  bamboo: {
+    "leaf-yellow,growth-slow": {
+      risk: "mid",
+      title: "マダケ・モウソウチクの診断結果",
+      pests: [
+        { name: "竹の開花・枯死", desc: "竹類は数十年に一度一斉開花し、その後枯死する。これは病気ではなく生理現象だが、広範囲の枯死につながる。" },
+        { name: "タケノコバエ類", desc: "筍内部に幼虫が潜入し食害。被害筍は成長が止まる。" }
+      ],
+      actions: [
+        "開花・枯死の場合は枯れた竹を早めに除去・処分",
+        "タケノコバエは被害筍の早期除去と翌年の防除（殺虫剤）",
+        "健全な竹林管理（適切な本数管理）で樹勢を維持",
+        "地下茎の適切な管理と越境防止"
+      ],
+      caution: "竹の一斉開花・枯死は種によって数十〜120年周期で発生します。開花が確認された場合は自治体・専門家に相談してください。"
+    }
+  },
+  kumazasa: {
+    "leaf-yellow,leaf-fall": {
+      risk: "low",
+      title: "クマザサ類の診断結果",
+      pests: [
+        { name: "ナンテンチク炭疽病", desc: "葉に褐色の病斑が生じる。過湿・密植環境で多発。" },
+        { name: "すす病", desc: "カイガラムシの排泄物に発生。葉が黒くなり光合成が阻害される。" }
+      ],
+      actions: [
+        "過密な株の間引きで通気性を改善",
+        "罹患葉の刈り取りと処分",
+        "過湿環境の改善（排水改善）",
+        "カイガラムシが見られる場合はマシン油乳剤散布"
+      ],
+      caution: "クマザサ・ナンテンチクの葉縁が白くなる「隈笹」は病気ではなく冬の自然現象です。春には新葉が展開します。"
+    }
+  },
+  fig: {
+    "leaf-spot,branch-dead": {
+      risk: "mid",
+      title: "イチジクの診断結果",
+      pests: [
+        { name: "イチジク疫病", desc: "果実・葉・枝に褐色の病斑が生じ、腐敗する。雨が多い時期に急速に広がる。" },
+        { name: "テッポウムシ（カミキリムシ幼虫）", desc: "幹内部を食害。根元に木屑が見られたら要注意。放置すると枯死に至る。" }
+      ],
+      actions: [
+        "疫病は罹患部の除去と殺菌剤（ジマンダイセン等）散布",
+        "テッポウムシは針金での幼虫捕殺または殺虫剤注入",
+        "排水改善と過湿を避けた土壌管理",
+        "適切な剪定による通気性の確保"
+      ],
+      caution: "イチジクの樹液（ラテックス）は皮膚炎を起こす場合があります。作業時は必ず手袋・長袖を着用してください。"
+    }
+  },
+  blueberry: {
+    "leaf-yellow,growth-slow": {
+      risk: "mid",
+      title: "ブルーベリーの診断結果",
+      pests: [
+        { name: "ミイラ病（ミイラ果）", desc: "果実がミイラ状に乾燥・変色する。糸状菌（Monilinia属）による病害。収量に大きく影響する。" },
+        { name: "コガネムシ幼虫（根圏食害）", desc: "根を食害し、地上部の萎凋・生育不良を引き起こす。根圏の確認が必要。" }
+      ],
+      actions: [
+        "ミイラ病は罹患果の早期除去・収集・焼却処分",
+        "開花期の殺菌剤散布（予防的）が有効",
+        "コガネムシ幼虫は根圏の土壌処理（ダイアジノン等）",
+        "適切なマルチングで根圏環境を改善"
+      ],
+      caution: "ブルーベリーは土壌酸性度（pH 4.5〜5.5）の管理が重要です。pH管理が不適切な場合、病害虫とは無関係の生育不良が起きやすいです。"
+    }
+  },
   default: {
     default: {
       risk: "mid",
@@ -1179,6 +1350,193 @@ if ("serviceWorker" in navigator) {
       .catch(err => console.log("[PWA] SW failed:", err));
   });
 }
+
+// ===== i18n =====
+const DIAG_I18N = {
+  ja: {
+    title: '樹木病害虫リスク診断 | 樹木医監修',
+    badge: '🌿 樹木医監修ツール',
+    h1: '樹木病害虫<br>リスク診断',
+    sub: '樹木医が監修。症状を選択するだけで、考えられる病害虫と<br>初期対処法を即座に確認できます。',
+    q1: '対象の樹木を選択してください',
+    q1desc: '最も近いものを選択してください',
+    q2: '症状が現れた時期',
+    q2desc: '症状を最初に確認した季節を選択してください',
+    q3: '確認できる症状（複数選択可）',
+    q3desc: '当てはまるものをすべて選択してください',
+    q4: '立地環境',
+    q4desc: '樹木が置かれている環境を選択してください',
+    btn: '🔍　診断する',
+    reset: '↩ もう一度診断する',
+    resultLabel: 'DIAGNOSIS RESULT',
+    pestTitle: '疑われる病害虫',
+    actionTitle: '推奨される初期対処',
+    cautionTitle: '注意事項',
+    ctaTitle: '🌲 より詳しい診断が必要ですか？',
+    ctaDesc: '本ツールは初期スクリーニングです。正確な診断と処置計画には、<br>樹木医による現地調査をお勧めします。',
+    ctaBtn: '📞 樹木医に相談する',
+    footer1: '本ツールは一般的な情報提供を目的としており、専門的な診断の代替ではありません。',
+    // Symptoms
+    s_leaf_yellow: '葉が黄変・褐変',
+    s_leaf_fall: '時期外れの落葉',
+    s_leaf_spot: '葉に斑点・病斑',
+    s_leaf_wilt: '葉のしおれ・萎縮',
+    s_leaf_hole: '葉に穴・食害痕',
+    s_leaf_powder: '葉に白い粉状物',
+    s_branch_dead: '枝枯れ・胴枯れ',
+    s_bark_crack: '樹皮の亀裂・剥離',
+    s_resin: 'ヤニ・樹液の滲出',
+    s_insect: '虫・卵・糞の確認',
+    s_mushroom: 'キノコ・子実体の発生',
+    s_growth_slow: '生長の著しい停滞',
+    // Seasons
+    spring: '春（3〜5月）', summer: '夏（6〜8月）',
+    autumn: '秋（9〜11月）', winter: '冬（12〜2月）',
+    // Locations
+    loc_urban: '市街地（舗装・建物に囲まれた環境）',
+    loc_park: '公園・緑地',
+    loc_garden: '住宅庭園',
+    loc_forest: '林・山地',
+    loc_coast: '沿岸部・海沿い',
+    loc_farm: '農地・果樹園',
+  },
+  en: {
+    title: 'Pest & Disease Risk Diagnosis | Arborist Tools Japan',
+    badge: '🌿 Certified Arborist Tool',
+    h1: 'Pest & Disease<br>Risk Diagnosis',
+    sub: 'Supervised by a certified arborist. Select symptoms to instantly identify<br>likely pests/diseases and recommended initial responses.',
+    q1: 'Select the Tree Species',
+    q1desc: 'Choose the closest match',
+    q2: 'When did symptoms appear?',
+    q2desc: 'Select the season when symptoms were first noticed',
+    q3: 'Visible Symptoms (multiple selection)',
+    q3desc: 'Check all that apply',
+    q4: 'Site Environment',
+    q4desc: 'Select the environment where the tree is located',
+    btn: '🔍　Diagnose',
+    reset: '↩ Diagnose Again',
+    resultLabel: 'DIAGNOSIS RESULT',
+    pestTitle: 'Suspected Pests / Diseases',
+    actionTitle: 'Recommended Initial Actions',
+    cautionTitle: 'Cautions',
+    ctaTitle: '🌲 Need a More Detailed Diagnosis?',
+    ctaDesc: 'This tool is for initial screening only. For accurate diagnosis and treatment planning,<br>an on-site inspection by a certified arborist is recommended.',
+    ctaBtn: '📞 Consult an Arborist',
+    footer1: 'This tool is for general information only and is not a substitute for professional diagnosis.',
+    // Symptoms
+    s_leaf_yellow: 'Leaf yellowing / browning',
+    s_leaf_fall: 'Premature leaf drop',
+    s_leaf_spot: 'Leaf spots / lesions',
+    s_leaf_wilt: 'Leaf wilting / curling',
+    s_leaf_hole: 'Holes / feeding damage on leaves',
+    s_leaf_powder: 'White powdery coating on leaves',
+    s_branch_dead: 'Branch dieback / canker',
+    s_bark_crack: 'Bark cracking / peeling',
+    s_resin: 'Resin / sap oozing',
+    s_insect: 'Insects / eggs / frass observed',
+    s_mushroom: 'Fungal fruiting bodies present',
+    s_growth_slow: 'Significantly reduced growth',
+    // Seasons
+    spring: 'Spring (Mar–May)', summer: 'Summer (Jun–Aug)',
+    autumn: 'Autumn (Sep–Nov)', winter: 'Winter (Dec–Feb)',
+    // Locations
+    loc_urban: 'Urban (paved / built-up area)',
+    loc_park: 'Park / green space',
+    loc_garden: 'Residential garden',
+    loc_forest: 'Woodland / mountain',
+    loc_coast: 'Coastal / seaside',
+    loc_farm: 'Farmland / orchard',
+  }
+};
+
+function setLang(lang) {
+  document.getElementById('btn-ja').classList.toggle('active', lang === 'ja');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.documentElement.lang = lang;
+  const t = DIAG_I18N[lang];
+  document.title = t.title;
+
+  const set = (sel, html) => { const el = document.querySelector(sel); if (el) el.innerHTML = html; };
+  const setText = (sel, txt) => { const el = document.querySelector(sel); if (el) el.textContent = txt; };
+
+  set('.badge', t.badge);
+  set('h1', t.h1);
+  set('.subtitle', t.sub);
+
+  // Q labels
+  const qs = document.querySelectorAll('.section-title');
+  const qdescs = document.querySelectorAll('.section-desc');
+  if (qs[0]) qs[0].innerHTML = `<span class="num">Q1</span>${t.q1}`;
+  if (qs[1]) qs[1].innerHTML = `<span class="num">Q2</span>${t.q2}`;
+  if (qs[2]) qs[2].innerHTML = `<span class="num">Q3</span>${t.q3}`;
+  if (qs[3]) qs[3].innerHTML = `<span class="num">Q4</span>${t.q4}`;
+  if (qdescs[0]) qdescs[0].textContent = t.q1desc;
+  if (qdescs[1]) qdescs[1].textContent = t.q2desc;
+  if (qdescs[2]) qdescs[2].textContent = t.q3desc;
+  if (qdescs[3]) qdescs[3].textContent = t.q4desc;
+
+  // Diagnose button
+  const btn = document.getElementById('diagnose-btn');
+  if (btn) btn.textContent = t.btn;
+
+  // Symptoms
+  const symMap = {
+    'leaf-yellow': t.s_leaf_yellow, 'leaf-fall': t.s_leaf_fall,
+    'leaf-spot': t.s_leaf_spot, 'leaf-wilt': t.s_leaf_wilt,
+    'leaf-hole': t.s_leaf_hole, 'leaf-powder': t.s_leaf_powder,
+    'branch-dead': t.s_branch_dead, 'bark-crack': t.s_bark_crack,
+    'resin': t.s_resin, 'insect': t.s_insect,
+    'mushroom': t.s_mushroom, 'growth-slow': t.s_growth_slow,
+  };
+  document.querySelectorAll('.symptom-item').forEach(el => {
+    const cb = el.querySelector('input');
+    if (cb && symMap[cb.value]) {
+      const txt = el.childNodes[el.childNodes.length - 1];
+      if (txt && txt.nodeType === 3) txt.textContent = ' ' + symMap[cb.value];
+    }
+  });
+
+  // Season options
+  const seasonSel = document.getElementById('season');
+  if (seasonSel) {
+    seasonSel.options[1].text = t.spring;
+    seasonSel.options[2].text = t.summer;
+    seasonSel.options[3].text = t.autumn;
+    seasonSel.options[4].text = t.winter;
+  }
+
+  // Location options
+  const locSel = document.getElementById('location');
+  if (locSel) {
+    const locs = [t.loc_urban, t.loc_park, t.loc_garden, t.loc_forest, t.loc_coast, t.loc_farm];
+    locs.forEach((l, i) => { if (locSel.options[i+1]) locSel.options[i+1].text = l; });
+  }
+
+  // Result section labels
+  const rh = document.querySelector('.result-header .risk-label');
+  if (rh) rh.textContent = t.resultLabel;
+  const cards = document.querySelectorAll('.result-card h3');
+  if (cards[0]) cards[0].innerHTML = `<span class="icon">🦠</span>${t.pestTitle}`;
+  if (cards[1]) cards[1].innerHTML = `<span class="icon">📋</span>${t.actionTitle}`;
+  if (cards[2]) cards[2].innerHTML = `<span class="icon">⚠️</span>${t.cautionTitle}`;
+
+  // CTA
+  const ctaH = document.querySelector('.cta-box h3');
+  const ctaP = document.querySelector('.cta-box p');
+  const ctaBtn = document.querySelector('.btn-cta');
+  const resetBtn = document.querySelector('.btn-reset');
+  if (ctaH) ctaH.textContent = t.ctaTitle;
+  if (ctaP) ctaP.innerHTML = t.ctaDesc;
+  if (ctaBtn) ctaBtn.textContent = t.ctaBtn;
+  if (resetBtn) resetBtn.textContent = t.reset;
+
+  // Footer
+  const footer = document.querySelector('footer p');
+  if (footer) footer.textContent = t.footer1;
+}
+
+if (navigator.language && navigator.language.startsWith('en')) setLang('en');
+
 </script>
 </body>
 </html>
