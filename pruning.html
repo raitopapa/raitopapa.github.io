@@ -428,6 +428,9 @@ footer {
 .ref-item a:hover { border-bottom-color: var(--moss); }
 .ref-note { font-size: 11px; color: #8fa085; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--mist); line-height: 1.7; }
 @media print { .ref-section { display: none; } }
+.lang-bar { background: rgba(44,26,14,0.95); padding: 5px 20px; display: flex; justify-content: flex-end; gap: 6px; }
+.lang-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 3px 9px; border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: rgba(232,240,225,0.6); cursor: pointer; }
+.lang-btn.active { background: var(--leaf); color: var(--bark); border-color: var(--leaf); font-weight: 600; }
 
 .pdf-btn {
   display: inline-flex; align-items: center; gap: 6px;
@@ -464,7 +467,10 @@ footer {
   <link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
-
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLangP('ja')" id="btn-ja">🇯🇵 日本語</button>
+  <button class="lang-btn" onclick="setLangP('en')" id="btn-en">🇺🇸 English</button>
+</div>
 <nav style="background:var(--bark);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;">
   <a href="index.html" style="color:#E8F0E1;text-decoration:none;font-family:'Shippori Mincho',serif;font-size:15px;font-weight:700;">
     🌿 樹木医ツール
@@ -503,7 +509,8 @@ footer {
         <option value="larch">カラマツ</option>
       </optgroup>
       <optgroup label="広葉樹（落葉）">
-        <option value="cherry">サクラ類</option>
+        <option value="cherry">サクラ類（ソメイヨシノ）</option>
+        <option value="yamazakura">ヤマザクラ・オオシマザクラ</option>
         <option value="zelkova">ケヤキ</option>
         <option value="maple">カエデ・モミジ</option>
         <option value="ginkgo">イチョウ</option>
@@ -513,6 +520,8 @@ footer {
         <option value="chestnut">クリ</option>
         <option value="rowan">ナナカマド</option>
         <option value="hornbeam">イヌシデ・アカシデ</option>
+        <option value="poplar">ポプラ・ヤナギ類</option>
+        <option value="rose">バラ類</option>
       </optgroup>
       <optgroup label="広葉樹（常緑）">
         <option value="camellia">ツバキ・サザンカ</option>
@@ -521,12 +530,20 @@ footer {
         <option value="shirakashi">シラカシ・アラカシ</option>
         <option value="tabunoki">タブノキ</option>
         <option value="yamamomo">ヤマモモ</option>
+        <option value="aucuba">アオキ</option>
+        <option value="fatsia">ヤツデ</option>
+      </optgroup>
+      <optgroup label="竹類">
+        <option value="bamboo">マダケ・モウソウチク</option>
+        <option value="kumazasa">クマザサ・ナンテンチク</option>
       </optgroup>
       <optgroup label="果樹">
         <option value="citrus">カンキツ類</option>
         <option value="persimmon">カキ</option>
         <option value="apple">リンゴ・ナシ</option>
         <option value="grape">ブドウ</option>
+        <option value="fig">イチジク</option>
+        <option value="blueberry">ブルーベリー</option>
       </optgroup>
       <optgroup label="生垣">
         <option value="hedge-box">ツゲ・イヌツゲ</option>
@@ -546,6 +563,22 @@ footer {
       <option value="health">枯れ枝・病枝の除去</option>
       <option value="hedge">生垣の刈り込み</option>
     </select>
+  </div>
+</div>
+
+<!-- 地域補正セレクター -->
+<div class="field" style="margin-bottom:20px;">
+  <label>🗾 地域補正（気象庁生物季節観測データ基準）</label>
+  <select id="region" onchange="generate()" style="background-color:var(--pale);">
+    <option value="0">標準（関東〜関西平野部・東京基準）</option>
+    <option value="-2">北海道全域（約1ヶ月遅め・札幌平年4/28開花）</option>
+    <option value="-1">東北北部・高標高地（約3週間遅め・青森平年4/17開花）</option>
+    <option value="-0.5">東北南部・北陸・長野高地（約2週間遅め・仙台平年4/6開花）</option>
+    <option value="0.5">九州・四国（約1週間早め・福岡平年3/22開花）</option>
+    <option value="1">沖縄・奄美（1〜2ヶ月早め・常緑樹中心の管理）</option>
+  </select>
+  <div style="font-size:10px;color:#8fa085;margin-top:4px;font-family:'DM Mono',monospace;">
+    出典：気象庁「生物季節観測（さくら開花平年日）」1991〜2020年平年値
   </div>
 </div>
 
@@ -597,6 +630,7 @@ footer {
     <li class="ref-item" data-num="5">Harris, R.W., Clark, J.R., Matheny, N.P. "Arboriculture: Integrated Management of Landscape Trees, Shrubs, and Vines" 4th ed. Prentice Hall (2004)</li>
     <li class="ref-item" data-num="6">ISA（国際樹木学会）「<a href="https://www.isa-arbor.com/Portals/0/Assets/PDF/PruningStandards_Japanese.pdf" target="_blank" rel="noopener">ANSI A300 剪定規格（日本語版）</a>」International Society of Arboriculture</li>
     <li class="ref-item" data-num="7">各都道府県農業試験場「花木・庭木の栽培管理技術指針」（地域別剪定適期の参考資料）</li>
+    <li class="ref-item" data-num="8">気象庁「<a href="https://www.data.jma.go.jp/sakura/data/sakura_kaika.html" target="_blank" rel="noopener">生物季節観測 さくらの開花平年日（1991〜2020年平年値）</a>」気象庁 — <strong>地域補正値の算出根拠</strong>。東京平年3/27を基準に、札幌+31日・青森+20日・仙台+9日・福岡-5日の差を剪定適期補正に換算。</li>
   </ul>
   <p class="ref-note">
     本ツールの剪定適期は、上記の公的機関・国際基準・専門文献および樹木医資格保有者の実務経験に基づいています。
@@ -1006,8 +1040,148 @@ const TREE_LABELS = {
   apple: 'リンゴ・ナシ',
   grape: 'ブドウ',
   'hedge-box': 'ツゲ・イヌツゲ（生垣）',
-  'hedge-photo': 'レッドロビン・カナメモチ（生垣）'
+  'hedge-photo': 'レッドロビン・カナメモチ（生垣）',
+  yamazakura: 'ヤマザクラ・オオシマザクラ',
+  poplar: 'ポプラ・ヤナギ類',
+  rose: 'バラ類',
+  aucuba: 'アオキ',
+  fatsia: 'ヤツデ',
+  bamboo: 'マダケ・モウソウチク',
+  kumazasa: 'クマザサ・ナンテンチク',
+  fig: 'イチジク',
+  blueberry: 'ブルーベリー'
 };
+
+// 新樹種データ
+const DB_EXTRA = {
+  yamazakura: {
+    shape:  ['best','best','caution','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+    size:   ['best','good','caution','avoid','avoid','avoid','avoid','avoid','avoid','avoid','neutral','good'],
+    health: ['good','good','good','avoid','avoid','avoid','avoid','avoid','avoid','good','good','good'],
+    _note: {
+      best: '1〜2月（完全落葉・休眠期）',
+      reason: 'ヤマザクラ・オオシマザクラはソメイヨシノ同様、落葉休眠期が最適。ヤマザクラは萌芽力が比較的強く、自然樹形が美しい。',
+      caution: '花後〜秋の剪定は傷口から腐朽菌が侵入しやすい。切り口には必ず保護剤を塗布。',
+      tools: 'よく切れる剪定鋏・ノコギリ。必ずトップジンMペーストで保護。',
+      quality: 'ヤマザクラは自然樹形が最も美しい。強剪定を避け、枯れ枝・込み枝の除去のみに限定するのが理想。'
+    }
+  },
+  poplar: {
+    shape:  ['best','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good','good'],
+    size:   ['best','good','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '12〜2月（落葉休眠期）',
+      reason: 'ポプラ・ヤナギ類は成長が非常に速く、落葉後の休眠期に剪定することで傷口からの腐朽リスクを最小化できます。',
+      caution: '成長が非常に速いため、定期的な管理が必要。根系が広く張るため、構造物への影響に注意。',
+      tools: '高木になりやすいため、高所作業車・ロープワークが必要。個人での大径木剪定は危険。',
+      quality: 'ヤナギ類は枝垂れる自然樹形が特徴。不必要な強剪定は避け、樹形を活かした管理が基本。'
+    }
+  },
+  rose: {
+    shape:  ['neutral','neutral','best','good','neutral','neutral','neutral','neutral','neutral','neutral','good','best'],
+    size:   ['neutral','neutral','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','best'],
+    flower: ['neutral','neutral','best','neutral','neutral','best','neutral','neutral','best','neutral','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '2〜3月（冬剪定）・花後剪定（5月・9月）',
+      reason: 'バラは冬の強剪定（2〜3月）と花後の軽い剪定（5月・9月）の組み合わせが基本。冬剪定で樹形・サイズをリセット。',
+      caution: '剪定は必ず芽の5mm上で45度に切る。切り口保護剤を塗布。黒星病・うどんこ病の防除と組み合わせた管理が必要。',
+      tools: 'バラ専用の鋭い剪定鋏。必ず厚手の手袋を着用（トゲに注意）。使用後はアルコール消毒。',
+      quality: '5枚葉の上で切るのが基本。外向きの芽の上で切ることで開いた樹形を維持。花後の花がら摘みを怠らないこと。'
+    }
+  },
+  aucuba: {
+    shape:  ['neutral','neutral','neutral','neutral','best','best','neutral','neutral','neutral','neutral','neutral','neutral'],
+    size:   ['neutral','neutral','neutral','neutral','best','good','neutral','neutral','neutral','neutral','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '5〜6月（新葉展開後）',
+      reason: 'アオキは日陰に強い常緑低木。春の新葉展開後が最適で、萌芽力が強く回復が早い時期です。',
+      caution: '耐陰性が高い樹種。強い直射日光が当たる場所では葉焼けが起きやすいため、立地環境に注意。',
+      tools: '剪定鋏。アオキは枝の途中で切ると切り口から枯れ込むため、必ず分岐点で切ること。',
+      quality: '斑入り品種は斑の少ない緑葉枝（先祖返り）を優先的に除去すると美観を維持できます。'
+    }
+  },
+  fatsia: {
+    shape:  ['neutral','neutral','neutral','neutral','best','best','neutral','neutral','neutral','neutral','neutral','neutral'],
+    size:   ['neutral','neutral','neutral','neutral','best','good','neutral','neutral','neutral','neutral','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '5〜6月（新葉展開後）',
+      reason: 'ヤツデは春の新葉展開後が最適。耐陰性・耐寒性が高く管理しやすい樹種です。',
+      caution: '古い葉・傷んだ葉を中心に除去。茎を詰めすぎると翌年の葉が小さくなります。',
+      tools: '剪定鋏。大きな葉を切ると見た目が悪くなるため、葉柄の付け根から除去するのが基本。',
+      quality: '幹が立ち上がりすぎた場合は株元から伐採し、株立ち状の若い芽を育てると美しい樹形になります。'
+    }
+  },
+  bamboo: {
+    shape:  ['neutral','neutral','neutral','best','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral'],
+    size:   ['neutral','neutral','neutral','best','best','neutral','neutral','neutral','neutral','good','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '4〜5月（タケノコ期直後）',
+      reason: '竹類はタケノコが出揃った後（5月頃）が最適。古い竹の間引きと新竹の本数管理を同時に行います。',
+      caution: '地下茎（根茎）の拡張を防ぐため、根止めシートの設置を強く推奨。隣地への侵入は法的トラブルになる場合があります。',
+      tools: 'のこぎり・竹用鉈（なた）。切り口は斜めに切り、雨水が溜まらないようにする。',
+      quality: '竹林は古い竹（3年以上）を優先的に除去し、若い竹（1〜2年）を残すことで美しい竹林を維持できます。筍の間引きも管理の重要な作業です。'
+    }
+  },
+  kumazasa: {
+    shape:  ['neutral','neutral','best','best','neutral','neutral','neutral','neutral','best','neutral','neutral','neutral'],
+    size:   ['neutral','neutral','best','best','neutral','neutral','neutral','neutral','best','neutral','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '3〜4月・9月（年2〜3回）',
+      reason: 'クマザサ類は萌芽力が強く、年2〜3回の刈り込みで管理します。春の新芽展開後と秋が最適。',
+      caution: '地下茎で横に広がるため、定期的な縁切りが必要。隣地への侵入管理が重要。',
+      tools: '刈り込み鋏・草刈り機。根茎の広がりはスコップで縁を切る。',
+      quality: '冬に葉縁が白く枯れる「隈笹」の景観を活かすなら、春の刈り込みのみに限定するのも選択肢。'
+    }
+  },
+  fig: {
+    shape:  ['best','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+    size:   ['best','good','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+    fruit:  ['best','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '1〜2月（落葉休眠期）',
+      reason: 'イチジクは落葉後の休眠期が最適。前年枝の結果習性を理解した剪定が収量に直結します。',
+      caution: 'イチジクの樹液（ラテックス）は皮膚炎を起こす場合があります。作業時は手袋・長袖を着用してください。',
+      tools: '剪定鋏・ノコギリ。切り口には保護剤を塗布。',
+      quality: '主枝・亜主枝を充実させる「開心自然形」が基本。前年枝に果実がなるため、結果母枝を適切に残すことが重要。'
+    }
+  },
+  blueberry: {
+    shape:  ['best','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+    size:   ['best','good','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+    fruit:  ['best','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral'],
+    health: ['good','good','good','good','good','good','good','good','good','good','good','good'],
+    _note: {
+      best: '1〜2月（落葉休眠期）',
+      reason: 'ブルーベリーは落葉後の休眠期が最適。古い枝の更新と結果枝の管理が収量・品質に直結します。',
+      caution: '品種によって剪定適期・方法が異なります（ハイブッシュ系・ラビットアイ系等）。品種に合わせた管理が必要。',
+      tools: '剪定鋏。切り口保護剤は不要だが、清潔な鋏の使用が重要。',
+      quality: '株全体の高さの1/3程度の古い太い枝を地際から除去する「更新剪定」を毎年行うと長期的に収量が安定します。'
+    }
+  }
+};
+
+// DB に新樹種を統合
+Object.assign(DB, DB_EXTRA);
+
+// TREE_LABELSにも追加
+Object.assign(TREE_LABELS, {
+  yamazakura: 'ヤマザクラ・オオシマザクラ',
+  poplar: 'ポプラ・ヤナギ類',
+  rose: 'バラ類',
+  aucuba: 'アオキ',
+  fatsia: 'ヤツデ',
+  bamboo: 'マダケ・モウソウチク',
+  kumazasa: 'クマザサ・ナンテンチク',
+  fig: 'イチジク',
+  blueberry: 'ブルーベリー'
+});
 
 const STATUS_LABELS = {
   best: '最適期',
@@ -1017,37 +1191,72 @@ const STATUS_LABELS = {
   neutral: '不適'
 };
 
+// 地域補正：気象庁生物季節観測データ（さくら開花平年日）に基づく
+// 東京平年3/27を基準として各地域の生育季節ズレを月単位で換算
+// 出典：気象庁「生物季節観測」1991-2020年平年値
+function applyRegionOffset(cal, offset) {
+  if (offset === 0) return cal;
+  const n = Math.round(Math.abs(offset));
+  if (n === 0) return cal;
+  const result = [...cal];
+  if (offset < 0) {
+    // 遅め：カレンダーを後ろにシフト
+    for (let i = 11; i >= n; i--) result[i] = cal[i - n];
+    for (let i = 0; i < n; i++) result[i] = 'neutral';
+  } else {
+    // 早め：カレンダーを前にシフト
+    for (let i = 0; i <= 11 - n; i++) result[i] = cal[i + n];
+    for (let i = 12 - n; i <= 11; i++) result[i] = 'neutral';
+  }
+  return result;
+}
+
+const REGION_LABELS = {
+  '0':    '',
+  '-2':   '【北海道補正：気象庁平年値で東京比+31日遅れ】',
+  '-1':   '【東北北部補正：気象庁平年値で東京比+20日遅れ】',
+  '-0.5': '【東北南部補正：気象庁平年値で東京比+9日遅れ】',
+  '0.5':  '【九州・四国補正：気象庁平年値で東京比-5日早め】',
+  '1':    '【沖縄・奄美補正：常緑樹主体・冬期管理が中心】'
+};
+
+const REGION_NOTES = {
+  '0':    '',
+  '-2':   '北海道（札幌）の平年開花日4/28をもとに、東京比約1ヶ月の補正を適用しています。',
+  '-1':   '青森の平年開花日4/17をもとに、東京比約3週間の補正を適用しています。',
+  '-0.5': '仙台の平年開花日4/6をもとに、東京比約2週間の補正を適用しています。',
+  '0.5':  '福岡の平年開花日3/22をもとに、東京比約5日早めの補正を適用しています。',
+  '1':    '沖縄・奄美は亜熱帯性気候のため、剪定適期が本土と大幅に異なります。地域の農業試験場の指導に従ってください。'
+};
+
 function generate() {
   const treeVal = document.getElementById('tree').value;
   const purposeVal = document.getElementById('purpose').value;
+  const regionOffset = parseFloat(document.getElementById('region').value || '0');
   if (!treeVal || !purposeVal) return;
 
   const treeData = DB[treeVal];
   if (!treeData) return;
 
-  // Get calendar: use purpose-specific if available, else 'shape'
-  let cal = treeData[purposeVal] || treeData['shape'];
+  let baseCal = treeData[purposeVal] || treeData['shape'];
+  const cal = applyRegionOffset(baseCal, regionOffset);
   const note = treeData['_note'];
 
-  // Render headline
-  document.getElementById('tree-headline').textContent = TREE_LABELS[treeVal];
-  document.getElementById('purpose-sub').textContent = '目的：' + PURPOSE_LABELS[purposeVal];
+  const regionLabel = REGION_LABELS[String(regionOffset)] || '';
+  const regionNote = REGION_NOTES[String(regionOffset)] || '';
 
-  // Best period
-  const bestMonths = cal
-    .map((s, i) => s === 'best' ? (i+1)+'月' : null)
-    .filter(Boolean);
-  const goodMonths = cal
-    .map((s, i) => (s === 'best' || s === 'good') ? (i+1)+'月' : null)
-    .filter(Boolean);
+  document.getElementById('tree-headline').textContent = TREE_LABELS[treeVal];
+  document.getElementById('purpose-sub').textContent = '目的：' + PURPOSE_LABELS[purposeVal] + (regionLabel ? '　' + regionLabel : '');
+
+  const bestMonths = cal.map((s, i) => s === 'best' ? (i+1)+'月' : null).filter(Boolean);
 
   document.getElementById('best-period-box').innerHTML = `
     <strong>🗓 最適な剪定時期：${bestMonths.join('・') || '通年対応可'}</strong>
     ${note.best ? '<span style="font-size:12px;color:#3D5A3E;">推奨期間の目安：' + note.best + '</span><br>' : ''}
     <span style="font-size:13px;color:#4a5e4a;">${note.reason}</span>
+    ${regionNote ? '<br><span style="font-size:11px;color:#C8842A;margin-top:6px;display:block;padding:6px 10px;background:rgba(200,132,42,0.08);border-radius:2px;">📍 ' + regionNote + '<br>出典：気象庁「生物季節観測」1991-2020年平年値</span>' : ''}
   `;
 
-  // Render calendar grid
   const grid = document.getElementById('cal-grid');
   grid.innerHTML = cal.map((status, i) => `
     <div class="month-cell status-${status}">
@@ -1057,33 +1266,76 @@ function generate() {
     </div>
   `).join('');
 
-  // Render detail cards
   const detailGrid = document.getElementById('detail-grid');
   detailGrid.innerHTML = `
     <div class="detail-card">
       <h3>⚠️ 注意事項</h3>
-      <ul class="detail-list">
-        <li>${note.caution}</li>
-      </ul>
+      <ul class="detail-list"><li>${note.caution}</li></ul>
     </div>
     <div class="detail-card">
       <h3>🔧 使用ツール・準備</h3>
-      <ul class="detail-list">
-        <li>${note.tools}</li>
-      </ul>
+      <ul class="detail-list"><li>${note.tools}</li></ul>
     </div>
     <div class="detail-card full">
       <h3>✨ 品質向上のポイント</h3>
-      <ul class="detail-list">
-        <li>${note.quality}</li>
-      </ul>
+      <ul class="detail-list"><li>${note.quality}</li></ul>
+    </div>
+    <div class="detail-card full">
+      <h3>📅 年間管理カレンダー</h3>
+      ${generateAnnualCalendar(treeVal, cal, note)}
     </div>
   `;
 
-  // Show
   const sec = document.getElementById('calendar-section');
   sec.style.display = 'block';
   sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function generateAnnualCalendar(treeVal, cal, note) {
+  const tasks = {
+    best:    '✂️ 剪定（最適期）',
+    good:    '✂️ 剪定（適期）',
+    caution: '⚠️ 剪定（要注意）',
+    avoid:   '🚫 剪定避ける',
+    neutral: '—'
+  };
+  const extras = {
+    pine:    {3:'🌱 みどり摘み', 9:'🍂 古葉取り'},
+    cherry:  {3:'🌸 開花', 4:'🌸 花後管理', 6:'💊 病害虫防除'},
+    plum:    {2:'🌸 開花', 6:'🍑 収穫', 7:'💊 病害虫防除'},
+    apple:   {4:'🌸 開花・摘花', 6:'🍎 摘果', 9:'🍎 収穫'},
+    grape:   {4:'🌱 芽かき', 5:'🌿 摘心', 7:'🍇 袋かけ', 9:'🍇 収穫'},
+    rose:    {4:'🌹 春の開花', 5:'✂️ 花後剪定', 9:'🌹 秋の開花', 11:'🌹 秋の花後剪定'},
+    bamboo:  {4:'🎋 筍収穫', 5:'🎋 筍管理', 9:'🍂 古竹除去'},
+    citrus:  {3:'🌸 開花', 11:'🍊 収穫', 12:'🍊 収穫終了'},
+    fig:     {8:'🍈 収穫開始', 10:'🍈 収穫終了'},
+    blueberry: {6:'🫐 収穫開始', 8:'🫐 収穫終了'},
+  };
+
+  const rows = MONTHS.map((month, i) => {
+    const status = cal[i];
+    const task = status === 'neutral' ? '—' : tasks[status];
+    const extra = (extras[treeVal] && extras[treeVal][i+1]) ? extras[treeVal][i+1] : '';
+    const rowBg = status === 'best' ? 'background:rgba(61,90,62,0.08)' :
+                  status === 'good' ? 'background:rgba(122,174,110,0.06)' :
+                  status === 'avoid' ? 'background:rgba(139,58,42,0.05)' : '';
+    return `<tr style="${rowBg}">
+      <td style="padding:5px 10px;font-family:'DM Mono',monospace;font-size:11px;color:#5a6e5a;border-bottom:1px solid #E8F0E1;white-space:nowrap;">${month}</td>
+      <td style="padding:5px 10px;font-size:11px;border-bottom:1px solid #E8F0E1;">${task}</td>
+      <td style="padding:5px 10px;font-size:11px;color:#6b7e6b;border-bottom:1px solid #E8F0E1;">${extra}</td>
+    </tr>`;
+  }).join('');
+
+  return `<table style="width:100%;border-collapse:collapse;">
+    <thead>
+      <tr style="background:var(--pale);">
+        <th style="padding:6px 10px;font-family:'DM Mono',monospace;font-size:10px;color:var(--moss);text-align:left;letter-spacing:0.1em;">月</th>
+        <th style="padding:6px 10px;font-family:'DM Mono',monospace;font-size:10px;color:var(--moss);text-align:left;letter-spacing:0.1em;">剪定作業</th>
+        <th style="padding:6px 10px;font-family:'DM Mono',monospace;font-size:10px;color:var(--moss);text-align:left;letter-spacing:0.1em;">その他の管理作業</th>
+      </tr>
+    </thead>
+    <tbody>${rows}</tbody>
+  </table>`;
 }
 
 function exportPDF() {
@@ -1103,6 +1355,122 @@ if ("serviceWorker" in navigator) {
       .catch(err => console.log("[PWA] SW failed:", err));
   });
 }
+
+// ===== i18n =====
+const PRUNE_I18N = {
+  ja: {
+    title: '剪定適期カレンダー | 樹木医監修',
+    badge: '🌿 樹木医監修ツール',
+    h1: '剪定適期<br>カレンダー計算機',
+    sub: '樹種と目的を選ぶだけで、月別の剪定適否と注意事項を即表示。<br>樹木医の知識をベースにした判断基準です。',
+    treeLabel: '樹種', purposeLabel: '剪定の目的',
+    regionLabel: '🗾 地域補正（気象庁生物季節観測データ基準）',
+    purposeOpts: ['— 選択してください —','樹形整理・透かし剪定','樹高・樹幅の縮小','花付きの向上','果実の品質向上','枯れ枝・病枝の除去','生垣の刈り込み'],
+    months: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+    best: '最適期', good: '適期', caution: '要注意', avoid: '避ける', neutral: '不適',
+    bestPeriod: '🗓 最適な剪定時期：',
+    detailCaution: '⚠️ 注意事項', detailTools: '🔧 使用ツール・準備',
+    detailQuality: '✨ 品質向上のポイント', annualCal: '📅 年間管理カレンダー',
+    calMonth: '月', calPrune: '剪定作業', calOther: 'その他の管理作業',
+    ctaTitle: '🌲 剪定を安全に進めたい方へ',
+    ctaDesc: '大木の剪定・強剪定は樹木へのダメージが大きく、誤った時期・方法は枯死の原因になります。<br>プロの樹木医・造園業者への相談をお勧めします。',
+    pdfBtn: '📄 PDF・印刷で保存',
+    anotherBtn: '📅 別の樹種を調べる',
+    consultBtn: '📞 専門家に相談する',
+    refTitle: '📚 剪定情報の根拠・出典',
+  },
+  en: {
+    title: 'Pruning Season Calendar | Arborist Tools Japan',
+    badge: '🌿 Certified Arborist Tool',
+    h1: 'Pruning Season<br>Calendar Calculator',
+    sub: 'Select species and pruning goal to see a monthly color-coded calendar<br>with timing guidance — based on professional arboricultural standards.',
+    treeLabel: 'Tree Species', purposeLabel: 'Pruning Goal',
+    regionLabel: '🗾 Regional Adjustment (JMA Phenological Data)',
+    purposeOpts: ['— Select —','Shaping / Thinning','Size Reduction','Improving Flowering','Improving Fruit Quality','Deadwood / Diseased Branch Removal','Hedge Trimming'],
+    months: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    best: 'Best', good: 'Good', caution: 'Caution', avoid: 'Avoid', neutral: 'Not Suitable',
+    bestPeriod: '🗓 Best Pruning Period: ',
+    detailCaution: '⚠️ Cautions', detailTools: '🔧 Tools & Preparation',
+    detailQuality: '✨ Quality Tips', annualCal: '📅 Annual Management Calendar',
+    calMonth: 'Month', calPrune: 'Pruning Work', calOther: 'Other Management Tasks',
+    ctaTitle: '🌲 Need Help with Safe Pruning?',
+    ctaDesc: 'Heavy pruning of large trees carries significant risk. Incorrect timing or technique<br>can lead to tree death. Consult a certified arborist or tree care professional.',
+    pdfBtn: '📄 Save as PDF / Print',
+    anotherBtn: '📅 Check Another Species',
+    consultBtn: '📞 Consult a Professional',
+    refTitle: '📚 References & Data Sources',
+  }
+};
+
+function setLangP(lang) {
+  document.getElementById('btn-ja').classList.toggle('active', lang === 'ja');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.documentElement.lang = lang;
+  const t = PRUNE_I18N[lang];
+  document.title = t.title;
+
+  const set = (sel, html) => { const el = document.querySelector(sel); if(el) el.innerHTML = html; };
+  set('.badge', t.badge);
+  set('h1', t.h1);
+  set('.sub', t.sub);
+
+  // Field labels
+  const labels = document.querySelectorAll('.field label');
+  if (labels[0]) labels[0].textContent = t.treeLabel;
+  if (labels[1]) labels[1].textContent = t.purposeLabel;
+  if (labels[2]) labels[2].textContent = t.regionLabel;
+
+  // Purpose select options
+  const purpSel = document.getElementById('purpose');
+  if (purpSel) t.purposeOpts.forEach((opt, i) => { if (purpSel.options[i]) purpSel.options[i].text = opt; });
+
+  // Update MONTHS global for calendar rendering
+  window._MONTHS_OVERRIDE = t.months;
+  window._STATUS_LABELS_OVERRIDE = { best: t.best, good: t.good, caution: t.caution, avoid: t.avoid, neutral: t.neutral };
+
+  // CTA
+  set('.cta-box h3', t.ctaTitle);
+  set('.cta-box p:first-of-type', t.ctaDesc);
+  const btns = document.querySelectorAll('.cta-box button, .cta-box .btn-primary, .cta-box .btn-outline, .cta-box .pdf-btn');
+  btns.forEach(b => {
+    if (b.textContent.includes('PDF') || b.textContent.includes('印刷')) b.textContent = t.pdfBtn;
+    else if (b.textContent.includes('別の') || b.textContent.includes('Another') || b.textContent.includes('調べ')) b.textContent = t.anotherBtn;
+    else if (b.textContent.includes('専門') || b.textContent.includes('Consult')) b.textContent = t.consultBtn;
+  });
+
+  // Ref title
+  const refH = document.querySelector('.ref-section h2');
+  if (refH) refH.textContent = t.refTitle;
+
+  // Re-render calendar if result is visible
+  const calSec = document.getElementById('calendar-section');
+  if (calSec && calSec.style.display !== 'none') {
+    const treeVal = document.getElementById('tree').value;
+    const purposeVal = document.getElementById('purpose').value;
+    if (treeVal && purposeVal) generate();
+  }
+}
+
+// Override MONTHS and STATUS_LABELS in generate() to support i18n
+const _origGenerate = generate;
+window.generate = function() {
+  _origGenerate();
+  // Patch month cells if lang override set
+  if (window._MONTHS_OVERRIDE) {
+    document.querySelectorAll('.month-cell').forEach((cell, i) => {
+      const numEl = cell.querySelector('.month-num');
+      const nameEl = cell.querySelector('.month-name');
+      const tipEl = cell.querySelector('.month-tooltip');
+      if (numEl) numEl.textContent = i + 1;
+      if (nameEl && window._MONTHS_OVERRIDE[i]) {
+        nameEl.textContent = window._MONTHS_OVERRIDE[i].replace(/[0-9月]/g,'').slice(0,3);
+      }
+    });
+  }
+};
+
+if (navigator.language && navigator.language.startsWith('en')) setLangP('en');
+
 </script>
 </body>
 </html>
