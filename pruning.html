@@ -1471,6 +1471,63 @@ window.generate = function() {
 
 if (navigator.language && navigator.language.startsWith('en')) setLangP('en');
 
+// Translate species options for pruning
+function translatePruningSpecies(lang) {
+  const map = {
+    en: {
+      pine:'Pine (Black/Red)', cedar:'Cedar / Cypress', juniper:'Juniper (Kaizuka)',
+      fir:'Fir (Momi)', hemlock:'Hemlock (Tsuga)', larch:'Larch',
+      cherry:'Cherry (Somei Yoshino)', yamazakura:'Cherry (Yama/Oshima)',
+      zelkova:'Zelkova', maple:'Maple / Momiji', ginkgo:'Ginkgo', plum:'Plum (Ume)',
+      magnolia:'Magnolia (Kobushi)', dogwood:'Dogwood (Hanamizuki)',
+      chestnut:'Chestnut', rowan:'Rowan', hornbeam:'Hornbeam',
+      poplar:'Poplar / Willow', rose:'Rose',
+      camellia:'Camellia', camphor:'Camphor Tree', holly:'Holly',
+      shirakashi:'Evergreen Oak', tabunoki:'Japanese Laurel', yamamomo:'Bayberry',
+      aucuba:'Aucuba', fatsia:'Fatsia',
+      bamboo:'Bamboo (Madake/Moso)', kumazasa:'Dwarf Bamboo',
+      citrus:'Citrus', persimmon:'Persimmon', apple:'Apple / Pear',
+      grape:'Grape', fig:'Fig', blueberry:'Blueberry',
+      'hedge-box':'Boxwood Hedge', 'hedge-photo':'Photinia Hedge',
+    },
+    ja: {
+      pine:'マツ類（クロマツ・アカマツ）', cedar:'スギ・ヒノキ', juniper:'カイヅカイブキ・ビャクシン',
+      fir:'モミ・ウラジロモミ', hemlock:'ツガ・コメツガ', larch:'カラマツ',
+      cherry:'サクラ類（ソメイヨシノ）', yamazakura:'ヤマザクラ・オオシマザクラ',
+      zelkova:'ケヤキ', maple:'カエデ・モミジ', ginkgo:'イチョウ', plum:'ウメ',
+      magnolia:'コブシ・ハクモクレン', dogwood:'ハナミズキ・ヤマボウシ',
+      chestnut:'クリ', rowan:'ナナカマド', hornbeam:'イヌシデ・アカシデ',
+      poplar:'ポプラ・ヤナギ類', rose:'バラ類',
+      camellia:'ツバキ・サザンカ', camphor:'クスノキ', holly:'モチノキ類',
+      shirakashi:'シラカシ・アラカシ', tabunoki:'タブノキ', yamamomo:'ヤマモモ',
+      aucuba:'アオキ', fatsia:'ヤツデ',
+      bamboo:'マダケ・モウソウチク', kumazasa:'クマザサ・ナンテンチク',
+      citrus:'カンキツ類', persimmon:'カキ', apple:'リンゴ・ナシ',
+      grape:'ブドウ', fig:'イチジク', blueberry:'ブルーベリー',
+      'hedge-box':'ツゲ・イヌツゲ', 'hedge-photo':'レッドロビン・カナメモチ',
+    }
+  };
+  const sel = document.getElementById('tree');
+  if (!sel) return;
+  const m = map[lang] || map.ja;
+  sel.querySelectorAll('option[value]').forEach(opt => {
+    if (opt.value && m[opt.value]) opt.text = m[opt.value];
+  });
+  const groups = sel.querySelectorAll('optgroup');
+  const groupLabels = lang === 'en'
+    ? ['Conifers','Deciduous Broadleaf','Evergreen Broadleaf','Bamboo','Fruit Trees','Hedges']
+    : ['針葉樹','広葉樹（落葉）','広葉樹（常緑）','竹類','果樹','生垣'];
+  groups.forEach((g, i) => { if (groupLabels[i]) g.label = groupLabels[i]; });
+}
+
+const _origSetLangP = setLangP;
+window.setLangP = function(lang) {
+  _origSetLangP(lang);
+  translatePruningSpecies(lang);
+};
+if (navigator.language && navigator.language.startsWith('en')) translatePruningSpecies('en');
+
+
 </script>
 </body>
 </html>
