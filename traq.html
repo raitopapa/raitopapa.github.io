@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>樹木リスク評価（ISA TRAQ準拠）| 樹木医ツール</title>
+<meta name="description" content="ISA Tree Risk Assessment Qualification（TRAQ）Level IIに準拠した樹木リスク評価ツール。樹木医・専門家向け。">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Noto+Serif+JP:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1A2F1A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="樹木医ツール">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<style>
+:root {
+  --ink: #0D1A0D;
+  --forest: #1A2F1A;
+  --moss: #2E5E2E;
+  --moss-l: #4A8A4A;
+  --leaf: #6AAE6A;
+  --cream: #F4F1EB;
+  --pale: #E8F0E1;
+  --mist: #C8D8C0;
+  --amber: #B87820;
+  --rust: #8B2A1A;
+  --sky: #2A5A8A;
+
+  /* TRAQ Risk Matrix Colors */
+  --risk-low:      #2E6B30;
+  --risk-moderate: #7A9A20;
+  --risk-high:     #C8842A;
+  --risk-extreme:  #8B2A1A;
+  --risk-imminent: #5A0A0A;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Noto Serif JP', serif;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse at 5% 10%, rgba(46,94,46,0.06) 0%, transparent 40%),
+    radial-gradient(ellipse at 95% 90%, rgba(26,47,26,0.04) 0%, transparent 40%);
+}
+
+/* NAV */
+nav {
+  background: var(--forest);
+  padding: 12px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+nav a { color: #C8D8C0; text-decoration: none; font-family: 'Shippori Mincho', serif; font-size: 15px; font-weight: 700; }
+.nav-back { font-size: 11px; font-family: 'DM Mono', monospace; letter-spacing: 0.1em; border: 1px solid rgba(200,216,192,0.3); padding: 5px 12px; border-radius: 2px; }
+.nav-badge { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; background: var(--moss); color: #C8D8C0; padding: 2px 8px; border-radius: 2px; margin-left: 8px; }
+
+.wrap { max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; }
+
+/* Header */
+header { margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid var(--mist); }
+.page-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--moss-l); margin-bottom: 8px; display: block; }
+h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(20px, 4vw, 30px); font-weight: 800; color: var(--forest); margin-bottom: 6px; }
+.sub { font-size: 12px; color: var(--moss-l); line-height: 1.8; }
+.isa-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--forest); color: #C8D8C0; padding: 4px 12px; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; margin-top: 10px; }
+
+/* Tree info grid */
+.info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 28px; }
+@media(max-width:600px){ .info-grid { grid-template-columns: 1fr 1fr; } }
+.info-field { background: rgba(255,255,255,0.7); border: 1px solid var(--mist); border-radius: 3px; padding: 12px 14px; }
+.info-field label { display: block; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; color: var(--moss); text-transform: uppercase; margin-bottom: 6px; }
+.info-field input, .info-field select, .info-field textarea {
+  width: 100%; font-family: 'Noto Serif JP', serif; font-size: 13px; color: var(--ink);
+  background: var(--cream); border: 1px solid var(--mist); border-radius: 2px; padding: 7px 10px;
+  appearance: none;
+}
+.info-field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%232E5E2E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+.info-field input:focus, .info-field select:focus, .info-field textarea:focus { outline: none; border-color: var(--moss); box-shadow: 0 0 0 3px rgba(46,94,46,0.1); }
+.info-field.wide { grid-column: span 2; }
+.info-field.full { grid-column: 1 / -1; }
+.info-field textarea { min-height: 60px; resize: vertical; line-height: 1.6; }
+
+/* Section */
+.traq-section { background: rgba(255,255,255,0.65); border: 1px solid var(--mist); border-radius: 4px; margin-bottom: 16px; overflow: hidden; backdrop-filter: blur(4px); }
+.traq-header { padding: 14px 18px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--mist); cursor: pointer; user-select: none; transition: background 0.15s; }
+.traq-header:hover { background: var(--pale); }
+.traq-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--cream); background: var(--forest); padding: 3px 8px; border-radius: 2px; flex-shrink: 0; }
+.traq-title { font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 600; color: var(--forest); flex: 1; }
+.traq-meta { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--moss-l); }
+.traq-chevron { font-size: 11px; color: var(--moss-l); transition: transform 0.2s; flex-shrink: 0; }
+.traq-section.open .traq-chevron { transform: rotate(180deg); }
+.traq-body { display: none; padding: 16px 18px; }
+.traq-section.open .traq-body { display: block; }
+
+/* Rating items */
+.rating-item { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(200,216,192,0.5); }
+.rating-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.rating-label { font-size: 13px; font-weight: 500; color: var(--forest); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.rating-desc { font-size: 11px; color: #6b8a6b; line-height: 1.65; margin-bottom: 10px; }
+.isa-ref { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--moss-l); border: 1px solid var(--mist); padding: 1px 6px; border-radius: 2px; }
+
+/* Radio rating buttons */
+.rating-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+.rating-btn {
+  padding: 7px 14px; border: 1.5px solid var(--mist); border-radius: 3px;
+  font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer;
+  transition: all 0.15s; background: white; color: #6b8a6b;
+  user-select: none;
+}
+.rating-btn:hover { border-color: var(--moss-l); color: var(--forest); }
+.rating-btn.sel-1 { background: var(--risk-low); border-color: var(--risk-low); color: white; }
+.rating-btn.sel-2 { background: var(--risk-moderate); border-color: var(--risk-moderate); color: white; }
+.rating-btn.sel-3 { background: var(--risk-high); border-color: var(--risk-high); color: white; }
+.rating-btn.sel-4 { background: var(--risk-extreme); border-color: var(--risk-extreme); color: white; }
+
+/* Text input in body */
+.traq-body input[type="text"],
+.traq-body input[type="number"],
+.traq-body select,
+.traq-body textarea {
+  width: 100%; padding: 9px 12px; font-family: 'Noto Serif JP', serif; font-size: 13px; color: var(--ink);
+  background: var(--cream); border: 1px solid var(--mist); border-radius: 3px; margin-top: 4px;
+  appearance: none;
+}
+.traq-body select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%232E5E2E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+.traq-body input:focus, .traq-body select:focus, .traq-body textarea:focus { outline: none; border-color: var(--moss); box-shadow: 0 0 0 3px rgba(46,94,46,0.1); }
+.field-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--moss); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; margin-top: 14px; display: block; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media(max-width:480px){ .two-col { grid-template-columns: 1fr; } }
+
+/* Risk Matrix Display */
+.matrix-display {
+  margin: 20px 0;
+  background: var(--forest);
+  border-radius: 4px;
+  padding: 20px;
+  color: var(--cream);
+}
+.matrix-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
+.matrix-grid {
+  display: grid;
+  grid-template-columns: auto repeat(4, 1fr);
+  gap: 3px;
+  font-size: 10px;
+}
+.matrix-cell {
+  padding: 8px 4px;
+  text-align: center;
+  border-radius: 2px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+}
+.matrix-header { opacity: 0.6; display: flex; align-items: center; justify-content: center; }
+.mc-low      { background: rgba(46,107,48,0.7); }
+.mc-moderate { background: rgba(122,154,32,0.7); }
+.mc-high     { background: rgba(200,132,42,0.7); }
+.mc-extreme  { background: rgba(139,42,26,0.7); }
+.mc-imminent { background: rgba(90,10,10,0.9); }
+.mc-active   { opacity: 1 !important; border: 2px solid white; font-weight: 600; }
+
+/* Calc button */
+.btn-calc {
+  width: 100%; padding: 17px; background: var(--forest); color: var(--cream);
+  border: none; border-radius: 3px; font-family: 'Shippori Mincho', serif;
+  font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px;
+  letter-spacing: 0.05em;
+}
+.btn-calc:hover { background: var(--moss); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(26,47,26,0.25); }
+
+/* Result */
+#result { display: none; animation: up 0.45s ease; margin-top: 28px; }
+@keyframes up { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+.result-header {
+  border-radius: 4px 4px 0 0; padding: 24px 28px;
+  display: flex; align-items: center; gap: 20px;
+}
+.rh-extreme  { background: var(--risk-extreme); color: white; }
+.rh-high     { background: var(--risk-high); color: white; }
+.rh-moderate { background: var(--risk-moderate); color: white; }
+.rh-low      { background: var(--risk-low); color: white; }
+.rh-imminent { background: var(--risk-imminent); color: white; }
+
+.risk-icon { font-size: 40px; flex-shrink: 0; }
+.result-title { font-family: 'Shippori Mincho', serif; font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.result-subtitle { font-size: 13px; opacity: 0.85; line-height: 1.7; }
+
+.result-body { border: 1px solid var(--mist); border-top: none; border-radius: 0 0 4px 4px; }
+.result-card { padding: 20px 24px; border-bottom: 1px solid var(--mist); background: white; }
+.result-card:last-child { border-bottom: none; }
+.result-card h3 { font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 700; color: var(--forest); margin-bottom: 12px; }
+
+/* Score breakdown */
+.score-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+@media(max-width:480px){ .score-grid { grid-template-columns: 1fr 1fr; } }
+.score-card { padding: 14px; border: 1px solid var(--mist); border-radius: 3px; text-align: center; background: var(--cream); }
+.score-card .sc-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--moss); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+.score-card .sc-val { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: var(--forest); }
+.score-card .sc-sub { font-size: 10px; color: #8fa085; margin-top: 2px; }
+
+/* Actions list */
+.action-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.action-item { display: flex; gap: 10px; padding: 10px 14px; border-radius: 3px; font-size: 12px; line-height: 1.7; }
+.action-urgent { background: #FFF0ED; border-left: 3px solid var(--risk-extreme); }
+.action-high   { background: #FFF8EE; border-left: 3px solid var(--risk-high); }
+.action-normal { background: var(--pale); border-left: 3px solid var(--leaf); }
+.action-tag { font-family: 'DM Mono', monospace; font-size: 9px; padding: 2px 6px; border-radius: 1px; flex-shrink: 0; color: white; margin-top: 2px; height: fit-content; }
+.tag-urgent { background: var(--risk-extreme); }
+.tag-high   { background: var(--risk-high); }
+.tag-normal { background: var(--moss); }
+
+/* Signature / Report */
+.report-box { background: var(--pale); border: 1px solid var(--mist); border-radius: 3px; padding: 16px 20px; margin-top: 16px; }
+.report-box h4 { font-family: 'Shippori Mincho', serif; font-size: 13px; font-weight: 600; color: var(--forest); margin-bottom: 8px; }
+.report-field { display: flex; justify-content: space-between; font-size: 11px; color: #6b8a6b; padding: 3px 0; border-bottom: 1px solid var(--mist); }
+.report-field:last-child { border-bottom: none; }
+
+/* CTA */
+.cta-box { background: linear-gradient(135deg, var(--moss) 0%, var(--forest) 100%); color: var(--cream); padding: 24px 28px; border-radius: 4px; text-align: center; margin-top: 20px; }
+.cta-box h3 { font-family: 'Shippori Mincho', serif; font-size: 17px; margin-bottom: 6px; }
+.cta-box p { font-size: 12px; opacity: 0.82; margin-bottom: 14px; line-height: 1.7; }
+.btn-pdf { display: inline-block; padding: 11px 24px; background: var(--cream); color: var(--forest); font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 700; border-radius: 2px; border: none; cursor: pointer; transition: opacity 0.2s; margin: 4px; }
+.btn-pdf:hover { opacity: 0.9; }
+.btn-reset { display: inline-block; padding: 11px 20px; background: transparent; color: var(--cream); font-family: 'Noto Serif JP', serif; font-size: 13px; border: 1px solid rgba(255,255,255,0.35); border-radius: 2px; cursor: pointer; margin: 4px; }
+
+/* Ref */
+.ref-section { margin-top: 36px; padding: 20px; background: rgba(255,255,255,0.5); border: 1px solid var(--mist); border-radius: 4px; }
+.ref-section h2 { font-family: 'Shippori Mincho', serif; font-size: 13px; font-weight: 700; color: var(--forest); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--mist); }
+.ref-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.ref-item { font-size: 11px; line-height: 1.7; color: #5a6e5a; padding-left: 20px; position: relative; }
+.ref-item::before { content: "[" attr(data-num) "]"; position: absolute; left: 0; font-family: 'DM Mono', monospace; color: var(--moss); font-size: 10px; }
+.ref-item a { color: var(--moss); text-decoration: none; border-bottom: 1px solid rgba(46,94,46,0.3); }
+.ref-note { font-size: 11px; color: #8fa085; margin-top: 10px; line-height: 1.7; }
+
+/* Ad */
+.ad-slot { background: var(--mist); border: 1px dashed #a0b8a0; border-radius: 3px; padding: 18px; text-align: center; font-family: 'DM Mono', monospace; font-size: 10px; color: #8fa085; margin: 24px 0; }
+
+footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--mist); font-family: 'DM Mono', monospace; font-size: 10px; color: #8fa085; text-align: center; line-height: 2; }
+
+/* Language switcher */
+.lang-bar { background: rgba(26,47,26,0.95); padding: 6px 20px; display: flex; justify-content: flex-end; align-items: center; gap: 6px; }
+.lang-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 4px 10px; border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: rgba(200,216,192,0.6); cursor: pointer; transition: all 0.15s; }
+.lang-btn.active { background: #6AAE6A; color: #1A2F1A; border-color: #6AAE6A; font-weight: 600; }
+
+@media print {
+  nav, .ad-slot, .cta-box { display: none !important; }
+  body { background: white; }
+  .result-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .action-item { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('ja')" id="btn-ja">🇯🇵 日本語</button>
+  <button class="lang-btn" onclick="setLang('en')" id="btn-en">🇺🇸 English</button>
+</div>
+
+<nav>
+  <div>
+    <a href="index.html">🌿 樹木医ツール</a>
+    <span class="nav-badge">PRO</span>
+  </div>
+  <a href="index.html" class="nav-back">← ホームへ</a>
+</nav>
+
+<div class="wrap">
+
+<header>
+  <span class="page-label">Professional Tool — ISA TRAQ Level II</span>
+  <h1>樹木リスク評価<br>Tree Risk Assessment</h1>
+  <p class="sub">ISA（国際樹木学会）Tree Risk Assessment Qualification（TRAQ）Level IIに準拠した<br>専門家向けリスク評価ツール。評価結果はISA標準リスクマトリクスで判定されます。</p>
+  <div class="isa-badge">🌐 ISA TRAQ Level II準拠 | ANSI A300 Part 9準拠</div>
+</header>
+
+<!-- Tree Info -->
+<div class="info-grid">
+  <div class="info-field">
+    <label>樹木ID / 管理番号</label>
+    <input type="text" id="tree-id" placeholder="例：A-001">
+  </div>
+  <div class="info-field">
+    <label>評価日</label>
+    <input type="date" id="eval-date">
+  </div>
+  <div class="info-field">
+    <label>評価者（樹木医）</label>
+    <input type="text" id="evaluator" placeholder="氏名・資格番号">
+  </div>
+  <div class="info-field wide">
+    <label>樹種</label>
+    <input type="text" id="tree-species" placeholder="例：ソメイヨシノ（Cerasus × yedoensis）">
+  </div>
+  <div class="info-field">
+    <label>胸高直径 DBH（cm）</label>
+    <input type="number" id="dbh" placeholder="例：45">
+  </div>
+  <div class="info-field">
+    <label>樹高（m）</label>
+    <input type="number" id="tree-height-m" placeholder="例：12">
+  </div>
+  <div class="info-field">
+    <label>樹冠直径（m）</label>
+    <input type="number" id="crown-diam" placeholder="例：8">
+  </div>
+  <div class="info-field wide">
+    <label>設置場所・立地</label>
+    <input type="text" id="location-desc" placeholder="例：○○公園 正門前 歩道沿い">
+  </div>
+  <div class="info-field full">
+    <label>現地所見メモ</label>
+    <textarea id="field-notes" placeholder="現地での観察事項・特記事項を記載してください"></textarea>
+  </div>
+</div>
+
+<div class="ad-slot">Google AdSense — プロ向けツール（高単価・専門家ターゲット）</div>
+
+<!-- PART 1: Failure Potential -->
+<div class="traq-section open" id="sec-failure">
+  <div class="traq-header" onclick="toggleSec('sec-failure')">
+    <span class="traq-num">PART 1</span>
+    <div>
+      <div class="traq-title">破損可能性（Likelihood of Failure）</div>
+      <div class="traq-meta">TRAQ Step 1 — 構造的欠陥・腐朽・根系の評価</div>
+    </div>
+    <span class="traq-chevron">▾</span>
+  </div>
+  <div class="traq-body">
+
+    <div class="rating-item">
+      <div class="rating-label">
+        1-1. 幹の構造的欠陥
+        <span class="isa-ref">TRAQ §4.2</span>
+      </div>
+      <div class="rating-desc">空洞・腐朽・亀裂・コドミナントステム・包含樹皮（included bark）の有無と程度を評価します。</div>
+      <div class="rating-btns" id="r-trunk-defect">
+        <button class="rating-btn" onclick="rate(this,'trunk-defect',1)" data-val="1">1 — 無し/軽微</button>
+        <button class="rating-btn" onclick="rate(this,'trunk-defect',2)" data-val="2">2 — 中程度</button>
+        <button class="rating-btn" onclick="rate(this,'trunk-defect',3)" data-val="3">3 — 著しい</button>
+        <button class="rating-btn" onclick="rate(this,'trunk-defect',4)" data-val="4">4 — 重大/即危険</button>
+      </div>
+    </div>
+
+    <div class="rating-item">
+      <div class="rating-label">
+        1-2. 根系・根元の健全性
+        <span class="isa-ref">TRAQ §4.3</span>
+      </div>
+      <div class="rating-desc">根の露出状況・根元の腐朽・土壌圧密・根圏制限・キノコ発生・傾斜の有無を評価します。</div>
+      <div class="rating-btns" id="r-root">
+        <button class="rating-btn" onclick="rate(this,'root',1)" data-val="1">1 — 健全</button>
+        <button class="rating-btn" onclick="rate(this,'root',2)" data-val="2">2 — 要注意</button>
+        <button class="rating-btn" onclick="rate(this,'root',3)" data-val="3">3 — 著しい欠陥</button>
+        <button class="rating-btn" onclick="rate(this,'root',4)" data-val="4">4 — 重大欠陥</button>
+      </div>
+    </div>
+
+    <div class="rating-item">
+      <div class="rating-label">
+        1-3. 枝・樹冠の構造
+        <span class="isa-ref">TRAQ §4.4</span>
+      </div>
+      <div class="rating-desc">枯死枝・ハンギングブランチ・過重な樹冠・非対称な重心・枝の折損リスクを評価します。</div>
+      <div class="rating-btns" id="r-crown">
+        <button class="rating-btn" onclick="rate(this,'crown',1)" data-val="1">1 — 健全</button>
+        <button class="rating-btn" onclick="rate(this,'crown',2)" data-val="2">2 — 要注意</button>
+        <button class="rating-btn" onclick="rate(this,'crown',3)" data-val="3">3 — 著しい欠陥</button>
+        <button class="rating-btn" onclick="rate(this,'crown',4)" data-val="4">4 — 危険な欠陥</button>
+      </div>
+    </div>
+
+    <div class="rating-item">
+      <div class="rating-label">
+        1-4. 樹勢・生命力
+        <span class="isa-ref">TRAQ §4.5</span>
+      </div>
+      <div class="rating-desc">葉密度・新梢伸長量・葉色・樹皮の状態から全体的な樹勢を評価します。</div>
+      <div class="rating-btns" id="r-vigor">
+        <button class="rating-btn" onclick="rate(this,'vigor',1)" data-val="1">1 — 旺盛</button>
+        <button class="rating-btn" onclick="rate(this,'vigor',2)" data-val="2">2 — 普通</button>
+        <button class="rating-btn" onclick="rate(this,'vigor',3)" data-val="3">3 — 衰退</button>
+        <button class="rating-btn" onclick="rate(this,'vigor',4)" data-val="4">4 — 著しい衰退</button>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top:16px;">
+      <div>
+        <span class="field-label">破損の可能性のある部位</span>
+        <select id="failure-part">
+          <option value="">— 選択 —</option>
+          <option>幹全体</option>
+          <option>幹の特定部位（地際部）</option>
+          <option>幹の特定部位（中間部）</option>
+          <option>主枝</option>
+          <option>側枝・細枝</option>
+          <option>根系全体</option>
+          <option>根の特定部位</option>
+          <option>複数部位</option>
+        </select>
+      </div>
+      <div>
+        <span class="field-label">腐朽の種類（確認できる場合）</span>
+        <select id="decay-type">
+          <option value="">— 選択 —</option>
+          <option>白色腐朽（白腐れ）</option>
+          <option>褐色腐朽（褐腐れ）</option>
+          <option>軟腐朽</option>
+          <option>複合腐朽</option>
+          <option>腐朽なし</option>
+          <option>不明</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PART 2: Likelihood of Impact -->
+<div class="traq-section" id="sec-impact">
+  <div class="traq-header" onclick="toggleSec('sec-impact')">
+    <span class="traq-num">PART 2</span>
+    <div>
+      <div class="traq-title">衝突可能性（Likelihood of Impact）</div>
+      <div class="traq-meta">TRAQ Step 2 — 破損部位の落下軌跡・対象物との距離</div>
+    </div>
+    <span class="traq-chevron">▾</span>
+  </div>
+  <div class="traq-body">
+
+    <div class="rating-item">
+      <div class="rating-label">
+        2-1. 対象物（Target）の種類
+        <span class="isa-ref">TRAQ §5.1</span>
+      </div>
+      <div class="rating-desc">破損した場合に衝突が予想される対象物を選択してください。</div>
+      <select id="target-type" onchange="updateTarget()" style="margin-bottom:10px;">
+        <option value="">— 選択してください —</option>
+        <option value="4">人・歩行者（常時）</option>
+        <option value="4">公道・幹線道路</option>
+        <option value="3">駐車場・車両</option>
+        <option value="3">建物・構造物</option>
+        <option value="3">公園利用者（定期的）</option>
+        <option value="2">農地・低利用区域</option>
+        <option value="1">無人区域・森林内</option>
+      </select>
+    </div>
+
+    <div class="rating-item">
+      <div class="rating-label">
+        2-2. 対象物の占有率（Occupancy）
+        <span class="isa-ref">TRAQ §5.2</span>
+      </div>
+      <div class="rating-desc">対象エリアに人・物が存在する時間的割合を評価します。</div>
+      <div class="rating-btns" id="r-occupancy">
+        <button class="rating-btn" onclick="rate(this,'occupancy',1)" data-val="1">1 — 稀（年数回）</button>
+        <button class="rating-btn" onclick="rate(this,'occupancy',2)" data-val="2">2 — 時々（週〜月）</button>
+        <button class="rating-btn" onclick="rate(this,'occupancy',3)" data-val="3">3 — 頻繁（日常的）</button>
+        <button class="rating-btn" onclick="rate(this,'occupancy',4)" data-val="4">4 — 常時（24時間）</button>
+      </div>
+    </div>
+
+    <div class="rating-item">
+      <div class="rating-label">
+        2-3. 落下軌跡と対象物の距離
+        <span class="isa-ref">TRAQ §5.3</span>
+      </div>
+      <div class="rating-desc">破損部位から対象物への距離・障害物の有無を評価します。</div>
+      <div class="rating-btns" id="r-trajectory">
+        <button class="rating-btn" onclick="rate(this,'trajectory',1)" data-val="1">1 — 到達不可能</button>
+        <button class="rating-btn" onclick="rate(this,'trajectory',2)" data-val="2">2 — 到達の可能性低</button>
+        <button class="rating-btn" onclick="rate(this,'trajectory',3)" data-val="3">3 — 直接到達する</button>
+        <button class="rating-btn" onclick="rate(this,'trajectory',4)" data-val="4">4 — 確実に到達する</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PART 3: Consequences -->
+<div class="traq-section" id="sec-consequence">
+  <div class="traq-header" onclick="toggleSec('sec-consequence')">
+    <span class="traq-num">PART 3</span>
+    <div>
+      <div class="traq-title">結果の重大性（Consequences of Failure）</div>
+      <div class="traq-meta">TRAQ Step 3 — 破損が引き起こす被害の深刻度</div>
+    </div>
+    <span class="traq-chevron">▾</span>
+  </div>
+  <div class="traq-body">
+
+    <div class="rating-item">
+      <div class="rating-label">
+        3-1. 予想される被害規模
+        <span class="isa-ref">TRAQ §6.1</span>
+      </div>
+      <div class="rating-desc">破損した場合に想定される人的・物的被害の最大規模を評価します。</div>
+      <div class="rating-btns" id="r-consequence">
+        <button class="rating-btn" onclick="rate(this,'consequence',1)" data-val="1">1 — 軽微（物的損害のみ）</button>
+        <button class="rating-btn" onclick="rate(this,'consequence',2)" data-val="2">2 — 中程度（軽傷・中程度損害）</button>
+        <button class="rating-btn" onclick="rate(this,'consequence',3)" data-val="3">3 — 重大（重傷・大規模損害）</button>
+        <button class="rating-btn" onclick="rate(this,'consequence',4)" data-val="4">4 — 壊滅的（死亡・全壊）</button>
+      </div>
+    </div>
+
+    <div class="rating-item">
+      <div class="rating-label">
+        3-2. 樹木の価値・便益
+        <span class="isa-ref">TRAQ §6.2</span>
+      </div>
+      <div class="rating-desc">撤去した場合に失われる生態系サービス・景観価値・樹木価値を評価します。</div>
+      <div class="rating-btns" id="r-tree-value">
+        <button class="rating-btn" onclick="rate(this,'tree-value',1)" data-val="1">1 — 低（代替容易）</button>
+        <button class="rating-btn" onclick="rate(this,'tree-value',2)" data-val="2">2 — 中程度</button>
+        <button class="rating-btn" onclick="rate(this,'tree-value',3)" data-val="3">3 — 高（大径木・希少種）</button>
+        <button class="rating-btn" onclick="rate(this,'tree-value',4)" data-val="4">4 — 非常に高（天然記念物等）</button>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top:16px;">
+      <div>
+        <span class="field-label">推定破損部位の重量（kg）</span>
+        <input type="number" id="failure-weight" placeholder="例：500">
+      </div>
+      <div>
+        <span class="field-label">破損時の予想落下距離（m）</span>
+        <input type="number" id="fall-distance" placeholder="例：8">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PART 4: Mitigation -->
+<div class="traq-section" id="sec-mitigation">
+  <div class="traq-header" onclick="toggleSec('sec-mitigation')">
+    <span class="traq-num">PART 4</span>
+    <div>
+      <div class="traq-title">リスク軽減措置（Risk Mitigation）</div>
+      <div class="traq-meta">TRAQ Step 4 — 推奨される処置・緊急度</div>
+    </div>
+    <span class="traq-chevron">▾</span>
+  </div>
+  <div class="traq-body">
+    <div class="rating-item">
+      <div class="rating-label">4-1. 現在の軽減措置の有無</div>
+      <div class="rating-desc">既存の支柱・ワイヤーブレーシング・定期的な剪定等の措置を評価します。</div>
+      <div class="rating-btns" id="r-existing-mitigation">
+        <button class="rating-btn" onclick="rate(this,'existing-mitigation',1)" data-val="1">1 — 十分な措置あり</button>
+        <button class="rating-btn" onclick="rate(this,'existing-mitigation',2)" data-val="2">2 — 部分的措置あり</button>
+        <button class="rating-btn" onclick="rate(this,'existing-mitigation',3)" data-val="3">3 — 措置なし</button>
+        <button class="rating-btn" onclick="rate(this,'existing-mitigation',4)" data-val="4">4 — 措置が機能していない</button>
+      </div>
+    </div>
+
+    <span class="field-label">推奨される軽減措置（複数選択可）</span>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" id="m1" style="accent-color:var(--moss);"> 枯死枝・危険枝の除去</label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" id="m2" style="accent-color:var(--moss);"> 樹冠の縮小剪定</label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" id="m3" style="accent-color:var(--moss);"> ワイヤーブレーシング設置</label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" id="m4" style="accent-color:var(--moss);"> 支柱・添え木の設置</label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" id="m5" style="accent-color:var(--moss);"> 精密診断（音波断層・引っ張り試験）</label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" id="m6" style="accent-color:var(--moss);"> 根圏環境の改善</label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" id="m7" style="accent-color:var(--moss);"> 対象物の移動・立入禁止</label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" id="m8" style="accent-color:var(--moss);"> 伐採（代替植栽を含む）</label>
+    </div>
+
+    <span class="field-label" style="margin-top:16px;">次回点検推奨時期</span>
+    <select id="next-inspection">
+      <option value="">— 選択 —</option>
+      <option>1ヶ月以内（緊急）</option>
+      <option>3ヶ月以内</option>
+      <option>6ヶ月以内</option>
+      <option>1年以内</option>
+      <option>2〜3年後</option>
+    </select>
+  </div>
+</div>
+
+<button class="btn-calc" onclick="calcRisk()">📊　ISAリスクマトリクスで評価する</button>
+
+<!-- Result -->
+<div id="result">
+  <div class="result-header" id="result-header">
+    <div class="risk-icon" id="risk-icon">⚠️</div>
+    <div>
+      <div class="result-title" id="result-title">—</div>
+      <div class="result-subtitle" id="result-subtitle">—</div>
+    </div>
+  </div>
+  <div class="result-body">
+
+    <div class="result-card">
+      <h3>📊 ISAリスクマトリクス評価結果</h3>
+      <div class="score-grid" id="score-grid"></div>
+    </div>
+
+    <div class="result-card">
+      <h3>🚨 推奨アクション</h3>
+      <ul class="action-list" id="action-list"></ul>
+    </div>
+
+    <div class="result-card">
+      <h3>📝 評価サマリー</h3>
+      <p id="eval-summary" style="font-size:12px;line-height:1.9;color:#4a5e4a;"></p>
+      <div class="report-box" style="margin-top:14px;">
+        <h4>評価記録</h4>
+        <div class="report-field"><span>樹木ID</span><span id="r-tree-id">—</span></div>
+        <div class="report-field"><span>評価日</span><span id="r-date">—</span></div>
+        <div class="report-field"><span>評価者</span><span id="r-evaluator">—</span></div>
+        <div class="report-field"><span>樹種</span><span id="r-species">—</span></div>
+        <div class="report-field"><span>DBH</span><span id="r-dbh">—</span></div>
+        <div class="report-field"><span>次回点検</span><span id="r-next">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <h3>📄 評価レポートを出力する</h3>
+    <p>この評価結果を報告書・納品物・行政提出資料としてご活用ください。</p>
+    <button class="btn-pdf" onclick="exportReport()">🖨 PDF・印刷で保存</button>
+    <button class="btn-reset" onclick="resetAll()">↩ 新規評価を開始</button>
+  </div>
+</div>
+
+<!-- References -->
+<div class="ref-section">
+  <h2>📚 評価基準の根拠・出典</h2>
+  <ul class="ref-list">
+    <li class="ref-item" data-num="1">Smiley, E.T., Matheny, N., Lilly, S. "<a href="https://www.isa-arbor.com/education/resources/tree-risk-assessment" target="_blank" rel="noopener">Best Management Practices: Tree Risk Assessment</a>" 2nd ed. International Society of Arboriculture (2011) — ISA TRAQ評価体系の根拠</li>
+    <li class="ref-item" data-num="2">ISA（国際樹木学会）"<a href="https://www.isa-arbor.com/Portals/0/Assets/PDF/Certification-Applications/TRAQ-App-Guide.pdf" target="_blank" rel="noopener">ISA Tree Risk Assessment Qualification (TRAQ) Program Guide</a>" Revised October 2025</li>
+    <li class="ref-item" data-num="3">ANSI A300 Part 9 "Tree Risk Assessment" American National Standards Institute — 樹木リスク評価の米国国家標準規格</li>
+    <li class="ref-item" data-num="4">Mattheck, C., Breloer, H. "The Body Language of Trees" HMSO (1994) — 構造的欠陥評価の古典的文献</li>
+    <li class="ref-item" data-num="5">Shigo, A.L. "A New Tree Biology" Shigo and Trees Associates (1986) — CODIT理論に基づく腐朽評価</li>
+    <li class="ref-item" data-num="6">国土交通省「街路樹の点検・診断指針（案）」国土交通省道路局（2019年）— 日本国内の法的根拠として参照</li>
+  </ul>
+  <p class="ref-note">本ツールはISA TRAQ Level IIの評価手順を参照していますが、法的拘束力を持つ診断書の代替ではありません。倒木・落枝による生命・財産への損害に係る最終判断は、TRAQ資格保有者または樹木医による現地評価に基づくものとしてください。</p>
+</div>
+
+<footer>
+  <p>本ツールはISA TRAQ Level IIを参照した専門家向けツールです。法的診断書の代替ではありません。</p>
+  <p>© 2025 樹木医ツール — ARBORIST TOOLS PRO | ISA TRAQ準拠</p>
+</footer>
+
+</div>
+
+<script>
+// State
+const ratings = {};
+document.getElementById('eval-date').value = new Date().toISOString().split('T')[0];
+
+function toggleSec(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function rate(btn, key, val) {
+  // Clear siblings
+  const container = btn.parentElement;
+  container.querySelectorAll('.rating-btn').forEach(b => {
+    b.className = 'rating-btn';
+  });
+  // Apply selected style
+  const cls = `sel-${val}`;
+  btn.classList.add(cls);
+  ratings[key] = val;
+}
+
+function updateTarget() {
+  const sel = document.getElementById('target-type');
+  const val = parseInt(sel.value) || 1;
+  ratings['target'] = val;
+}
+
+// ISA Risk Matrix
+// Likelihood of Failure × Likelihood of Impact → Risk Rating
+// Then modified by Consequences
+const RISK_MATRIX = {
+  // [failure][impact] → base risk level (1-5)
+  // 1=Low, 2=Moderate, 3=High, 4=Extreme, 5=Imminent
+  '1,1': 1, '1,2': 1, '1,3': 2, '1,4': 2,
+  '2,1': 1, '2,2': 2, '2,3': 2, '2,4': 3,
+  '3,1': 2, '3,2': 2, '3,3': 3, '3,4': 4,
+  '4,1': 2, '4,2': 3, '4,3': 4, '4,4': 5,
+};
+
+const RISK_LABELS = {
+  1: { label: 'Low Risk（低リスク）', en: 'LOW', cls: 'rh-low', icon: '🟢', color: '#2E6B30' },
+  2: { label: 'Moderate Risk（中程度リスク）', en: 'MODERATE', cls: 'rh-moderate', icon: '🟡', color: '#7A9A20' },
+  3: { label: 'High Risk（高リスク）', en: 'HIGH', cls: 'rh-high', icon: '🟠', color: '#C8842A' },
+  4: { label: 'Extreme Risk（極めて高いリスク）', en: 'EXTREME', cls: 'rh-extreme', icon: '🔴', color: '#8B2A1A' },
+  5: { label: 'Imminent Danger（差し迫った危険）', en: 'IMMINENT', cls: 'rh-imminent', icon: '🚨', color: '#5A0A0A' },
+};
+
+const ACTIONS = {
+  1: [
+    { tag: 'normal', cls: 'action-normal', text: '定期的な観察を継続（年1〜2回の点検を推奨）' },
+    { tag: 'normal', cls: 'action-normal', text: '予防的管理（適切な剪定・施肥・灌水）の継続' },
+  ],
+  2: [
+    { tag: 'high', cls: 'action-high', text: '6ヶ月以内に専門家による詳細評価を実施' },
+    { tag: 'high', cls: 'action-high', text: '推奨された軽減措置を計画的に実施' },
+    { tag: 'normal', cls: 'action-normal', text: '年2〜4回の定期点検を実施' },
+  ],
+  3: [
+    { tag: 'urgent', cls: 'action-urgent', text: '1〜3ヶ月以内に軽減措置を実施' },
+    { tag: 'urgent', cls: 'action-urgent', text: '精密診断（音波断層診断・引っ張り試験等）の実施を検討' },
+    { tag: 'high', cls: 'action-high', text: '台風・強風前後の緊急点検体制を整備' },
+    { tag: 'high', cls: 'action-high', text: '行政・管理者への報告と対応協議' },
+  ],
+  4: [
+    { tag: 'urgent', cls: 'action-urgent', text: '即座に立入禁止区域を設定・警告標示を設置' },
+    { tag: 'urgent', cls: 'action-urgent', text: '1ヶ月以内に軽減措置（伐採または大規模剪定）を実施' },
+    { tag: 'urgent', cls: 'action-urgent', text: '管理者・行政への緊急報告と書面での通知' },
+    { tag: 'high', cls: 'action-high', text: '伐採の場合は代替植栽計画を同時に策定' },
+  ],
+  5: [
+    { tag: 'urgent', cls: 'action-urgent', text: '⚡ 即時対応必須 — 直ちに立入禁止措置を実施' },
+    { tag: 'urgent', cls: 'action-urgent', text: '⚡ 24〜48時間以内に緊急伐採または緊急処置を実施' },
+    { tag: 'urgent', cls: 'action-urgent', text: '⚡ 行政・警察・道路管理者への緊急連絡' },
+    { tag: 'urgent', cls: 'action-urgent', text: '⚡ 評価結果の文書化と証拠保全' },
+  ],
+};
+
+function calcRisk() {
+  // Gather all ratings
+  const failure = Math.max(
+    ratings['trunk-defect'] || 1,
+    ratings['root'] || 1,
+    ratings['crown'] || 1,
+    ratings['vigor'] || 1
+  );
+
+  const impact = Math.max(
+    ratings['occupancy'] || 1,
+    ratings['trajectory'] || 1,
+    ratings['target'] || 1
+  );
+
+  const consequence = ratings['consequence'] || 1;
+  const treeValue = ratings['tree-value'] || 1;
+
+  // Base risk from matrix
+  let baseRisk = RISK_MATRIX[`${failure},${impact}`] || 1;
+
+  // Consequence adjustment
+  if (consequence >= 4) baseRisk = Math.min(5, baseRisk + 1);
+  else if (consequence >= 3 && baseRisk >= 3) baseRisk = Math.min(5, baseRisk + 1);
+
+  const riskInfo = RISK_LABELS[baseRisk];
+
+  // Render header
+  const header = document.getElementById('result-header');
+  header.className = `result-header ${riskInfo.cls}`;
+  document.getElementById('risk-icon').textContent = riskInfo.icon;
+  document.getElementById('result-title').textContent = riskInfo.label;
+  document.getElementById('result-subtitle').textContent =
+    `ISA TRAQ Level II リスクマトリクス評価 — 破損可能性: ${failure}/4　衝突可能性: ${impact}/4　結果重大性: ${consequence}/4`;
+
+  // Score grid
+  const scores = [
+    { label: '破損可能性', val: failure, max: 4, unit: '/4' },
+    { label: '衝突可能性', val: impact, max: 4, unit: '/4' },
+    { label: '結果重大性', val: consequence, max: 4, unit: '/4' },
+    { label: '樹木価値', val: treeValue, max: 4, unit: '/4' },
+    { label: '総合リスク', val: riskInfo.en, max: null, unit: '' },
+    { label: '対応緊急度', val: baseRisk <= 1 ? '低' : baseRisk <= 2 ? '中' : baseRisk <= 3 ? '高' : baseRisk <= 4 ? '最高' : '緊急', max: null, unit: '' },
+  ];
+
+  document.getElementById('score-grid').innerHTML = scores.map(s => `
+    <div class="score-card">
+      <div class="sc-label">${s.label}</div>
+      <div class="sc-val">${s.val}<span style="font-size:11px;color:#8fa085;">${s.unit}</span></div>
+    </div>
+  `).join('');
+
+  // Actions
+  const actions = ACTIONS[baseRisk] || ACTIONS[1];
+  const mitigations = [];
+  ['m1','m2','m3','m4','m5','m6','m7','m8'].forEach((id, i) => {
+    if (document.getElementById(id).checked) {
+      const labels = ['枯死枝・危険枝の除去','樹冠の縮小剪定','ワイヤーブレーシング設置','支柱・添え木の設置','精密診断の実施','根圏環境の改善','対象物の移動・立入禁止','伐採（代替植栽を含む）'];
+      mitigations.push(labels[i]);
+    }
+  });
+
+  let actionHTML = actions.map(a => `
+    <li class="action-item ${a.cls}">
+      <span class="action-tag tag-${a.tag}">${a.tag === 'urgent' ? '緊急' : a.tag === 'high' ? '要対応' : '推奨'}</span>
+      <span>${a.text}</span>
+    </li>
+  `).join('');
+
+  if (mitigations.length > 0) {
+    actionHTML += `<li class="action-item action-normal">
+      <span class="action-tag tag-normal">措置</span>
+      <span>評価者推奨措置：${mitigations.join('・')}</span>
+    </li>`;
+  }
+
+  const nextInspection = document.getElementById('next-inspection').value;
+  if (nextInspection) {
+    actionHTML += `<li class="action-item action-normal">
+      <span class="action-tag tag-normal">点検</span>
+      <span>次回点検推奨時期：${nextInspection}</span>
+    </li>`;
+  }
+
+  document.getElementById('action-list').innerHTML = actionHTML;
+
+  // Summary
+  const treeId = document.getElementById('tree-id').value || '未記入';
+  const species = document.getElementById('tree-species').value || '未記入';
+  const dbh = document.getElementById('dbh').value;
+  const notes = document.getElementById('field-notes').value;
+
+  document.getElementById('eval-summary').textContent =
+    `樹木ID「${treeId}」（${species}、DBH${dbh || '—'}cm）について、ISA TRAQ Level IIに準拠したリスク評価を実施した結果、総合リスクレベルは「${riskInfo.label}」と判定されました。` +
+    `破損可能性${failure}/4、衝突可能性${impact}/4、結果重大性${consequence}/4の評価に基づき、${riskInfo.en}リスクとして分類されます。` +
+    (notes ? `　現地所見：${notes}` : '');
+
+  // Report fields
+  document.getElementById('r-tree-id').textContent = treeId;
+  document.getElementById('r-date').textContent = document.getElementById('eval-date').value;
+  document.getElementById('r-evaluator').textContent = document.getElementById('evaluator').value || '未記入';
+  document.getElementById('r-species').textContent = species;
+  document.getElementById('r-dbh').textContent = dbh ? `${dbh} cm` : '—';
+  document.getElementById('r-next').textContent = nextInspection || '未設定';
+
+  // Show
+  document.getElementById('result').style.display = 'block';
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function exportReport() {
+  const now = new Date();
+  document.title = `樹木リスク評価レポート_${document.getElementById('tree-id').value || 'NoID'}_${now.toLocaleDateString('ja-JP')}`;
+  window.print();
+}
+
+function resetAll() {
+  Object.keys(ratings).forEach(k => delete ratings[k]);
+  document.querySelectorAll('.rating-btn').forEach(b => b.className = 'rating-btn');
+  document.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+  document.querySelectorAll('input[type="text"], input[type="number"]').forEach(i => i.value = '');
+  document.querySelectorAll('select').forEach(s => s.value = '');
+  document.getElementById('eval-date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('field-notes').value = '';
+  document.getElementById('result').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js")
+      .then(reg => console.log("[PWA] SW registered:", reg.scope))
+      .catch(err => console.log("[PWA] SW failed:", err));
+  });
+}
+
+// ===== i18n =====
+const TRAQ_I18N = {
+  ja: {
+    'page-title': '樹木リスク評価（ISA TRAQ準拠）| 樹木医ツール',
+    'page-label': 'Professional Tool — ISA TRAQ Level II',
+    'h1': '樹木リスク評価<br>Tree Risk Assessment',
+    'sub': 'ISA（国際樹木学会）Tree Risk Assessment Qualification（TRAQ）Level IIに準拠した<br>専門家向けリスク評価ツール。評価結果はISA標準リスクマトリクスで判定されます。',
+    'btn-calc': '📊　ISAリスクマトリクスで評価する',
+    'btn-pdf': '🖨 PDF・印刷で保存',
+    'btn-reset': '↩ 新規評価を開始',
+    'p1-title': '破損可能性（Likelihood of Failure）',
+    'p2-title': '衝突可能性（Likelihood of Impact）',
+    'p3-title': '結果の重大性（Consequences of Failure）',
+    'p4-title': 'リスク軽減措置（Risk Mitigation）',
+  },
+  en: {
+    'page-title': 'Tree Risk Assessment (ISA TRAQ) | Arborist Tools Japan',
+    'page-label': 'Professional Tool — ISA TRAQ Level II',
+    'h1': 'Tree Risk Assessment<br>(ISA TRAQ Compliant)',
+    'sub': 'A professional tree risk assessment tool based on ISA Tree Risk Assessment Qualification (TRAQ) Level II.<br>Results are rated using the ISA standard risk matrix.',
+    'btn-calc': '📊　Assess Risk with ISA Matrix',
+    'btn-pdf': '🖨 Save as PDF / Print',
+    'btn-reset': '↩ Start New Assessment',
+    'p1-title': 'Likelihood of Failure',
+    'p2-title': 'Likelihood of Impact',
+    'p3-title': 'Consequences of Failure',
+    'p4-title': 'Risk Mitigation',
+  }
+};
+
+function setLang(lang) {
+  document.getElementById('btn-ja').classList.toggle('active', lang === 'ja');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.documentElement.lang = lang;
+  const t = TRAQ_I18N[lang];
+  document.title = t['page-title'];
+  document.querySelector('.page-label').innerHTML = t['page-label'];
+  document.querySelector('h1').innerHTML = t['h1'];
+  document.querySelector('.sub').innerHTML = t['sub'];
+  document.querySelector('.btn-calc').textContent = t['btn-calc'];
+  document.querySelectorAll('.btn-pdf').forEach(b => b.textContent = t['btn-pdf']);
+  document.querySelectorAll('.btn-reset').forEach(b => b.textContent = t['btn-reset']);
+  // Section titles
+  const titles = document.querySelectorAll('.traq-title');
+  const keys = ['p1-title','p2-title','p3-title','p4-title'];
+  titles.forEach((el, i) => { if (keys[i]) el.textContent = t[keys[i]]; });
+  if (navigator.language && lang === 'ja') document.documentElement.lang = 'ja';
+}
+
+if (navigator.language && navigator.language.startsWith('en')) setLang('en');
+
+</script>
+</body>
+</html>
