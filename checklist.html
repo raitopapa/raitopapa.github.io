@@ -259,6 +259,9 @@ footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--mist);
 .ref-item a:hover { border-bottom-color: var(--moss); }
 .ref-note { font-size: 11px; color: #8fa085; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--mist); line-height: 1.7; }
 @media print { .ref-section { display: none; } }
+.lang-bar { background: rgba(44,26,14,0.95); padding: 5px 20px; display: flex; justify-content: flex-end; gap: 6px; }
+.lang-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 3px 9px; border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: rgba(232,240,225,0.6); cursor: pointer; }
+.lang-btn.active { background: var(--leaf); color: var(--bark); border-color: var(--leaf); font-weight: 600; }
 
 @media(max-width:480px){
   .score-display { flex-direction: column; text-align: center; }
@@ -319,7 +322,10 @@ footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--mist);
   <link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
-
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLangC('ja')" id="btn-ja">🇯🇵 日本語</button>
+  <button class="lang-btn" onclick="setLangC('en')" id="btn-en">🇺🇸 English</button>
+</div>
 <nav style="background:var(--bark);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;">
   <a href="index.html" style="color:#E8F0E1;text-decoration:none;font-family:'Shippori Mincho',serif;font-size:15px;font-weight:700;">
     🌿 樹木医ツール
@@ -932,6 +938,109 @@ if ("serviceWorker" in navigator) {
       .catch(err => console.log("[PWA] SW failed:", err));
   });
 }
+
+// ===== i18n =====
+const CHECK_I18N = {
+  ja: {
+    title: '樹木健全度チェックリスト | 樹木医監修',
+    badge: '🌿 樹木医監修ツール',
+    h1: '樹木健全度<br>チェックリスト',
+    sub: '現地調査で使える診断シート。根元・幹・枝・葉の状態を記録し、<br>総合スコアと対処優先度を自動算出します。',
+    fieldTree: '樹木名・管理番号', fieldDate: '調査日', fieldHeight: '樹高の目安',
+    progLabel: 'CHECK PROGRESS',
+    sec1: '根元・根系', sec1meta: 'ROOT ZONE — 8項目',
+    sec2: '幹・樹皮', sec2meta: 'TRUNK & BARK — 8項目',
+    sec3: '枝・樹冠', sec3meta: 'BRANCH & CROWN — 8項目',
+    sec4: '葉・生育状態', sec4meta: 'FOLIAGE & VIGOR — 8項目',
+    calcBtn: '📊　健全度スコアを算出する',
+    pdfBtn: '📄 PDF・印刷で保存',
+    resetBtn: '↩ 新しい樹木を診断',
+    ctaTitle: '🌲 この診断結果を記録・共有する',
+    ctaDesc: 'Notionやスプレッドシートへの記録、樹木医への報告資料としてご活用ください。<br>詳細な診断・処置計画は専門家にご相談ください。',
+    rankA: '健全（Healthy）', rankB: '概ね健全（Fair）',
+    rankC: '要管理（Poor）', rankD: '危険・要緊急対応（Critical）',
+    secScoreLabels: { root:'根元・根系', trunk:'幹・樹皮', branch:'枝・樹冠', leaf:'葉・生育' },
+    priorityHigh: '緊急', priorityMid: '要対応', priorityLow: '推奨',
+    refTitle: '📚 チェック基準の根拠・出典',
+  },
+  en: {
+    title: 'Tree Health Checklist | Arborist Tools Japan',
+    badge: '🌿 Certified Arborist Tool',
+    h1: 'Tree Health<br>Checklist',
+    sub: 'A field inspection sheet. Record root, trunk, branch, and foliage conditions<br>to automatically calculate a health score and action priority list.',
+    fieldTree: 'Tree Name / ID', fieldDate: 'Survey Date', fieldHeight: 'Estimated Height',
+    progLabel: 'CHECK PROGRESS',
+    sec1: 'Root Zone', sec1meta: 'ROOT ZONE — 8 items',
+    sec2: 'Trunk & Bark', sec2meta: 'TRUNK & BARK — 8 items',
+    sec3: 'Branch & Crown', sec3meta: 'BRANCH & CROWN — 8 items',
+    sec4: 'Foliage & Vigor', sec4meta: 'FOLIAGE & VIGOR — 8 items',
+    calcBtn: '📊　Calculate Health Score',
+    pdfBtn: '📄 Save as PDF / Print',
+    resetBtn: '↩ Inspect a New Tree',
+    ctaTitle: '🌲 Save & Share This Result',
+    ctaDesc: 'Use this as a field record or arborist report template.<br>For detailed diagnosis and treatment plans, consult a certified arborist.',
+    rankA: 'Healthy', rankB: 'Fair',
+    rankC: 'Poor — Needs Management', rankD: 'Critical — Urgent Action Required',
+    secScoreLabels: { root:'Root Zone', trunk:'Trunk & Bark', branch:'Branch & Crown', leaf:'Foliage & Vigor' },
+    priorityHigh: 'Urgent', priorityMid: 'Action Needed', priorityLow: 'Recommended',
+    refTitle: '📚 References & Standards',
+  }
+};
+
+function setLangC(lang) {
+  document.getElementById('btn-ja').classList.toggle('active', lang === 'ja');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.documentElement.lang = lang;
+  const t = CHECK_I18N[lang];
+  document.title = t.title;
+
+  const set = (sel, html) => { const el = document.querySelector(sel); if(el) el.innerHTML = html; };
+  set('.badge', t.badge);
+  set('h1', t.h1);
+  set('.sub', t.sub);
+
+  // Info bar labels
+  const infoLabels = document.querySelectorAll('.info-field label');
+  if (infoLabels[0]) infoLabels[0].textContent = t.fieldTree;
+  if (infoLabels[1]) infoLabels[1].textContent = t.fieldDate;
+  if (infoLabels[2]) infoLabels[2].textContent = t.fieldHeight;
+
+  // Progress
+  const progLabel = document.querySelector('.progress-label');
+  if (progLabel) progLabel.textContent = t.progLabel;
+
+  // Section headers
+  const secNames = document.querySelectorAll('.section-name');
+  const secMetas = document.querySelectorAll('.section-meta');
+  const secs = ['sec1','sec2','sec3','sec4'];
+  secs.forEach((k, i) => {
+    if (secNames[i]) secNames[i].textContent = t[k];
+    if (secMetas[i]) secMetas[i].textContent = t[k+'meta'];
+  });
+
+  // Buttons
+  const calcBtn = document.querySelector('.btn-calc');
+  if (calcBtn) calcBtn.textContent = t.calcBtn;
+  const pdfBtn = document.querySelector('.pdf-btn');
+  if (pdfBtn) pdfBtn.textContent = t.pdfBtn;
+  const resetBtn = document.querySelector('.btn-o');
+  if (resetBtn) resetBtn.textContent = t.resetBtn;
+
+  // CTA
+  set('.cta-box h3', t.ctaTitle);
+  set('.cta-box p', t.ctaDesc);
+
+  // Ref title
+  const refH = document.querySelector('.ref-section h2');
+  if (refH) refH.textContent = t.refTitle;
+
+  // Store for calcScore to use
+  window._CHECK_LANG = lang;
+  window._CHECK_I18N_T = t;
+}
+
+if (navigator.language && navigator.language.startsWith('en')) setLangC('en');
+
 </script>
 </body>
 </html>
