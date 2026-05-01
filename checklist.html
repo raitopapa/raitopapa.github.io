@@ -939,8 +939,233 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-// ===== i18n =====
+// ===== Complete i18n for Checklist =====
 const CHECK_I18N = {
+  ja: {
+    title: '樹木健全度チェックリスト | 樹木医監修',
+    badge: '🌿 樹木医監修ツール',
+    h1: '樹木健全度<br>チェックリスト',
+    sub: '現地調査で使える診断シート。根元・幹・枝・葉の状態を記録し、<br>総合スコアと対処優先度を自動算出します。',
+    fieldTree: '樹木名・管理番号', fieldDate: '調査日', fieldHeight: '樹高の目安',
+    heightOpts: ['— 選択 —','低木（〜3m）','中木（3〜10m）','高木（10m以上）'],
+    progCount: (c,t) => `${c} / ${t} 項目`,
+    calcBtn: '📊　健全度スコアを算出する',
+    pdfBtn: '📄 PDF・印刷で保存',
+    resetBtn: '↩ 新しい樹木を診断',
+    ctaTitle: '🌲 この診断結果を記録・共有する',
+    ctaDesc: 'Notionやスプレッドシートへの記録、樹木医への報告資料としてご活用ください。<br>詳細な診断・処置計画は専門家にご相談ください。',
+    refTitle: '📚 チェック基準の根拠・出典',
+    footer1: '本ツールは一般的な情報提供を目的としており、専門的な診断の代替ではありません。',
+    // Sections
+    sec1name:'根元・根系', sec1meta:'ROOT ZONE — 8項目',
+    sec2name:'幹・樹皮',   sec2meta:'TRUNK & BARK — 8項目',
+    sec3name:'枝・樹冠',   sec3meta:'BRANCH & CROWN — 8項目',
+    sec4name:'葉・生育状態', sec4meta:'FOLIAGE & VIGOR — 8項目',
+    // Result
+    rankA:'健全（Healthy）', rankB:'概ね健全（Fair）',
+    rankC:'要管理（Poor）', rankD:'危険・要緊急対応（Critical）',
+    rankDescA:'現時点で重大な問題は確認されません。定期的な観察と予防的管理を継続してください。',
+    rankDescB:'軽微な問題が見られます。早めに対処することで健全な状態を維持できます。',
+    rankDescC:'複数の問題が確認されます。速やかな対処と樹木医への相談を推奨します。',
+    rankDescD:'深刻な問題が確認されます。倒木・落枝リスクの評価と緊急対応が必要です。',
+    secScoreLabels:{root:'根元・根系',trunk:'幹・樹皮',branch:'枝・樹冠',leaf:'葉・生育'},
+    resultSec1:'📊 部位別スコア', resultSec2:'🚨 対処優先度リスト', resultSec3:'📝 総合所見',
+    pUrgent:'緊急', pMid:'要対応', pLow:'推奨', pOk:'OK',
+    pAllClear:'すべての項目をクリアしています。',
+    // Check items [main, detail]
+    checks: [
+      // root
+      ['根元部分の隆起・盛り上がりがない','根系の発達と支持力の基本。地際の変形は根腐れや風倒リスクのサイン。'],
+      ['根元周辺の土壌に空洞・陥没がない','地下部の根腐れや土壌流失のサイン。踏み込んで確認する。'],
+      ['根張り（露出根）が放射状に広がっている','一方向にのみ根が集中する場合、反対側の根系が欠損している可能性がある。'],
+      ['根元周辺に十分な土壌スペースがある','根圏の直径は樹高の1/3が目安。舗装や構造物による根圏制限がないか確認。'],
+      ['根元にキノコ・菌核が発生していない','ナラタケ・シロアミタケ等の発生は根系の腐朽を強く示唆する危険信号。'],
+      ['土壌が過度に踏み固められていない','根圏内の土壌硬度が高いと通気性・透水性が低下し、細根の発達を妨げる。'],
+      ['根元に除草剤・薬剤散布の痕跡がない','薬剤の根圏への流入は根系に深刻なダメージを与える場合がある。'],
+      ['根元に適切なマルチング（有機物被覆）がある','マルチングは土壌水分の保持・温度緩和・微生物活性の向上に有効。'],
+      // trunk
+      ['幹に大きな空洞・腐朽部位がない','打音診断（木槌で叩く）で空洞音がしないか確認。空洞は倒木・落枝の重大リスク。'],
+      ['幹にキノコ（子実体）が発生していない','サルノコシカケ類・ツリガネタケ等の発生は内部腐朽の証拠。発生部位の上側の折損リスクが高い。'],
+      ['樹皮に深刻なひび割れ・剥離がない','自然な樹皮の剥離は問題ないが、縦に深く割れる場合は凍害・腐朽の可能性。'],
+      ['幹に異常なヤニ・樹液の滲出がない','大量のヤニ滲出は穿孔虫（カミキリムシ等）の加害・病害の可能性を示す。'],
+      ['幹の傾きが許容範囲内（垂直±15°以内）','傾きが大きい場合、重心の偏りによる倒木リスクがある。根系の発達状況と合わせて評価。'],
+      ['過去の剪定・損傷による腐朽が進行していない','古い切り口の腐朽進行度をチェック。適切に愈傷組織（カルス）が形成されているか確認。'],
+      ['幹への固縛物（針金・ロープ等）による締め付けがない','針金食い込みは通導組織を遮断し、樹木を衰弱・枯死させる。'],
+      ['低い位置での地際腐朽（白色・褐色腐朽）がない','地際の腐朽は支持機能を著しく低下させる。プローブ等で深度を確認することが望ましい。'],
+      // branch
+      ['枯れ枝（枯死枝・ハンギングブランチ）がない','枯れ枝は腐朽が進み、強風・降雪時に落下する危険がある。特に人が通る場所では即対応必須。'],
+      ['枝の折損・裂け（コドミナントステム等）がない','二またに分岐した等太の幹（コドミナント）は、内部に樹皮が挟まる「包含樹皮」になりやすく、折損リスクが高い。'],
+      ['樹冠が均等に発達しており偏りがない','一方向に樹冠が偏っている場合、重心の偏りによる傾倒リスクがある。'],
+      ['樹冠内部に光が適切に届いている','過密な樹冠は病害虫の温床になりやすい。透かし剪定で通気・採光を確保することが樹勢維持の基本。'],
+      ['前年の枝の伸長量が通常範囲内（著しい衰退がない）','新梢の伸長量が例年の50%以下に低下している場合、樹勢の著しい低下を示す。'],
+      ['枝に胴枯れ・流れ枯れが広がっていない','特定の枝から広がる枯れ込みは、胴枯病・腐朽菌・穿孔性害虫の加害を示す場合がある。'],
+      ['支柱・添え木が適切に機能しており樹木を傷めていない','支柱の当たり部分が樹皮を圧迫・損傷していないか定期的に確認。緩み・腐朽の確認も必要。'],
+      ['周辺構造物・電線への接触・危険な越境がない','建物・電線・フェンス等への接触は損害のリスク。定期的な点検と適切な間隔の確保が必要。'],
+      // leaf
+      ['葉の色・サイズが樹種の標準的な状態にある','黄化（クロロシス）・小葉化・葉の縮小は栄養障害・根系障害の典型的なサイン。'],
+      ['時期外れの大量落葉・早期落葉がない','夏季の落葉は深刻な水分ストレス・根系障害・病害を示す。速やかな原因究明が必要。'],
+      ['葉に顕著な病斑・斑点・変色がない','葉の病変は糸状菌・細菌・ウイルスによる病害の可能性。複数の枝で確認される場合は特に注意。'],
+      ['葉に著しい食害（虫食い・網目状・白化）がない','ハバチ・ハモグリムシ・ハダニ等の加害。大発生時は樹勢を大きく低下させる。'],
+      ['葉の密度が適正（著しい葉の量の減少がない）','全樹冠の30%以上で葉密度の低下が見られる場合、樹勢の著しい低下と評価される。'],
+      ['葉に白い粉状物（うどんこ病）・すす状物（すす病）がない','うどんこ病は光合成を阻害。すす病はカイガラムシ・アブラムシの排泄物に発生し、光合成障害を引き起こす。'],
+      ['害虫（毛虫・カイガラムシ・アブラムシ等）の顕著な寄生がない','葉裏・新芽・枝の分岐部を中心に確認。チャドクガ等の毒毛虫は素手での確認を避ける。'],
+      ['周辺の大気汚染・塩害の影響が少ない','道路沿い（排気ガス・融雪剤）・海岸部（塩害）では、葉縁の焦げや枝枯れが発生しやすい。'],
+    ],
+  },
+  en: {
+    title: 'Tree Health Checklist | Arborist Tools Japan',
+    badge: '🌿 Certified Arborist Tool',
+    h1: 'Tree Health<br>Checklist',
+    sub: 'A field inspection sheet. Record root, trunk, branch, and foliage conditions<br>to automatically calculate a health score and action priority list.',
+    fieldTree: 'Tree Name / ID', fieldDate: 'Survey Date', fieldHeight: 'Est. Height',
+    heightOpts: ['— Select —','Small (up to 3m)','Medium (3–10m)','Large (10m+)'],
+    progCount: (c,t) => `${c} / ${t} items`,
+    calcBtn: '📊　Calculate Health Score',
+    pdfBtn: '📄 Save as PDF / Print',
+    resetBtn: '↩ Inspect a New Tree',
+    ctaTitle: '🌲 Save & Share This Result',
+    ctaDesc: 'Use this as a field record or arborist report template.<br>For detailed diagnosis and treatment plans, consult a certified arborist.',
+    refTitle: '📚 References & Standards',
+    footer1: 'This tool is for general information only and is not a substitute for professional diagnosis.',
+    sec1name:'Root Zone',  sec1meta:'ROOT ZONE — 8 items',
+    sec2name:'Trunk & Bark', sec2meta:'TRUNK & BARK — 8 items',
+    sec3name:'Branch & Crown', sec3meta:'BRANCH & CROWN — 8 items',
+    sec4name:'Foliage & Vigor', sec4meta:'FOLIAGE & VIGOR — 8 items',
+    rankA:'Healthy', rankB:'Fair',
+    rankC:'Poor — Needs Management', rankD:'Critical — Urgent Action Required',
+    rankDescA:'No significant issues detected. Continue regular observation and preventive management.',
+    rankDescB:'Minor issues observed. Early action recommended to maintain tree health.',
+    rankDescC:'Multiple issues identified. Prompt action and arborist consultation recommended.',
+    rankDescD:'Serious issues detected. Immediate risk assessment and urgent action required.',
+    secScoreLabels:{root:'Root Zone',trunk:'Trunk & Bark',branch:'Branch & Crown',leaf:'Foliage & Vigor'},
+    resultSec1:'📊 Section Scores', resultSec2:'🚨 Action Priority List', resultSec3:'📝 Overall Assessment',
+    pUrgent:'Urgent', pMid:'Action Needed', pLow:'Recommended', pOk:'OK',
+    pAllClear:'All items passed. No immediate concerns.',
+    checks: [
+      // root
+      ['No abnormal swelling or heaving at root collar','Foundation of root system stability. Deformation at ground level may indicate root rot or windthrow risk.'],
+      ['No voids or subsidence in soil around root zone','Signs of underground root decay or soil loss. Probe by stepping gently to confirm.'],
+      ['Surface roots spread radially in all directions','If roots concentrate in one direction, absence of roots on the opposite side may indicate root system deficiency.'],
+      ['Adequate soil space exists around root zone','Root zone diameter should be at least 1/3 of tree height. Check for restrictions from pavement or structures.'],
+      ['No fungal fruiting bodies at base','Presence of Armillaria or similar fungi strongly indicates root decay — a serious hazard warning sign.'],
+      ['Soil is not excessively compacted','High soil compaction reduces aeration and drainage, inhibiting fine root development.'],
+      ['No evidence of herbicide or chemical spray near roots','Chemical infiltration into the root zone can cause serious damage to the root system.'],
+      ['Appropriate mulching (organic material) present at base','Mulching improves soil moisture retention, temperature buffering, and microbial activity.'],
+      // trunk
+      ['No significant cavities or decay in trunk','Check for hollow sounds by tapping with a mallet. Cavities are a major risk factor for failure.'],
+      ['No fungal fruiting bodies on trunk','Bracket fungi (e.g., Ganoderma) are evidence of internal decay. High failure risk above infection site.'],
+      ['No severe bark cracking or peeling','Natural bark shedding is normal, but deep longitudinal cracks may indicate frost damage or decay.'],
+      ['No abnormal resin or sap oozing from trunk','Heavy resin flow may indicate boring insect attack (e.g., longhorn beetles) or disease.'],
+      ['Trunk lean within acceptable range (≤15° from vertical)','Excessive lean indicates shifted center of gravity and increased failure risk. Assess with root condition.'],
+      ['No advancing decay at old pruning wounds or injury sites','Check progression of decay at old wounds. Confirm proper callus (wound wood) formation.'],
+      ['No constricting materials (wire, rope, etc.) on trunk','Wire cutting into bark severs vascular tissue, causing tree decline and death.'],
+      ['No basal decay (white rot or brown rot) near ground level','Basal decay severely reduces structural support. Use probe to assess depth when possible.'],
+      // branch
+      ['No deadwood or hanging branches present','Dead branches are prone to decay and can fall during wind or snow. Immediate removal required in occupied areas.'],
+      ['No splits or cracks (codominant stems, included bark)','Codominant stems with included bark are prone to sudden splitting and are high-risk structural defects.'],
+      ['Crown is evenly developed with no major asymmetry','A heavily one-sided crown shifts the center of gravity and increases toppling risk.'],
+      ['Adequate light penetration into the crown interior','Dense crowns become breeding grounds for pests and diseases. Thinning improves air and light.'],
+      ['Previous year\'s growth within normal range (no severe dieback)','If new shoot growth is less than 50% of normal, it indicates significant decline in tree vigor.'],
+      ['No progressive branch dieback or canker present','Dieback spreading from specific branches may indicate canker disease, decay fungi, or boring insects.'],
+      ['Support stakes are functioning properly without injuring tree','Check that stake ties are not pressing on or damaging bark. Check for looseness or decay.'],
+      ['No hazardous contact with structures, power lines, or fences','Contact with buildings, power lines, or fences poses risk of damage. Regular inspection required.'],
+      // leaf
+      ['Leaf color and size are typical for the species','Chlorosis, small leaves, or leaf reduction are typical signs of nutritional or root system disorders.'],
+      ['No premature or excessive leaf drop out of season','Summer leaf drop indicates serious water stress, root damage, or disease. Prompt investigation needed.'],
+      ['No significant leaf spots, lesions, or discoloration','Leaf abnormalities may indicate fungal, bacterial, or viral disease, especially if observed on multiple branches.'],
+      ['No significant feeding damage (holes, skeletonizing, bleaching)','Damage by sawflies, leaf miners, or mites. Heavy infestations can significantly reduce tree vigor.'],
+      ['Leaf density is adequate (no severe thinning of foliage)','If leaf density is reduced in more than 30% of the crown, it indicates significant decline in tree vigor.'],
+      ['No powdery mildew or sooty mold on leaves','Powdery mildew inhibits photosynthesis. Sooty mold grows on honeydew from scale insects or aphids.'],
+      ['No significant infestation by caterpillars, scale, or aphids','Check leaf undersides, new shoots, and branch forks. Avoid bare-hand contact with urticating caterpillars.'],
+      ['Minimal air pollution or salt damage visible','Trees near roads (exhaust, de-icing salt) or coasts (salt spray) are prone to leaf scorch and dieback.'],
+    ],
+  }
+};
+
+function setLangC(lang) {
+  document.getElementById('btn-ja').classList.toggle('active', lang === 'ja');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.documentElement.lang = lang;
+  const t = CHECK_I18N[lang];
+  document.title = t.title;
+  window._CHECK_LANG = lang;
+  window._CHECK_I18N_T = t;
+
+  const set = (sel, html) => { const el = document.querySelector(sel); if(el) el.innerHTML = html; };
+  const setText = (sel, txt) => { const el = document.querySelector(sel); if(el) el.textContent = txt; };
+
+  set('.badge', t.badge);
+  set('h1', t.h1);
+  set('.sub', t.sub);
+
+  // Info bar
+  const infoLabels = document.querySelectorAll('.info-field label');
+  if (infoLabels[0]) infoLabels[0].textContent = t.fieldTree;
+  if (infoLabels[1]) infoLabels[1].textContent = t.fieldDate;
+  if (infoLabels[2]) infoLabels[2].textContent = t.fieldHeight;
+
+  // Height select
+  const hSel = document.getElementById('tree-height');
+  if (hSel) t.heightOpts.forEach((opt, i) => { if(hSel.options[i]) hSel.options[i].text = opt; });
+
+  // Progress count
+  const progCount = document.getElementById('prog-count');
+  if (progCount) {
+    const parts = progCount.textContent.split('/');
+    const current = parseInt(parts[0]) || 0;
+    progCount.textContent = t.progCount(current, 32);
+  }
+
+  // Section names/metas
+  const secKeys = ['root','trunk','branch','leaf'];
+  secKeys.forEach(k => {
+    const nameEl = document.querySelector(`#sec-${k} .section-name`);
+    const metaEl = document.querySelector(`#sec-${k} .section-meta`);
+    if (nameEl) nameEl.textContent = t[`sec${secKeys.indexOf(k)+1}name`] || t[`sec1name`];
+    if (metaEl) metaEl.textContent = t[`sec${secKeys.indexOf(k)+1}meta`] || t[`sec1meta`];
+  });
+  // Fix section name/meta by index
+  const secNameEls = document.querySelectorAll('.section-name');
+  const secMetaEls = document.querySelectorAll('.section-meta');
+  ['sec1name','sec2name','sec3name','sec4name'].forEach((k,i) => {
+    if(secNameEls[i]) secNameEls[i].textContent = t[k];
+    if(secMetaEls[i]) secMetaEls[i].textContent = t[k.replace('name','meta')];
+  });
+
+  // Check items — translate all 32
+  const items = document.querySelectorAll('.check-item');
+  items.forEach((item, i) => {
+    if (t.checks[i]) {
+      const mainEl = item.querySelector('.check-main');
+      const detailEl = item.querySelector('.check-detail');
+      if (mainEl) mainEl.textContent = t.checks[i][0];
+      if (detailEl) detailEl.textContent = t.checks[i][1];
+    }
+  });
+
+  // Buttons
+  const calcBtn = document.querySelector('.btn-calc');
+  if (calcBtn) calcBtn.textContent = t.calcBtn;
+  const pdfBtn = document.querySelector('.pdf-btn');
+  if (pdfBtn) pdfBtn.textContent = t.pdfBtn;
+  const resetBtns = document.querySelectorAll('.btn-o');
+  resetBtns.forEach(b => b.textContent = t.resetBtn);
+
+  // CTA
+  set('.cta-box h3', t.ctaTitle);
+  set('.cta-box p', t.ctaDesc);
+
+  // Footer
+  const footerP = document.querySelector('footer p');
+  if (footerP) footerP.textContent = t.footer1;
+
+  // Ref title
+  const refH = document.querySelector('.ref-section h2');
+  if (refH) refH.textContent = t.refTitle;
+}
+
+if (navigator.language && navigator.language.startsWith('en')) setLangC('en');
+
   ja: {
     title: '樹木健全度チェックリスト | 樹木医監修',
     badge: '🌿 樹木医監修ツール',
