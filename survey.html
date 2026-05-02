@@ -4,8 +4,52 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>現地調査・複数樹木記録 | 樹木医ツール</title>
+<meta property="og:title" content="現地調査・複数樹木記録 | GPS・地図・CSV出力 | 樹木医プロツール">
+<meta property="og:description" content="複数本の樹木を現地で連続記録。GPS位置記録・OpenStreetMap地図・国土地理院地形図・衛星画像・CSV台帳出力・GeoJSON出力・QRコード生成に対応。オフライン動作。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://raitopapa.github.io/survey.html">
+<meta property="og:image" content="https://raitopapa.github.io/icons/icon-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:site_name" content="樹木医ツール — Arborist Tools Japan">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="現地調査・複数樹木記録 | GPS・地図・CSV出力 | 樹木医プロツール">
+<meta name="twitter:description" content="Multi-tree field survey tool with GPS, OpenStreetMap/topo/satellite layers, CSV/GeoJSON export, QR codes, voice input, dark mode. Offline-capable PWA.">
+<meta name="twitter:image" content="https://raitopapa.github.io/icons/icon-512.png">
+<link rel="canonical" href="https://raitopapa.github.io/survey.html">
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "現地調査・複数樹木記録",
+    "url": "https://raitopapa.github.io/survey.html",
+    "description": "複数本の樹木を現地で連続記録。GPS位置記録・OpenStreetMap地図・国土地理院地形図・衛星画像・CSV台帳出力・GeoJSON出力・QRコード生成に対応。オフライン動作。",
+    "inLanguage": ["ja", "en"],
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "isAccessibleForFree": true,
+    "author": {
+      "@type": "Person",
+      "jobTitle": "樹木医（Certified Japanese Arborist）"
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "樹木医ツール", "item": "https://raitopapa.github.io/"},
+        {"@type": "ListItem", "position": 2, "name": "現地調査・複数樹木記録", "item": "https://raitopapa.github.io/survey.html"}
+      ]
+    }
+  }
+</script>
 <meta name="description" content="現地で複数本の樹木を連続記録。調査レポートをPDFで自動生成。樹木医・専門家向けフィールドワークツール。">
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Noto+Serif+JP:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Leaflet.js (OpenStreetMap - 完全無料) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<!-- QRCode.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#1A2F1A">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -184,8 +228,67 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--mist);
 .lang-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 4px 10px; border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: rgba(200,216,192,0.6); cursor: pointer; transition: all 0.15s; }
 .lang-btn.active { background: #6AAE6A; color: #1A2F1A; border-color: #6AAE6A; font-weight: 600; }
 
-@media print {
-  nav, .action-row, .stats-bar, .card-actions, .ad-slot, footer, .survey-meta { display: none !important; }
+/* ===== モバイル最適化 ===== */
+@media(max-width:600px){
+  .wrap { padding: 16px 12px 80px; }
+  .action-row { flex-direction: column; }
+  .action-row button { width: 100%; padding: 14px; font-size: 15px; }
+  .card-grid { grid-template-columns: 1fr !important; }
+  .card-grid.two { grid-template-columns: 1fr !important; }
+  .quick-checks { grid-template-columns: 1fr !important; }
+  .qc-item { padding: 10px 12px; font-size: 13px; }
+  .btn-gps { width: 100%; justify-content: center; padding: 12px; font-size: 13px; }
+  .risk-selector { flex-direction: column; }
+  .risk-btn { padding: 12px; font-size: 13px; text-align: center; }
+  .card-actions { flex-direction: column; }
+  .btn-save-card, .btn-delete-card { width: 100%; padding: 12px; font-size: 13px; }
+  .stats-bar { gap: 6px; }
+  .stat-pill { font-size: 12px; padding: 6px 10px; }
+  #survey-map { height: 260px; }
+  .map-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .layer-btns { width: 100%; justify-content: space-between; }
+  .layer-btn { flex: 1; text-align: center; padding: 6px 4px; }
+  .f-group input, .f-group select, .f-group textarea { padding: 10px 10px; font-size: 14px; }
+}
+
+/* ダークモード（屋外高コントラスト） */
+.dark-mode {
+  --cream: #1A1A1A;
+  --pale: #242424;
+  --mist: #3A3A3A;
+  --ink: #F0F0F0;
+  --forest: #0A1A0A;
+}
+.dark-mode body { background: #1A1A1A; }
+.dark-mode .tree-card,
+.dark-mode .survey-meta .meta-field,
+.dark-mode .map-section { background: #242424; border-color: #3A3A3A; }
+.dark-mode .f-group input,
+.dark-mode .f-group select,
+.dark-mode .f-group textarea { background: #2E2E2E; color: #F0F0F0; border-color: #444; }
+.dark-mode .qc-item { background: #2E2E2E; color: #D0D0D0; border-color: #3A3A3A; }
+.dark-mode .card-header { background: #2A2A2A; }
+
+/* ダークモードトグルボタン */
+.btn-dark { padding: 5px 10px; border-radius: 2px; border: 1px solid rgba(200,216,192,0.4); background: transparent; color: var(--cream); font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; }
+.btn-dark.active { background: #2A2A2A; color: #FFD700; border-color: #FFD700; }
+
+/* オフラインバナー */
+.offline-banner { display: none; background: var(--amber); color: white; text-align: center; padding: 8px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.05em; }
+.offline-banner.show { display: block; }
+
+/* IndexedDB保存インジケーター */
+.db-status { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--moss-l); display: flex; align-items: center; gap: 4px; padding: 4px 0; }
+.db-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--leaf); display: inline-block; }
+.db-dot.saving { background: var(--amber); animation: blink 0.8s infinite; }
+.db-dot.error { background: var(--rust); }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* 地図ピン手動移動モード */
+.pin-mode-btn { padding: 4px 10px; border-radius: 2px; border: 1px solid rgba(200,216,192,0.4); background: transparent; color: var(--cream); font-family: 'DM Mono', monospace; font-size: 10px; cursor: pointer; }
+.pin-mode-btn.active { background: var(--amber); color: white; border-color: var(--amber); }
+.pin-mode-hint { font-size: 11px; color: var(--amber); font-family: 'DM Mono', monospace; padding: 6px 12px; background: rgba(184,120,32,0.1); border-top: 1px solid rgba(184,120,32,0.3); display: none; }
+.pin-mode-hint.show { display: block; }
   .report-overlay { display: block !important; position: static !important; background: none !important; padding: 0 !important; }
   .report-modal { border-radius: 0 !important; }
   .report-btn-row { display: none !important; }
@@ -193,12 +296,118 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--mist);
   .report-modal-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .risk-badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
+
+/* Map styles */
+.map-section { margin-bottom: 20px; background: rgba(255,255,255,0.7); border: 1px solid var(--mist); border-radius: 4px; overflow: hidden; }
+.map-header { padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--mist); background: var(--forest); color: var(--cream); flex-wrap: wrap; gap: 8px; }
+.map-header h3 { font-family: 'Shippori Mincho', serif; font-size: 13px; font-weight: 600; }
+.map-controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.layer-btns { display: flex; gap: 4px; flex-wrap: wrap; }
+.layer-btn { padding: 4px 10px; border-radius: 2px; border: 1px solid rgba(200,216,192,0.4); background: rgba(255,255,255,0.1); color: var(--cream); font-family: 'DM Mono', monospace; font-size: 10px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.layer-btn:hover { background: rgba(255,255,255,0.2); }
+.layer-btn.active { background: var(--leaf); color: var(--forest); border-color: var(--leaf); font-weight: 600; }
+.map-ctrl-btn { padding: 5px 12px; border-radius: 2px; border: 1px solid rgba(200,216,192,0.4); background: transparent; color: var(--cream); font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; transition: background 0.15s; }
+.map-ctrl-btn:hover { background: rgba(255,255,255,0.15); }
+.map-ctrl-btn.active { background: var(--leaf); color: var(--forest); border-color: var(--leaf); }
+#survey-map { height: 380px; width: 100%; }
+.map-legend { padding: 10px 16px; display: flex; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--mist); background: rgba(255,255,255,0.5); }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #5a6e5a; }
+.legend-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; flex-shrink: 0; }
+.gps-status { font-family: 'DM Mono', monospace; font-size: 10px; padding: 3px 8px; border-radius: 2px; }
+.gps-ok { background: rgba(106,174,106,0.2); color: var(--moss); }
+.gps-err { background: rgba(139,42,26,0.2); color: var(--rust); }
+.gps-wait { background: rgba(184,120,32,0.2); color: var(--amber); }
+
+/* Export buttons */
+.btn-export-csv { padding: 12px 18px; background: var(--sky); color: white; border: none; border-radius: 3px; font-family: 'Shippori Mincho', serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.btn-export-csv:hover { filter: brightness(1.1); }
+.btn-export-geojson { padding: 12px 18px; background: #2A6A4A; color: white; border: none; border-radius: 3px; font-family: 'Shippori Mincho', serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.btn-export-geojson:hover { filter: brightness(1.1); }
+
+/* GPS button in card */
+.btn-gps { padding: 7px 12px; background: var(--sky); color: white; border: none; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+.btn-gps:hover { filter: brightness(1.1); }
+.gps-coords { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--moss-l); margin-top: 4px; }
+.coords-display { display: none; }
+
+/* ===== ダークモード（屋外高コントラスト） ===== */
+body.dark-mode {
+  --ink: #E8F0E1;
+  --forest: #0A150A;
+  --moss: #6AAE6A;
+  --moss-l: #8AC88A;
+  --cream: #111A11;
+  --pale: #1A2A1A;
+  --mist: #2A4A2A;
+  --amber: #E8A840;
+  background: #111A11;
+}
+body.dark-mode .tree-card,
+body.dark-mode .meta-field,
+body.dark-mode .f-group input,
+body.dark-mode .f-group select,
+body.dark-mode .f-group textarea,
+body.dark-mode .map-section { filter: brightness(0.92); }
+body.dark-mode .card-body { background: #1A2A1A; }
+body.dark-mode .card-header { background: #0F1F0F; }
+.dark-toggle { padding: 4px 10px; border-radius: 2px; border: 1px solid rgba(200,216,192,0.3); background: transparent; color: var(--cream); font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; transition: all 0.2s; }
+.dark-toggle.on { background: #1A1A00; color: #FFE066; border-color: #FFE066; }
+
+/* ===== モバイルUX改善 ===== */
+@media(max-width:600px) {
+  .card-grid { grid-template-columns: 1fr !important; }
+  .card-grid.two { grid-template-columns: 1fr 1fr !important; }
+  .f-group input, .f-group select, .f-group textarea { font-size: 16px !important; padding: 12px 10px !important; } /* iOSズーム防止 */
+  .btn-save-card, .btn-delete-card { padding: 12px 18px; font-size: 13px; }
+  .risk-btn { padding: 12px 16px; font-size: 13px; }
+  .btn-gps { padding: 12px 16px; font-size: 13px; }
+  .action-row { flex-direction: column; }
+  .action-row button { width: 100%; padding: 14px; font-size: 14px; }
+  .btn-add { order: -1; }
+  .qc-item { padding: 10px 12px; font-size: 13px; }
+  #survey-map { height: 280px; }
+}
+
+/* ===== 進捗ダッシュボード ===== */
+.dashboard { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-bottom: 16px; }
+@media(max-width:540px){ .dashboard { grid-template-columns: 1fr 1fr; } }
+.dash-card { background: rgba(255,255,255,0.7); border: 1px solid var(--mist); border-radius: 4px; padding: 12px; text-align: center; }
+.dash-num { font-family: 'DM Mono', monospace; font-size: 26px; font-weight: 500; color: var(--forest); line-height: 1; }
+.dash-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--moss-l); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
+.dash-card.high { border-left: 3px solid var(--rust); }
+.dash-card.moderate { border-left: 3px solid var(--amber); }
+.dash-card.low { border-left: 3px solid var(--leaf); }
+
+/* ===== オフラインバナー ===== */
+.offline-banner { display: none; background: #5A3A0A; color: #FFD080; padding: 6px 20px; text-align: center; font-family: 'DM Mono', monospace; font-size: 11px; position: sticky; top: 44px; z-index: 90; }
+
+/* ===== 保存ステータス ===== */
+.idb-status { font-family: 'DM Mono', monospace; font-size: 10px; padding: 4px 10px; border-radius: 2px; display: inline-flex; align-items: center; gap: 5px; }
+.idb-ok { background: rgba(46,94,46,0.15); color: var(--moss); }
+.idb-warn { background: rgba(184,120,32,0.15); color: var(--amber); }
+
+/* ===== 地図ピン移動モード ===== */
+.map-ctrl-btn.pin-mode { background: var(--amber); color: white; border-color: var(--amber); }
+.pin-hint { font-size: 11px; color: var(--amber); font-family: 'DM Mono', monospace; padding: 4px 16px; background: rgba(184,120,32,0.1); display: none; }
+
+/* ===== 音声入力ボタン ===== */
+.btn-voice { padding: 6px 10px; background: transparent; border: 1px solid var(--mist); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--moss-l); transition: all 0.15s; }
+.btn-voice.recording { background: var(--rust); border-color: var(--rust); color: white; animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+
+/* ===== 樹種サジェスト ===== */
+.species-suggest { position: relative; }
+.suggest-list { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--mist); border-radius: 0 0 3px 3px; z-index: 50; max-height: 160px; overflow-y: auto; display: none; }
+.suggest-item { padding: 8px 12px; font-size: 13px; cursor: pointer; border-bottom: 1px solid var(--pale); }
+.suggest-item:hover { background: var(--pale); }
 </style>
 </head>
 <body>
+<div class="offline-banner" id="offline-banner">⚠️ オフライン — データはデバイスに保存されています</div>
 <div class="lang-bar">
   <button class="lang-btn active" onclick="setLang('ja')" id="btn-ja">🇯🇵 日本語</button>
   <button class="lang-btn" onclick="setLang('en')" id="btn-en">🇺🇸 English</button>
+  <button class="btn-dark" onclick="toggleDark(this)" id="btn-dark" title="屋外向けダークモード">🌙 夜間モード</button>
 </div>
 
 <nav>
@@ -206,8 +415,16 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--mist);
     <a href="index.html">🌿 樹木医ツール</a>
     <span class="nav-badge">FIELD</span>
   </div>
-  <a href="index.html" class="nav-back">← ホームへ</a>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <button class="dark-toggle" id="dark-toggle" onclick="toggleDark()" title="ダークモード（屋外向け）">🌙 Dark</button>
+    <a href="index.html" class="nav-back">← ホームへ</a>
+  </div>
 </nav>
+
+<!-- オフラインバナー -->
+<div class="offline-banner" id="offline-banner">
+  ⚠️ オフラインモード — データはデバイスに保存中。接続回復後も自動利用できます。
+</div>
 
 <div class="wrap">
 
@@ -215,7 +432,30 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--mist);
   <span class="page-label">Field Survey Tool — Multi-Tree Recording</span>
   <h1>現地調査・複数樹木記録<br>フィールドワークシート</h1>
   <p class="sub">現地で複数本の樹木を連続記録し、調査レポートを自動生成します。<br>オフライン対応・PWA対応のため、電波のない現場でもご利用いただけます。</p>
+  <div style="display:flex;align-items:center;gap:10px;margin-top:8px;font-family:'DM Mono',monospace;font-size:10px;color:var(--moss-l);">
+    <span class="idb-status idb-warn" id="idb-status">💾 保存中...</span>
+  </div>
 </header>
+
+<!-- 進捗ダッシュボード -->
+<div class="dashboard" id="dashboard">
+  <div class="dash-card">
+    <div class="dash-num" id="dash-total">0</div>
+    <div class="dash-label">調査本数</div>
+  </div>
+  <div class="dash-card high">
+    <div class="dash-num" id="dash-high" style="color:var(--rust);">0</div>
+    <div class="dash-label">高リスク</div>
+  </div>
+  <div class="dash-card moderate">
+    <div class="dash-num" id="dash-moderate" style="color:var(--amber);">0</div>
+    <div class="dash-label">要注意</div>
+  </div>
+  <div class="dash-card low">
+    <div class="dash-num" id="dash-low" style="color:var(--moss);">0</div>
+    <div class="dash-label">低リスク</div>
+  </div>
+</div>
 
 <!-- Survey Meta -->
 <div class="survey-meta">
@@ -257,7 +497,43 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--mist);
 <div class="action-row">
   <button class="btn-add" onclick="addTree()">＋ 樹木を追加</button>
   <button class="btn-report" onclick="generateReport()">📄 調査レポートを生成</button>
+  <button class="btn-export-csv" onclick="exportCSV()">📊 CSV台帳出力</button>
+  <button class="btn-export-geojson" onclick="exportGeoJSON()">🗺 GeoJSON出力</button>
   <button class="btn-clear" onclick="clearAll()">🗑 全削除</button>
+</div>
+<div class="db-status" id="db-status">
+  <span class="db-dot" id="db-dot"></span>
+  <span id="db-status-text">データ読み込み中...</span>
+</div>
+
+<!-- Map Section -->
+<div class="map-section" id="map-section">
+  <div class="map-header">
+    <h3>🗺 樹木位置マップ</h3>
+    <div class="map-controls">
+      <div class="layer-btns">
+        <button class="layer-btn active" onclick="switchLayer('osm',this)" title="OpenStreetMap 標準地図">🗺 標準</button>
+        <button class="layer-btn" onclick="switchLayer('topo',this)" title="国土地理院 地形図・等高線">🏔 地形図</button>
+        <button class="layer-btn" onclick="switchLayer('satellite',this)" title="Esri 衛星画像（無料）">🛰 衛星</button>
+        <button class="layer-btn" onclick="switchLayer('pale',this)" title="白地図（淡色）">⬜ 白地図</button>
+      </div>
+      <span class="gps-status gps-wait" id="gps-status">📍 GPS未取得</span>
+      <button class="map-ctrl-btn" onclick="locateMe()">📍 現在地</button>
+      <button class="pin-mode-btn" id="pin-mode-btn" onclick="togglePinMode()" title="地図をタップして樹木の位置を手動指定">📌 ピン移動</button>
+      <button class="map-ctrl-btn" onclick="fitAllTrees()">全樹木表示</button>
+    </div>
+  </div>
+  <div class="pin-mode-hint" id="pin-mode-hint">📌 地図上をタップして、選択中の樹木の位置を指定してください</div>
+  <div id="survey-map"></div>
+  <div class="map-legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#8B2A1A;"></div>高リスク</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#B87820;"></div>要注意</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2E5E2E;"></div>低リスク</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2A5A8A;"></div>未評価</div>
+    <div style="margin-left:auto;font-size:10px;color:#8fa085;font-family:'DM Mono',monospace;" id="map-attribution">
+      地図：© OpenStreetMap contributors
+    </div>
+  </div>
 </div>
 
 <!-- Tree list -->
@@ -380,6 +656,18 @@ function renderTree(tree) {
         </div>
       </div>
 
+      <!-- GPS -->
+      <div class="f-group" style="margin-bottom:12px;">
+        <label style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;color:var(--moss);text-transform:uppercase;display:block;margin-bottom:6px;">📍 GPS座標</label>
+        <button class="btn-gps" onclick="getGPS(${tree.id})">📍 現在地を取得</button>
+        <div class="coords-display" id="coords-${tree.id}">
+          <div class="gps-coords">
+            緯度: <span id="lat-${tree.id}">—</span> &nbsp; 経度: <span id="lng-${tree.id}">—</span>
+            &nbsp; 精度: <span id="acc-${tree.id}">—</span>m
+          </div>
+        </div>
+      </div>
+
       <div style="margin-bottom:10px;">
         <label style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;color:var(--moss);text-transform:uppercase;display:block;margin-bottom:8px;">現地チェック項目（複数選択可）</label>
         <div class="quick-checks">${checksHTML}</div>
@@ -421,14 +709,30 @@ function renderTree(tree) {
       </div>
 
       <div class="f-group" style="margin-bottom:12px;">
-        <label>所見・特記事項</label>
+        <label style="display:flex;align-items:center;justify-content:space-between;">
+          所見・特記事項
+          <button class="btn-voice" onclick="startVoice(${tree.id})" title="音声入力">🎤</button>
+        </label>
         <textarea id="notes-${tree.id}" placeholder="現地での観察事項・写真番号・特記事項を記録してください"></textarea>
       </div>
 
       <div class="card-actions">
         <button class="btn-save-card" onclick="saveCard(${tree.id})">✓ 記録を保存</button>
+        <button class="btn-gps" onclick="getGPS(${tree.id})" style="background:var(--sky);">📍 GPS取得</button>
+        <button class="btn-save-card" style="background:#2A6A4A;" onclick="showQR(${tree.id})">📱 QR</button>
         <button class="btn-delete-card" onclick="deleteTree(${tree.id})">削除</button>
         <span class="save-status" id="save-status-${tree.id}"></span>
+      </div>
+      <!-- QRコード表示エリア -->
+      <div id="qr-area-${tree.id}" style="display:none;padding:14px;background:var(--pale);border-top:1px solid var(--mist);">
+        <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+          <div id="qr-${tree.id}"></div>
+          <div>
+            <div style="font-family:'Shippori Mincho',serif;font-size:13px;font-weight:600;color:var(--forest);margin-bottom:4px;">樹木 #${tree.id} QRコード</div>
+            <div style="font-size:11px;color:#6b8a6b;line-height:1.7;">このQRコードを樹木に貼付することで<br>現地でスキャンして情報を即確認できます。</div>
+            <button onclick="downloadTreeQR(${tree.id})" style="margin-top:8px;padding:6px 12px;background:var(--forest);color:white;border:none;border-radius:2px;font-family:'DM Mono',monospace;font-size:10px;cursor:pointer;">⬇ ダウンロード</button>
+          </div>
+        </div>
       </div>
     </div>
   `;
@@ -502,6 +806,8 @@ function saveCard(id) {
   setTimeout(() => status.textContent = '', 3000);
 
   updateStats();
+  // IndexedDBに永続保存
+  saveAllToDB();
 }
 
 function deleteTree(id) {
@@ -525,6 +831,9 @@ function updateStats() {
 
 function clearAll() {
   if (!confirm('全ての記録を削除しますか？この操作は取り消せません。')) return;
+  // マーカー削除
+  Object.values(markers).forEach(m => { try { map && map.removeLayer(m); } catch(e){} });
+  markers = {};
   trees = [];
   treeCount = 0;
   document.getElementById('tree-list').innerHTML = `
@@ -533,6 +842,14 @@ function clearAll() {
       <p>「＋ 樹木を追加」ボタンを押して<br>現地調査を開始してください。</p>
     </div>`;
   updateStats();
+  // IndexedDBからも削除
+  if (db) {
+    try {
+      const tx = db.transaction(STORE, 'readwrite');
+      tx.objectStore(STORE).delete('current');
+      tx.oncomplete = () => dbSetStatus('ok', '全データを削除しました');
+    } catch(e) {}
+  }
 }
 
 function generateReport() {
@@ -679,7 +996,695 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js").catch(() => {});
   });
 }
+</script>
+<script>
+// ===== IndexedDB 永続保存 =====
+const DB_NAME = 'arborist-survey';
+const DB_VER = 1;
+const STORE = 'surveys';
+let db = null;
 
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VER);
+    req.onupgradeneeded = e => {
+      const d = e.target.result;
+      if (!d.objectStoreNames.contains(STORE)) {
+        d.createObjectStore(STORE, { keyPath: 'id' });
+      }
+    };
+    req.onsuccess = e => { db = e.target.result; resolve(db); };
+    req.onerror = () => reject(req.error);
+  });
+}
+
+function dbSetStatus(state, msg) {
+  const dot = document.getElementById('db-dot');
+  const txt = document.getElementById('db-status-text');
+  if (!dot || !txt) return;
+  dot.className = 'db-dot' + (state === 'saving' ? ' saving' : state === 'error' ? ' error' : '');
+  txt.textContent = msg;
+}
+
+async function saveAllToDB() {
+  if (!db) return;
+  dbSetStatus('saving', '保存中...');
+  try {
+    const tx = db.transaction(STORE, 'readwrite');
+    const store = tx.objectStore(STORE);
+    const surveyData = {
+      id: 'current',
+      date: document.getElementById('survey-date')?.value || '',
+      surveyor: document.getElementById('surveyor')?.value || '',
+      location: document.getElementById('survey-location')?.value || '',
+      weather: document.getElementById('weather')?.value || '',
+      trees: trees,
+      treeCount: treeCount,
+      savedAt: new Date().toISOString()
+    };
+    store.put(surveyData);
+    tx.oncomplete = () => {
+      dbSetStatus('ok', `自動保存済み — ${new Date().toLocaleTimeString('ja-JP', {hour:'2-digit',minute:'2-digit'})}`);
+    };
+    tx.onerror = () => dbSetStatus('error', '保存エラー');
+  } catch(e) { dbSetStatus('error', '保存エラー: ' + e.message); }
+}
+
+async function loadFromDB() {
+  if (!db) return;
+  try {
+    const tx = db.transaction(STORE, 'readonly');
+    const store = tx.objectStore(STORE);
+    const req = store.get('current');
+    req.onsuccess = () => {
+      const data = req.result;
+      if (!data || !data.trees || data.trees.length === 0) {
+        dbSetStatus('ok', 'データなし — 新規調査を開始してください');
+        return;
+      }
+      // メタデータ復元
+      if (data.date) document.getElementById('survey-date').value = data.date;
+      if (data.surveyor) document.getElementById('surveyor').value = data.surveyor;
+      if (data.location) document.getElementById('survey-location').value = data.location;
+      if (data.weather) document.getElementById('weather').value = data.weather;
+
+      // 樹木データ復元
+      treeCount = data.treeCount || data.trees.length;
+      trees = [];
+      const empty = document.getElementById('empty-state');
+      if (empty) empty.style.display = 'none';
+
+      data.trees.forEach(t => {
+        trees.push(t);
+        renderTree(t);
+
+        // フォームデータ復元
+        if (t.data) {
+          const d = t.data;
+          const setVal = (id, val) => { const el = document.getElementById(id); if(el && val) el.value = val; };
+          setVal(`tid-${t.id}`, d.tid);
+          setVal(`species-${t.id}`, d.species);
+          setVal(`dbh-${t.id}`, d.dbh);
+          setVal(`height-${t.id}`, d.height);
+          setVal(`age-${t.id}`, d.age);
+          setVal(`pos-${t.id}`, d.pos);
+          setVal(`vigor-${t.id}`, d.vigor);
+          setVal(`action-${t.id}`, d.action);
+          setVal(`notes-${t.id}`, d.notes);
+          if (d.checks) {
+            QUICK_CHECKS.forEach(c => {
+              if (d.checks.includes(c.label)) {
+                const cb = document.getElementById(`${t.id}-${c.id}`);
+                if (cb) { cb.checked = true; cb.closest('.qc-item')?.classList.add('checked'); }
+              }
+            });
+          }
+        }
+        // GPS座標復元
+        if (t.lat && t.lng) {
+          const latEl = document.getElementById(`lat-${t.id}`);
+          const lngEl = document.getElementById(`lng-${t.id}`);
+          const accEl = document.getElementById(`acc-${t.id}`);
+          const coordsDiv = document.getElementById(`coords-${t.id}`);
+          if(latEl) latEl.textContent = t.lat.toFixed(6);
+          if(lngEl) lngEl.textContent = t.lng.toFixed(6);
+          if(accEl) accEl.textContent = t.accuracy || '—';
+          if(coordsDiv) coordsDiv.style.display = 'block';
+          const gpsBtn = document.querySelector(`#card-${t.id} .btn-gps`);
+          if(gpsBtn) gpsBtn.textContent = '✓ 取得済み';
+        }
+        // リスク復元
+        if (t.risk) {
+          const card = document.getElementById(`card-${t.id}`);
+          if (card) {
+            card.classList.add(`risk-${t.risk}`);
+            const badge = document.getElementById(`risk-badge-${t.id}`);
+            if(badge) {
+              badge.className = `card-risk-badge crb-${t.risk}`;
+              badge.textContent = t.risk==='high'?'高リスク':t.risk==='moderate'?'要注意':'低リスク';
+            }
+            card.querySelectorAll('.risk-btn').forEach(b => b.className = 'risk-btn');
+            const riskBtns = card.querySelectorAll('.risk-btn');
+            const riskMap = {'low':0,'moderate':1,'high':2};
+            const idx = riskMap[t.risk];
+            if(riskBtns[idx]) riskBtns[idx].classList.add(`sel-${t.risk}`);
+          }
+        }
+        updateTitle(t.id);
+      });
+
+      updateStats();
+      dbSetStatus('ok', `${data.trees.length}本のデータを復元 — ${new Date(data.savedAt).toLocaleString('ja-JP')}`);
+
+      // 地図マーカー復元（地図初期化後）
+      setTimeout(() => {
+        data.trees.forEach(t => { if(t.lat && t.lng) addTreeMarker(t); });
+        if (data.trees.some(t=>t.lat && t.lng)) fitAllTrees();
+      }, 500);
+    };
+  } catch(e) { dbSetStatus('error', 'データ読込エラー'); }
+}
+
+// 自動保存（30秒ごと）
+setInterval(saveAllToDB, 30000);
+
+// ===== ピン手動移動モード =====
+let pinMoveMode = false;
+let pinMoveTargetId = null;
+
+function togglePinMode() {
+  pinMoveMode = !pinMoveMode;
+  const btn = document.getElementById('pin-mode-btn');
+  const hint = document.getElementById('pin-mode-hint');
+  if (pinMoveMode) {
+    btn.classList.add('active');
+    btn.textContent = '📌 移動中...';
+    hint.classList.add('show');
+    hint.textContent = '📌 地図をタップして樹木の位置を指定 — 対象樹木を選択してください';
+    map.getContainer().style.cursor = 'crosshair';
+    // 最後に保存した樹木をデフォルトターゲットに
+    pinMoveTargetId = trees.length > 0 ? trees[trees.length-1].id : null;
+    if (pinMoveTargetId) {
+      hint.textContent = `📌 樹木 #${pinMoveTargetId} の位置を指定中 — 地図をタップ`;
+    }
+  } else {
+    btn.classList.remove('active');
+    btn.textContent = '📌 ピン移動';
+    hint.classList.remove('show');
+    map.getContainer().style.cursor = '';
+    pinMoveTargetId = null;
+  }
+}
+
+// 地図クリック時のピン配置（既存のinitMap内に追記する形で）
+function setupMapClickHandler() {
+  map.on('click', e => {
+    if (!pinMoveMode) return;
+    const { lat, lng } = e.latlng;
+
+    // ターゲット樹木がなければ最新樹木を選択
+    if (!pinMoveTargetId && trees.length > 0) {
+      pinMoveTargetId = trees[trees.length-1].id;
+    }
+    if (!pinMoveTargetId) {
+      alert('先に「＋ 樹木を追加」で樹木を追加してください。');
+      return;
+    }
+
+    const tree = trees.find(t => t.id === pinMoveTargetId);
+    if (!tree) return;
+    tree.lat = lat;
+    tree.lng = lng;
+    tree.accuracy = 0; // 手動入力
+
+    // 座標表示更新
+    const latEl = document.getElementById(`lat-${tree.id}`);
+    const lngEl = document.getElementById(`lng-${tree.id}`);
+    const accEl = document.getElementById(`acc-${tree.id}`);
+    const coordsDiv = document.getElementById(`coords-${tree.id}`);
+    if(latEl) latEl.textContent = lat.toFixed(6);
+    if(lngEl) lngEl.textContent = lng.toFixed(6);
+    if(accEl) accEl.textContent = '手動';
+    if(coordsDiv) coordsDiv.style.display = 'block';
+    const gpsBtn = document.querySelector(`#card-${tree.id} .btn-gps`);
+    if(gpsBtn) gpsBtn.textContent = '✓ 手動設定済み';
+
+    addTreeMarker(tree);
+
+    // 次の樹木に自動移動
+    const idx = trees.findIndex(t => t.id === pinMoveTargetId);
+    if (idx < trees.length - 1) {
+      pinMoveTargetId = trees[idx + 1].id;
+      document.getElementById('pin-mode-hint').textContent = `📌 樹木 #${pinMoveTargetId} の位置を指定中 — 地図をタップ`;
+    } else {
+      // 全樹木配置完了
+      pinMoveMode = false;
+      const btn = document.getElementById('pin-mode-btn');
+      btn.classList.remove('active');
+      btn.textContent = '📌 ピン移動';
+      document.getElementById('pin-mode-hint').classList.remove('show');
+      map.getContainer().style.cursor = '';
+      alert(`✅ 全${trees.length}本の位置を設定しました。`);
+    }
+    saveAllToDB();
+    updateStats();
+  });
+}
+
+// ===== ダークモード =====
+function toggleDark(btn) {
+  document.documentElement.classList.toggle('dark-mode');
+  document.body.classList.toggle('dark-mode');
+  const isOn = document.body.classList.contains('dark-mode');
+  btn.classList.toggle('active', isOn);
+  btn.textContent = isOn ? '☀️ 通常モード' : '🌙 夜間モード';
+  localStorage.setItem('arborist-dark', isOn ? '1' : '0');
+}
+
+// ダークモード設定復元
+if (localStorage.getItem('arborist-dark') === '1') {
+  document.documentElement.classList.add('dark-mode');
+  document.body.classList.add('dark-mode');
+  window.addEventListener('load', () => {
+    const btn = document.getElementById('btn-dark');
+    if(btn) { btn.classList.add('active'); btn.textContent = '☀️ 通常モード'; }
+  });
+}
+
+// ===== オフライン検知 =====
+function updateOnlineStatus() {
+  const banner = document.getElementById('offline-banner');
+  if (!banner) return;
+  if (!navigator.onLine) {
+    banner.classList.add('show');
+  } else {
+    banner.classList.remove('show');
+  }
+}
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+updateOnlineStatus();
+
+let map = null;
+let markers = {};
+let myLocationMarker = null;
+let currentBaseLayer = null;
+
+// タイルレイヤー定義（全て無料・APIキー不要）
+const TILE_LAYERS = {
+  osm: {
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    label: '🗺 標準地図 — OpenStreetMap',
+    maxZoom: 19
+  },
+  topo: {
+    url: 'https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png',
+    attribution: '© <a href="https://maps.gsi.go.jp/development/ichiran.html">国土地理院</a>',
+    label: '🏔 地形図・等高線 — 国土地理院',
+    maxZoom: 18
+  },
+  satellite: {
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    attribution: '© <a href="https://www.esri.com/">Esri</a>, Maxar, Earthstar Geographics',
+    label: '🛰 衛星画像 — Esri World Imagery',
+    maxZoom: 18
+  },
+  pale: {
+    url: 'https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',
+    attribution: '© <a href="https://maps.gsi.go.jp/development/ichiran.html">国土地理院</a>',
+    label: '⬜ 白地図（淡色） — 国土地理院',
+    maxZoom: 18
+  }
+};
+
+function initMap() {
+  if (map) return;
+  map = L.map('survey-map', { zoomControl: true }).setView([35.6812, 139.7671], 15);
+
+  // デフォルト：OpenStreetMap
+  const def = TILE_LAYERS.osm;
+  currentBaseLayer = L.tileLayer(def.url, {
+    attribution: def.attribution,
+    maxZoom: def.maxZoom
+  }).addTo(map);
+
+  // スケールバー追加
+  L.control.scale({ imperial: false, metric: true }).addTo(map);
+
+  // ピン移動クリックハンドラー設定
+  setupMapClickHandler();
+}
+
+function switchLayer(key, btn) {
+  if (!map) return;
+  const layerDef = TILE_LAYERS[key];
+  if (!layerDef) return;
+
+  // 既存ベースレイヤーを削除
+  if (currentBaseLayer) map.removeLayer(currentBaseLayer);
+
+  // 新レイヤーを追加
+  currentBaseLayer = L.tileLayer(layerDef.url, {
+    attribution: layerDef.attribution,
+    maxZoom: layerDef.maxZoom
+  }).addTo(map);
+
+  // ツリーマーカーを最前面に
+  Object.values(markers).forEach(m => m.bringToFront());
+  if (myLocationMarker) myLocationMarker.bringToFront();
+
+  // ボタン状態更新
+  document.querySelectorAll('.layer-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+
+  // 帰属表示更新
+  const attrEl = document.getElementById('map-attribution');
+  if (attrEl) attrEl.innerHTML = `地図：${layerDef.label}`;
+}
+
+function getMarkerColor(risk) {
+  return { high:'#8B2A1A', moderate:'#B87820', low:'#2E5E2E', '':'#2A5A8A' }[risk] || '#2A5A8A';
+}
+
+function createMarkerIcon(risk) {
+  const color = getMarkerColor(risk);
+  // 衛星画像モードでは白い外枠を太くして視認性UP
+  const isSatellite = document.querySelector('.layer-btn.active')?.textContent?.includes('衛星');
+  const border = isSatellite ? '3px solid white' : '2px solid white';
+  const shadow = isSatellite
+    ? '0 0 0 2px rgba(0,0,0,0.6), 0 3px 8px rgba(0,0,0,0.5)'
+    : '0 2px 6px rgba(0,0,0,0.4)';
+  return L.divIcon({
+    className: '',
+    html: `<div style="width:20px;height:20px;background:${color};border:${border};border-radius:50%;box-shadow:${shadow};"></div>`,
+    iconSize:[20,20], iconAnchor:[10,10], popupAnchor:[0,-12]
+  });
+}
+
+function addTreeMarker(tree) {
+  if (!map || !tree.lat || !tree.lng) return;
+  const d = tree.data || {};
+  const riskLabel = tree.risk==='high'?'🔴 高リスク':tree.risk==='moderate'?'🟡 要注意':tree.risk==='low'?'🟢 低リスク':'未評価';
+  const popupHTML = `<div style="font-family:'Noto Serif JP',serif;font-size:12px;min-width:160px;">
+    <strong style="font-size:13px;">${d.tid||'#'+tree.id} — ${d.species||'未入力'}</strong><br>
+    DBH: ${d.dbh||'—'}cm | 樹高: ${d.height||'—'}m<br>
+    樹勢: ${d.vigor||'—'} | ${riskLabel}<br>
+    ${d.notes?'<em style="font-size:11px;color:#6b8a6b;">'+d.notes.slice(0,60)+(d.notes.length>60?'…':'')+'</em>':''}
+  </div>`;
+  if (markers[tree.id]) map.removeLayer(markers[tree.id]);
+  markers[tree.id] = L.marker([tree.lat,tree.lng],{icon:createMarkerIcon(tree.risk)})
+    .addTo(map).bindPopup(popupHTML);
+}
+
+function removeTreeMarker(id) {
+  if (markers[id]) { map.removeLayer(markers[id]); delete markers[id]; }
+}
+
+function fitAllTrees() {
+  const pts = trees.filter(t=>t.lat&&t.lng).map(t=>[t.lat,t.lng]);
+  if (!pts.length) { alert('GPS座標が記録された樹木がありません。'); return; }
+  if (pts.length===1) { map.setView(pts[0],17); return; }
+  map.fitBounds(L.latLngBounds(pts),{padding:[40,40]});
+}
+
+function locateMe() {
+  if (!navigator.geolocation) return;
+  const st = document.getElementById('gps-status');
+  st.textContent='📍 取得中...'; st.className='gps-status gps-wait';
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const {latitude:lat,longitude:lng,accuracy} = pos.coords;
+      map.setView([lat,lng],17);
+      if (myLocationMarker) map.removeLayer(myLocationMarker);
+      myLocationMarker = L.circleMarker([lat,lng],{radius:10,color:'#2A5A8A',fillColor:'#6AAEE8',fillOpacity:0.7,weight:2})
+        .addTo(map).bindPopup('📍 現在地').openPopup();
+      st.textContent=`✓ 取得済（±${Math.round(accuracy)}m）`; st.className='gps-status gps-ok';
+    },
+    () => { st.textContent='⚠ GPS取得失敗'; st.className='gps-status gps-err'; },
+    {enableHighAccuracy:true,timeout:10000}
+  );
+}
+
+function getGPS(id) {
+  if (!navigator.geolocation) { alert('このブラウザはGeolocationに対応していません。'); return; }
+  const btn = document.querySelector(`#card-${id} .btn-gps`);
+  if (btn) btn.textContent='📍 取得中...';
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const {latitude:lat,longitude:lng,accuracy} = pos.coords;
+      const tree = trees.find(t=>t.id===id);
+      if (tree) { tree.lat=lat; tree.lng=lng; tree.accuracy=Math.round(accuracy); }
+      const latEl=document.getElementById(`lat-${id}`);
+      const lngEl=document.getElementById(`lng-${id}`);
+      const accEl=document.getElementById(`acc-${id}`);
+      const coordsDiv=document.getElementById(`coords-${id}`);
+      if(latEl) latEl.textContent=lat.toFixed(6);
+      if(lngEl) lngEl.textContent=lng.toFixed(6);
+      if(accEl) accEl.textContent=Math.round(accuracy);
+      if(coordsDiv) coordsDiv.style.display='block';
+      if(btn) btn.textContent='✓ 取得済み';
+      if(tree) { addTreeMarker(tree); map.setView([lat,lng],17); }
+      updateStats();
+    },
+    () => { if(btn) btn.textContent='📍 現在地を取得'; alert('GPS取得に失敗しました。位置情報の許可を確認してください。'); },
+    {enableHighAccuracy:true,timeout:10000}
+  );
+}
+
+// ===== CSV Export =====
+function exportCSV() {
+  trees.forEach(t=>saveCard(t.id));
+  if (!trees.length) { alert('記録された樹木がありません。'); return; }
+  const date=document.getElementById('survey-date').value;
+  const surveyor=document.getElementById('surveyor').value;
+  const location=document.getElementById('survey-location').value;
+  const headers=['調査日','調査者','調査場所','樹木ID','樹種','DBH(cm)','樹高(m)','樹齢','位置メモ','緯度','経度','GPS精度(m)','樹勢','リスク評価','推奨処置','チェック項目','所見・特記事項'];
+  const rows=trees.map(t=>{
+    const d=t.data||{};
+    return [date,surveyor,location,d.tid||'#'+t.id,d.species||'',d.dbh||'',d.height||'',d.age||'',d.pos||'',
+      t.lat?t.lat.toFixed(6):'',t.lng?t.lng.toFixed(6):'',t.accuracy||'',
+      d.vigor||'',t.risk==='high'?'高リスク':t.risk==='moderate'?'要注意':t.risk==='low'?'低リスク':'未評価',
+      d.action||'',d.checks?d.checks.join('・'):'',d.notes||''
+    ].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',');
+  });
+  const csv='\uFEFF'+headers.map(h=>`"${h}"`).join(',')+'\n'+rows.join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download=`樹木台帳_${location||'現地調査'}_${date||new Date().toLocaleDateString('ja-JP')}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+// ===== GeoJSON Export =====
+function exportGeoJSON() {
+  trees.forEach(t=>saveCard(t.id));
+  const geoTrees=trees.filter(t=>t.lat&&t.lng);
+  if (!geoTrees.length) { alert('GPS座標が記録された樹木がありません。\n各樹木カードの「現在地を取得」ボタンでGPS座標を記録してください。'); return; }
+  const date=document.getElementById('survey-date').value;
+  const surveyor=document.getElementById('surveyor').value;
+  const location=document.getElementById('survey-location').value;
+  const geojson={
+    type:'FeatureCollection',
+    name:`樹木台帳_${location||'現地調査'}`,
+    crs:{type:'name',properties:{name:'urn:ogc:def:crs:OGC:1.3:CRS84'}},
+    metadata:{survey_date:date,surveyor,location,generated:new Date().toISOString(),
+      tool:'Arborist Tools Japan (raitopapa.github.io)',coordinate_system:'WGS84 (EPSG:4326)'},
+    features:geoTrees.map(t=>{
+      const d=t.data||{};
+      return {type:'Feature',
+        geometry:{type:'Point',coordinates:[t.lng,t.lat]},
+        properties:{tree_id:d.tid||'#'+t.id,species:d.species||'',dbh_cm:d.dbh?parseFloat(d.dbh):null,
+          height_m:d.height?parseFloat(d.height):null,age:d.age||'',location_note:d.pos||'',
+          gps_accuracy_m:t.accuracy||null,vigor:d.vigor||'',risk_level:t.risk||'unknown',
+          recommended_action:d.action||'',checks:d.checks||[],notes:d.notes||'',
+          survey_date:date,surveyor}};
+    })
+  };
+  const json=JSON.stringify(geojson,null,2);
+  const blob=new Blob([json],{type:'application/geo+json;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download=`樹木台帳_${location||'現地調査'}_${date||new Date().toLocaleDateString('ja-JP')}.geojson`;
+  a.click(); URL.revokeObjectURL(url);
+  alert(`✅ GeoJSON出力完了\n${geoTrees.length}本の樹木データをエクスポートしました。\nQGIS・ArcGIS・Google Earth等で開けます。`);
+}
+
+// Override deleteTree to also remove map marker
+const _origDelete = deleteTree;
+window.deleteTree = function(id) {
+  if(!confirm(`樹木 #${id} の記録を削除しますか？`)) return;
+  removeTreeMarker(id);
+  trees=trees.filter(t=>t.id!==id);
+  const el=document.getElementById(`card-${id}`); if(el) el.remove();
+  updateStats();
+  if(!trees.length){const e=document.getElementById('empty-state');if(e) e.style.display='block';}
+};
+
+// Override setRisk to refresh marker color
+const _origSetRisk = setRisk;
+window.setRisk = function(id,level,btn) {
+  _origSetRisk(id,level,btn);
+  const tree=trees.find(t=>t.id===id);
+  if(tree&&tree.lat&&tree.lng) addTreeMarker(tree);
+};
+
+// Init map and DB on page load
+document.addEventListener('DOMContentLoaded', async () => {
+  initMap();
+  locateMe();
+  // IndexedDB初期化 → 保存データ復元
+  try {
+    await openDB();
+    await loadFromDB();
+  } catch(e) {
+    dbSetStatus('error', 'ストレージ初期化失敗: ' + e.message);
+  }
+});
+</script>
+<script>
+// ===== QRコード（現地樹木用） =====
+function showQR(id) {
+  saveCard(id);
+  const area = document.getElementById(`qr-area-${id}`);
+  const qrDiv = document.getElementById(`qr-${id}`);
+  if (!area || !qrDiv) return;
+
+  if (area.style.display !== 'none') {
+    area.style.display = 'none';
+    return;
+  }
+
+  qrDiv.innerHTML = '';
+  const tree = trees.find(t => t.id === id);
+  const d = tree?.data || {};
+  const location = document.getElementById('survey-location').value;
+  const date = document.getElementById('survey-date').value;
+
+  const qrData = JSON.stringify({
+    tool: 'Arborist Tools Japan',
+    url: 'https://raitopapa.github.io/survey.html',
+    site: location,
+    tree_id: d.tid || '#' + id,
+    species: d.species || '',
+    dbh: d.dbh || '',
+    risk: tree?.risk || '',
+    lat: tree?.lat ? tree.lat.toFixed(6) : '',
+    lng: tree?.lng ? tree.lng.toFixed(6) : '',
+    survey_date: date,
+    action: d.action || ''
+  });
+
+  try {
+    new QRCode(qrDiv, {
+      text: qrData,
+      width: 140,
+      height: 140,
+      colorDark: '#1A2F1A',
+      colorLight: '#F4F1EB',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  } catch(e) {
+    qrDiv.innerHTML = '<div style="width:140px;height:140px;background:#E8F0E1;display:flex;align-items:center;justify-content:center;font-size:10px;color:#4a5e4a;text-align:center;border-radius:3px;">QRコード<br>生成中...</div>';
+  }
+
+  area.style.display = 'block';
+}
+
+function downloadTreeQR(id) {
+  const canvas = document.querySelector(`#qr-${id} canvas`);
+  if (!canvas) { alert('QRコードが生成されていません。'); return; }
+  const tree = trees.find(t => t.id === id);
+  const d = tree?.data || {};
+  const link = document.createElement('a');
+  link.download = `樹木QR_${d.tid || id}_${d.species || 'tree'}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+  const total = trees.length;
+  const high = trees.filter(t => t.risk === 'high').length;
+  const mod  = trees.filter(t => t.risk === 'moderate').length;
+  const low  = trees.filter(t => t.risk === 'low').length;
+  const set = (id, v) => { const el = document.getElementById(id); if(el) el.textContent = v; };
+  set('dash-total', total); set('stat-total', total);
+  set('dash-high', high);   set('stat-high', high);
+  set('dash-moderate', mod); set('stat-moderate', mod);
+  set('dash-low', low);     set('stat-low', low);
+}
+
+// saveCard / updateStats をダッシュボード連動に
+const _origSave2 = saveCard;
+window.saveCard = function(id) { _origSave2(id); updateDashboard(); };
+const _origStats2 = updateStats;
+window.updateStats = function() { _origStats2(); updateDashboard(); };
+
+// ===== 樹種サジェスト =====
+const SPECIES_LIST = [
+  'マツ（クロマツ）','マツ（アカマツ）','スギ','ヒノキ','カラマツ','モミ','ツガ',
+  'ソメイヨシノ','ヤマザクラ','オオシマザクラ','ケヤキ','コナラ','クヌギ',
+  'イロハモミジ','オオモミジ','イチョウ','ウメ','コブシ','ハナミズキ','ヤマボウシ',
+  'クリ','ナナカマド','イヌシデ','アカシデ','ポプラ','ヤナギ','バラ',
+  'ツバキ','サザンカ','クスノキ','モチノキ','ソヨゴ','シラカシ','アラカシ',
+  'タブノキ','ヤマモモ','アオキ','ヤツデ','マダケ','モウソウチク','クマザサ',
+  'カキ','ミカン','ユズ','リンゴ','ナシ','ブドウ','イチジク','ブルーベリー','モモ',
+  // English
+  'Japanese Black Pine','Japanese Red Pine','Japanese Cedar','Japanese Cypress',
+  'Larch','Zelkova','Cherry (Somei Yoshino)','Ginkgo','Japanese Maple',
+  'Camphor Tree','Camellia','Bamboo','Persimmon','Fig'
+];
+
+function initSpeciesSuggest(id) {
+  const input = document.getElementById(`species-${id}`);
+  if (!input || input.dataset.suggest) return;
+  input.dataset.suggest = '1';
+  input.setAttribute('autocomplete', 'off');
+
+  const wrapper = input.parentElement;
+  if (!wrapper.classList.contains('species-suggest')) wrapper.classList.add('species-suggest');
+
+  const suggList = document.createElement('div');
+  suggList.className = 'suggest-list';
+  suggList.id = `suggest-${id}`;
+  wrapper.appendChild(suggList);
+
+  input.addEventListener('input', () => {
+    const val = input.value.trim();
+    if (!val) { suggList.style.display = 'none'; return; }
+    const hits = SPECIES_LIST.filter(s => s.includes(val)).slice(0, 6);
+    if (!hits.length) { suggList.style.display = 'none'; return; }
+    suggList.innerHTML = hits.map(m =>
+      `<div class="suggest-item" onmousedown="selectSpecies(${id},'${m}')">${m}</div>`
+    ).join('');
+    suggList.style.display = 'block';
+  });
+
+  input.addEventListener('blur', () => setTimeout(() => { suggList.style.display = 'none'; }, 150));
+}
+
+function selectSpecies(id, name) {
+  const input = document.getElementById(`species-${id}`);
+  if (input) { input.value = name; updateTitle(id); }
+  const list = document.getElementById(`suggest-${id}`);
+  if (list) list.style.display = 'none';
+}
+
+// ===== 音声入力（Web Speech API） =====
+function startVoice(id) {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    alert('このブラウザは音声入力に対応していません。\nChrome（Android・PC）でお試しください。');
+    return;
+  }
+  const recognition = new SR();
+  recognition.lang = document.documentElement.lang === 'en' ? 'en-US' : 'ja-JP';
+  recognition.interimResults = false;
+  recognition.continuous = false;
+
+  const btn = document.querySelector(`#card-${id} .btn-voice`);
+  if (btn) btn.classList.add('recording');
+
+  recognition.onresult = e => {
+    const txt = e.results[0][0].transcript;
+    const notes = document.getElementById(`notes-${id}`);
+    if (notes) notes.value += (notes.value ? '\n' : '') + txt;
+    if (btn) btn.classList.remove('recording');
+  };
+  recognition.onerror = () => { if (btn) btn.classList.remove('recording'); };
+  recognition.onend   = () => { if (btn) btn.classList.remove('recording'); };
+  recognition.start();
+}
+
+// renderTree 後に樹種サジェストを初期化するフック
+const _origRenderTree2 = renderTree;
+window.renderTree = function(tree) {
+  _origRenderTree2(tree);
+  // 少し遅延してサジェストを初期化（DOM生成完了後）
+  setTimeout(() => initSpeciesSuggest(tree.id), 200);
+};
+
+</script>
+<script>
 // ===== i18n =====
 // ===== Complete i18n for Survey =====
 const SURVEY_I18N = {
