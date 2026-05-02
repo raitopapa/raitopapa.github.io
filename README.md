@@ -32,8 +32,8 @@
 | Tool | File | Description |
 |---|---|---|
 | ⚠️ 樹木リスク評価 | `traq.html` | ISA TRAQ Level II準拠・ANSI A300 Part 9 |
-| 💰 樹木価値算定 | `ctla.html` | CTLA 10th ed. + i-Tree生態系サービス計算 |
-| 🗺 現地調査記録 | `survey.html` | GPS・地図・CSV/GeoJSON・QRコード・音声入力 |
+| 💰 樹木価値算定 | `ctla.html` | CTLA 10th ed. + i-Tree生態系サービス計算 + QRコード |
+| 🗺 現地調査記録 | `survey.html` | GPS・地図・写真記録・CSV/GeoJSON・QR・音声・履歴管理 |
 
 ---
 
@@ -47,6 +47,9 @@
 - **i-Tree生態系サービス計算** — CO₂固定量・雨水抑制・大気浄化・冷却効果・生物多様性価値
 
 ### フィールドワーク（survey.html）
+- **📸 写真記録** — カメラ撮影・ファイル選択→IndexedDBに永続保存・ライトボックス表示
+- **🔔 メンテナンスアラート** — 次回点検期限を自動計算・バナー通知・PWAプッシュ通知対応
+- **📊 点検履歴管理** — 複数回の調査を時系列で蓄積・リスク推移を一覧表示
 - **GPS位置記録** — Geolocation API（精度表示付き）
 - **地図レイヤー切替** — 標準・国土地理院地形図（等高線）・Esri衛星画像・白地図（全て無料）
 - **ピン手動配置** — GPS不良時に地図タップで位置を手動指定
@@ -55,12 +58,15 @@
 - **QRコード生成** — 樹木ごとにQRを生成・PNG保存・現地貼付用
 - **IndexedDB永続保存** — ページを閉じてもデータを保持・次回調査へ引き継ぎ
 - **音声入力** — Web Speech API（所見欄・Chrome対応）
-- **ダークモード** — 屋外の強い日差し対応・高コントラスト
+- **ダークモード** — 屋外の強い日差し対応・高コントラスト・設定を記憶
+- **樹種サジェスト** — 入力時に候補を自動表示（50+種）
+- **オフライン対応** — 電波のない現場でも完全動作
 
 ### UX・技術
 - **PWA対応** — オフライン動作・ホーム画面インストール
 - **JA/EN 言語切替** — 全7ページ完全対応・ブラウザ言語自動検出
 - **PDF出力** — 全ツールの結果を印刷・PDF保存
+- **SEO対応** — OGP / Twitter Card / JSON-LD構造化データ / sitemap.xml
 - **出典明示** — 農林水産省・国交省・ISA・CTLA等の一次資料を全ツールに明示
 
 ---
@@ -72,10 +78,11 @@
 | フロントエンド | HTML / CSS / Vanilla JavaScript のみ |
 | 地図 | Leaflet.js + OpenStreetMap / 国土地理院 / Esri（全て無料） |
 | QRコード | QRCode.js（クライアントサイド生成） |
-| ストレージ | IndexedDB（ブラウザ永続保存） |
+| ストレージ | IndexedDB（surveys・photos・historyの3ストア） |
+| 写真保存 | Base64 → IndexedDB（サーバー不要・完全ローカル） |
 | PWA | Service Worker + Web App Manifest |
 | ホスティング | GitHub Pages（静的配信） |
-| SEO | OGP / Twitter Card / JSON-LD / sitemap.xml |
+| SEO | OGP / Twitter Card / JSON-LD / sitemap.xml / robots.txt |
 
 ---
 
@@ -89,11 +96,12 @@ raitopapa.github.io/
 ├── checklist.html      # 樹木健全度チェックリスト
 ├── traq.html           # ISA TRAQ リスク評価（Pro）
 ├── ctla.html           # CTLA + i-Tree 価値算定（Pro）
-├── survey.html         # 現地調査・GPS・地図（Pro）
+├── survey.html         # 現地調査・GPS・地図・写真・履歴（Pro）
 ├── privacy.html        # プライバシーポリシー
 ├── contact.html        # お問い合わせ
 ├── sitemap.xml         # サイトマップ（SEO）
 ├── robots.txt          # クローラー設定
+├── _config.yml         # GitHub Pages設定
 ├── manifest.json       # PWA マニフェスト
 ├── sw.js               # Service Worker
 ├── icons/
@@ -129,7 +137,7 @@ raitopapa.github.io/
 ```bash
 git clone https://github.com/raitopapa/raitopapa.github.io.git
 cd raitopapa.github.io
-# Service Worker のテストには localhost が必要
+# Service Worker・IndexedDB・GPS のテストには localhost が必要
 python3 -m http.server 8080
 # → http://localhost:8080 で開く
 ```
@@ -149,7 +157,7 @@ git push origin feature/add-new-species
 - [ ] 対応樹種のさらなる拡充（現在40+種）
 - [ ] 多言語対応（韓国語・繁体字中国語・ドイツ語）
 - [ ] i-Tree係数の日本地域別精度向上
-- [ ] GPS高精度モード（外部Bluetoothレシーバー連携）
+- [ ] 写真のGPSジオタグ読み取り（EXIF対応）
 
 ---
 
@@ -182,8 +190,9 @@ v2.6  ✅ 地図レイヤー切替（地形図・衛星・白地図）
 v2.7  ✅ IndexedDB永続保存・ピン手動配置・ダークモード・音声入力
 v2.8  ✅ i-Tree生態系サービス計算・QRコード生成
 v2.9  ✅ OGP/Twitter Card/JSON-LD/sitemap.xml（SEO強化）
-v3.0  🔲 多言語対応（韓国語・繁体字中国語・ドイツ語）
-v3.1  🔲 GPS高精度・クラスター表示
-v3.2  🔲 写真添付AI診断（Claude API）
-v3.3  🔲 Google Analytics設置（アクセス解析）
+v3.0  ✅ 写真記録（IndexedDB）・メンテナンスアラート・点検履歴管理
+v3.1  🔲 多言語対応（韓国語・繁体字中国語・ドイツ語）
+v3.2  🔲 Google Analytics設置（アクセス解析）
+v3.3  🔲 写真のGPSジオタグ読み取り（EXIF対応）
+v3.4  🔲 写真添付AI診断（Claude API）
 ```
