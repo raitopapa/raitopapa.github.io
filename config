@@ -1,6 +1,0 @@
-# GitHub Pages設定
-# sitemap.xmlのContent-Typeを正しく設定するため
- 
-include:
-  - sitemap.xml
-  - robots.txt
