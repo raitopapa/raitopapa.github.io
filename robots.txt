@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://raitopapa.github.io/sitemap.xml
+
+# Disallow admin or private paths (none currently)
+# Disallow: /admin/
