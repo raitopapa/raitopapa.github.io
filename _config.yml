@@ -1,3 +1,8 @@
+# GitHub Pages設定
 include:
   - sitemap.xml
   - robots.txt
+  - ads.txt
+
+plugins: []
+markdown: kramdown
