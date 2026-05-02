@@ -393,6 +393,55 @@ body.dark-mode .card-header { background: #0F1F0F; }
 /* ===== 音声入力ボタン ===== */
 .btn-voice { padding: 6px 10px; background: transparent; border: 1px solid var(--mist); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--moss-l); transition: all 0.15s; }
 .btn-voice.recording { background: var(--rust); border-color: var(--rust); color: white; animation: pulse 1s infinite; }
+
+/* ===== 写真記録 ===== */
+.photo-section { margin-bottom: 12px; }
+.photo-section label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: var(--moss); text-transform: uppercase; display: block; margin-bottom: 6px; }
+.photo-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.btn-camera { padding: 8px 14px; background: var(--sky); color: white; border: none; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+.btn-camera:hover { filter: brightness(1.1); }
+.btn-camera-upload { padding: 8px 14px; background: var(--moss); color: white; border: none; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; }
+.photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px,1fr)); gap: 6px; margin-top: 6px; }
+.photo-thumb { position: relative; }
+.photo-thumb img { width: 100%; height: 80px; object-fit: cover; border-radius: 3px; border: 2px solid var(--mist); cursor: pointer; }
+.photo-thumb .photo-del { position: absolute; top: -4px; right: -4px; width: 18px; height: 18px; background: var(--rust); color: white; border: none; border-radius: 50%; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; }
+.photo-count { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--moss-l); }
+.photo-lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 300; align-items: center; justify-content: center; }
+.photo-lightbox.open { display: flex; }
+.photo-lightbox img { max-width: 95vw; max-height: 90vh; border-radius: 4px; }
+.photo-lightbox-close { position: absolute; top: 16px; right: 20px; background: transparent; border: none; color: white; font-size: 28px; cursor: pointer; }
+.hidden-input { display: none; }
+
+/* ===== 点検履歴 ===== */
+.history-section { background: rgba(255,255,255,0.5); border: 1px solid var(--mist); border-radius: 4px; margin-bottom: 16px; overflow: hidden; }
+.history-header { padding: 12px 16px; background: var(--forest); color: var(--cream); display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+.history-header h3 { font-family: 'Shippori Mincho', serif; font-size: 13px; }
+.history-body { display: none; }
+.history-section.open .history-body { display: block; }
+.history-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.history-table th { padding: 7px 12px; background: var(--pale); font-family: 'DM Mono', monospace; font-size: 9px; color: var(--moss); text-align: left; letter-spacing: 0.1em; border-bottom: 1px solid var(--mist); }
+.history-table td { padding: 8px 12px; border-bottom: 1px solid rgba(200,216,192,0.3); vertical-align: top; }
+.history-table tr:last-child td { border-bottom: none; }
+.history-table tr:hover td { background: var(--pale); }
+.trend-up   { color: var(--rust); font-weight: 600; }
+.trend-down { color: var(--moss); font-weight: 600; }
+.trend-same { color: var(--amber); }
+.btn-load-history { padding: 6px 12px; background: var(--forest); color: var(--cream); border: none; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 10px; cursor: pointer; }
+.history-empty { padding: 20px; text-align: center; font-size: 12px; color: #8fa085; }
+
+/* ===== メンテナンスアラート ===== */
+.alert-banner { display: none; background: linear-gradient(135deg, var(--rust), #5A1A0A); color: white; padding: 12px 20px; position: sticky; top: 44px; z-index: 95; }
+.alert-banner.show { display: block; }
+.alert-banner h4 { font-family: 'Shippori Mincho', serif; font-size: 14px; margin-bottom: 6px; }
+.alert-list { font-size: 12px; opacity: 0.9; line-height: 1.8; }
+.alert-dismiss { float: right; background: rgba(255,255,255,0.2); border: none; color: white; padding: 4px 10px; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 10px; cursor: pointer; }
+.btn-notify { padding: 5px 10px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 10px; cursor: pointer; margin-top: 6px; }
+
+/* ライトボックス */
+#photo-lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 300; align-items: center; justify-content: center; flex-direction: column; gap: 12px; }
+#photo-lightbox.open { display: flex; }
+#photo-lightbox img { max-width: 95vw; max-height: 80vh; border-radius: 4px; }
+#photo-lightbox-caption { color: white; font-family: 'DM Mono', monospace; font-size: 11px; opacity: 0.7; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
 
 /* ===== 樹種サジェスト ===== */
@@ -424,6 +473,21 @@ body.dark-mode .card-header { background: #0F1F0F; }
 <!-- オフラインバナー -->
 <div class="offline-banner" id="offline-banner">
   ⚠️ オフラインモード — データはデバイスに保存中。接続回復後も自動利用できます。
+</div>
+
+<!-- メンテナンスアラートバナー -->
+<div class="alert-banner" id="alert-banner">
+  <button class="alert-dismiss" onclick="document.getElementById('alert-banner').classList.remove('show')">✕ 閉じる</button>
+  <h4>🔔 点検期限のお知らせ</h4>
+  <div class="alert-list" id="alert-list"></div>
+  <button class="btn-notify" onclick="requestNotifyPermission()">📲 プッシュ通知を有効にする</button>
+</div>
+
+<!-- 写真ライトボックス -->
+<div id="photo-lightbox" onclick="closeLightbox()">
+  <button style="position:absolute;top:16px;right:20px;background:transparent;border:none;color:white;font-size:28px;cursor:pointer;" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+  <div id="photo-lightbox-caption"></div>
 </div>
 
 <div class="wrap">
@@ -500,6 +564,22 @@ body.dark-mode .card-header { background: #0F1F0F; }
   <button class="btn-export-csv" onclick="exportCSV()">📊 CSV台帳出力</button>
   <button class="btn-export-geojson" onclick="exportGeoJSON()">🗺 GeoJSON出力</button>
   <button class="btn-clear" onclick="clearAll()">🗑 全削除</button>
+</div>
+
+<!-- 点検履歴セクション -->
+<div class="history-section" id="history-section">
+  <div class="history-header" onclick="toggleHistory()">
+    <h3>📊 点検履歴 — 過去の調査記録</h3>
+    <span style="font-family:'DM Mono',monospace;font-size:10px;opacity:0.7;" id="history-count">0件</span>
+  </div>
+  <div class="history-body" id="history-body">
+    <div style="padding:12px 16px;display:flex;gap:8px;border-bottom:1px solid var(--mist);flex-wrap:wrap;">
+      <button class="btn-load-history" onclick="loadHistoryList()">🔄 履歴を読み込む</button>
+      <button class="btn-load-history" style="background:var(--amber);" onclick="saveCurrentToHistory()">💾 現在の調査を履歴に保存</button>
+      <button class="btn-load-history" style="background:var(--rust);" onclick="clearHistory()">🗑 履歴を削除</button>
+    </div>
+    <div id="history-content"><div class="history-empty">「履歴を読み込む」ボタンを押して過去の調査データを確認できます。</div></div>
+  </div>
 </div>
 <div class="db-status" id="db-status">
   <span class="db-dot" id="db-dot"></span>
@@ -654,6 +734,19 @@ function renderTree(tree) {
           <label>位置・管理番号</label>
           <input type="text" id="pos-${tree.id}" placeholder="例：北側入口から3本目">
         </div>
+      </div>
+
+      <!-- 📸 写真記録 -->
+      <div class="photo-section">
+        <label>📸 写真記録（複数枚可）</label>
+        <div class="photo-btns">
+          <button class="btn-camera" onclick="openCamera(${tree.id})">📷 カメラで撮影</button>
+          <button class="btn-camera-upload" onclick="document.getElementById('photo-input-${tree.id}').click()">🖼 ファイルを選択</button>
+          <span class="photo-count" id="photo-count-${tree.id}">0枚</span>
+        </div>
+        <input type="file" accept="image/*" capture="environment" class="hidden-input" id="camera-input-${tree.id}" onchange="handlePhoto(${tree.id}, this, 'camera')">
+        <input type="file" accept="image/*" multiple class="hidden-input" id="photo-input-${tree.id}" onchange="handlePhoto(${tree.id}, this, 'file')">
+        <div class="photo-grid" id="photo-grid-${tree.id}"></div>
       </div>
 
       <!-- GPS -->
@@ -1513,10 +1606,13 @@ window.setRisk = function(id,level,btn) {
 document.addEventListener('DOMContentLoaded', async () => {
   initMap();
   locateMe();
-  // IndexedDB初期化 → 保存データ復元
+  checkOnline();
   try {
-    await openDB();
+    await openDBv2(); // v3: photos + history ストア追加
+    dbSetStatus('ok', '自動保存：オン');
     await loadFromDB();
+    checkMaintenanceAlerts();
+    loadHistoryList();
   } catch(e) {
     dbSetStatus('error', 'ストレージ初期化失敗: ' + e.message);
   }
@@ -1599,6 +1695,327 @@ window.saveCard = function(id) { _origSave2(id); updateDashboard(); };
 const _origStats2 = updateStats;
 window.updateStats = function() { _origStats2(); updateDashboard(); };
 
+// ===== 📸 写真記録 =====
+// 写真はIndexedDBのphotosストアにBase64で保存
+// {id: 'photo_treeId_timestamp', treeId, dataUrl, caption, timestamp}
+
+const PHOTO_STORE = 'photos';
+const HISTORY_STORE = 'history';
+
+// DBのバージョンを上げてphotoストアとhistoryストアを追加
+function openDBv2() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, 3); // バージョン3に
+    req.onupgradeneeded = e => {
+      const d = e.target.result;
+      if (!d.objectStoreNames.contains(STORE)) d.createObjectStore(STORE, { keyPath: 'id' });
+      if (!d.objectStoreNames.contains(PHOTO_STORE)) {
+        const ps = d.createObjectStore(PHOTO_STORE, { keyPath: 'id' });
+        ps.createIndex('treeId', 'treeId', { unique: false });
+      }
+      if (!d.objectStoreNames.contains(HISTORY_STORE)) {
+        d.createObjectStore(HISTORY_STORE, { keyPath: 'id', autoIncrement: true });
+      }
+    };
+    req.onsuccess = e => { db = e.target.result; resolve(db); };
+    req.onerror = () => reject(req.error);
+  });
+}
+
+function openCamera(treeId) {
+  const input = document.getElementById(`camera-input-${treeId}`);
+  if (input) input.click();
+}
+
+function handlePhoto(treeId, input, mode) {
+  const files = Array.from(input.files);
+  if (!files.length) return;
+
+  files.forEach(file => {
+    if (!file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const dataUrl = e.target.result;
+      const photoId = `photo_${treeId}_${Date.now()}_${Math.random().toString(36).slice(2,6)}`;
+      savePhoto({ id: photoId, treeId, dataUrl, timestamp: new Date().toISOString() });
+      renderPhotoThumb(treeId, photoId, dataUrl);
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value = ''; // リセット
+}
+
+function savePhoto(photo) {
+  if (!db) return;
+  try {
+    const tx = db.transaction(PHOTO_STORE, 'readwrite');
+    tx.objectStore(PHOTO_STORE).put(photo);
+  } catch(e) { console.error('Photo save error:', e); }
+}
+
+function renderPhotoThumb(treeId, photoId, dataUrl) {
+  const grid = document.getElementById(`photo-grid-${treeId}`);
+  const countEl = document.getElementById(`photo-count-${treeId}`);
+  if (!grid) return;
+
+  const thumb = document.createElement('div');
+  thumb.className = 'photo-thumb';
+  thumb.id = `thumb-${photoId}`;
+  thumb.innerHTML = `
+    <img src="${dataUrl}" alt="写真" onclick="openLightbox('${dataUrl}','樹木 #${treeId}')">
+    <button class="photo-del" onclick="deletePhoto('${photoId}',${treeId})" title="削除">✕</button>
+  `;
+  grid.appendChild(thumb);
+
+  // カウント更新
+  const count = grid.querySelectorAll('.photo-thumb').length;
+  if (countEl) countEl.textContent = `${count}枚`;
+}
+
+async function loadPhotosForTree(treeId) {
+  if (!db) return;
+  try {
+    const tx = db.transaction(PHOTO_STORE, 'readonly');
+    const idx = tx.objectStore(PHOTO_STORE).index('treeId');
+    const req = idx.getAll(treeId);
+    req.onsuccess = () => {
+      req.result.forEach(p => renderPhotoThumb(treeId, p.id, p.dataUrl));
+    };
+  } catch(e) { /* photo store not yet created */ }
+}
+
+function deletePhoto(photoId, treeId) {
+  if (!confirm('この写真を削除しますか？')) return;
+  if (db) {
+    try {
+      const tx = db.transaction(PHOTO_STORE, 'readwrite');
+      tx.objectStore(PHOTO_STORE).delete(photoId);
+    } catch(e) {}
+  }
+  const thumb = document.getElementById(`thumb-${photoId}`);
+  if (thumb) thumb.remove();
+  const grid = document.getElementById(`photo-grid-${treeId}`);
+  const countEl = document.getElementById(`photo-count-${treeId}`);
+  if (grid && countEl) countEl.textContent = `${grid.querySelectorAll('.photo-thumb').length}枚`;
+}
+
+function openLightbox(dataUrl, caption) {
+  const lb = document.getElementById('photo-lightbox');
+  const img = document.getElementById('lightbox-img');
+  const cap = document.getElementById('photo-lightbox-caption');
+  if (!lb || !img) return;
+  img.src = dataUrl;
+  if (cap) cap.textContent = caption || '';
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  const lb = document.getElementById('photo-lightbox');
+  if (lb) lb.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ===== 🔔 メンテナンスアラート =====
+// 次回点検日が3日以内の樹木をアラート表示
+
+function checkMaintenanceAlerts() {
+  const now = new Date();
+  const alerts = [];
+
+  trees.forEach(t => {
+    const d = t.data || {};
+    const action = d.action || '';
+    const savedAt = t.savedAt ? new Date(t.savedAt) : null;
+    if (!savedAt) return;
+
+    // 点検スケジュールから次回期限を計算
+    let nextDays = null;
+    if (action.includes('緊急') || t.risk === 'high') nextDays = 7;
+    else if (action.includes('精密診断')) nextDays = 30;
+    else if (action.includes('定期点検')) nextDays = 365;
+    else if (action.includes('剪定')) nextDays = 180;
+    if (!nextDays) return;
+
+    const nextDate = new Date(savedAt);
+    nextDate.setDate(nextDate.getDate() + nextDays);
+    const diffDays = Math.ceil((nextDate - now) / (1000*60*60*24));
+
+    if (diffDays <= 30 && diffDays >= -7) {
+      alerts.push({
+        tree: d.tid || '#' + t.id,
+        species: d.species || '—',
+        risk: t.risk,
+        action,
+        diffDays,
+        nextDate: nextDate.toLocaleDateString('ja-JP')
+      });
+    }
+  });
+
+  if (alerts.length === 0) return;
+
+  const banner = document.getElementById('alert-banner');
+  const list = document.getElementById('alert-list');
+  if (!banner || !list) return;
+
+  list.innerHTML = alerts.map(a => {
+    const urgency = a.diffDays <= 0 ? '⚡ 期限超過' : a.diffDays <= 7 ? '🔴 7日以内' : a.diffDays <= 14 ? '🟡 14日以内' : '📅 今月中';
+    return `${urgency} 樹木${a.tree}（${a.species}）— ${a.action} — 期限: ${a.nextDate}`;
+  }).join('<br>');
+
+  banner.classList.add('show');
+}
+
+async function requestNotifyPermission() {
+  if (!('Notification' in window)) {
+    alert('このブラウザはプッシュ通知に対応していません。');
+    return;
+  }
+  const perm = await Notification.requestPermission();
+  if (perm === 'granted') {
+    new Notification('🌿 樹木医ツール', {
+      body: '点検アラートの通知を有効にしました。',
+      icon: '/icons/icon-192.png'
+    });
+  }
+}
+
+// saveCardに次回点検日を記録するフック
+const _origSaveCard3 = window.saveCard;
+window.saveCard = function(id) {
+  _origSaveCard3(id);
+  const tree = trees.find(t => t.id === id);
+  if (tree) tree.savedAt = tree.savedAt || new Date().toISOString();
+  checkMaintenanceAlerts();
+};
+
+// ===== 📊 点検履歴管理 =====
+
+function toggleHistory() {
+  document.getElementById('history-section').classList.toggle('open');
+}
+
+async function saveCurrentToHistory() {
+  if (trees.length === 0) { alert('記録された樹木がありません。'); return; }
+  trees.forEach(t => saveCard(t.id));
+
+  if (!db) { alert('データベースが初期化されていません。'); return; }
+
+  const snapshot = {
+    surveyDate: document.getElementById('survey-date')?.value || new Date().toLocaleDateString('ja-JP'),
+    surveyor: document.getElementById('surveyor')?.value || '',
+    location: document.getElementById('survey-location')?.value || '',
+    weather: document.getElementById('weather')?.value || '',
+    savedAt: new Date().toISOString(),
+    treeCount: trees.length,
+    highRisk: trees.filter(t => t.risk === 'high').length,
+    moderateRisk: trees.filter(t => t.risk === 'moderate').length,
+    lowRisk: trees.filter(t => t.risk === 'low').length,
+    trees: JSON.parse(JSON.stringify(trees.map(t => ({ ...t, data: { ...t.data } }))))
+  };
+
+  try {
+    const tx = db.transaction(HISTORY_STORE, 'readwrite');
+    tx.objectStore(HISTORY_STORE).add(snapshot);
+    tx.oncomplete = () => {
+      alert(`✅ 現在の調査（${trees.length}本）を履歴に保存しました。\n調査日: ${snapshot.surveyDate}`);
+      loadHistoryList();
+    };
+  } catch(e) { alert('履歴の保存に失敗しました: ' + e.message); }
+}
+
+async function loadHistoryList() {
+  if (!db) { alert('データベースが初期化されていません。'); return; }
+
+  try {
+    const tx = db.transaction(HISTORY_STORE, 'readonly');
+    const req = tx.objectStore(HISTORY_STORE).getAll();
+    req.onsuccess = () => {
+      const records = req.result.sort((a, b) => new Date(b.savedAt) - new Date(a.savedAt));
+      const countEl = document.getElementById('history-count');
+      if (countEl) countEl.textContent = `${records.length}件`;
+
+      const content = document.getElementById('history-content');
+      if (!content) return;
+
+      if (records.length === 0) {
+        content.innerHTML = '<div class="history-empty">履歴がありません。「現在の調査を履歴に保存」で記録できます。</div>';
+        return;
+      }
+
+      content.innerHTML = `
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>調査日</th>
+              <th>場所</th>
+              <th>調査者</th>
+              <th>本数</th>
+              <th>🔴高</th>
+              <th>🟡中</th>
+              <th>🟢低</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${records.map((r, i) => `
+              <tr>
+                <td style="font-family:'DM Mono',monospace;font-size:10px;">${r.surveyDate}</td>
+                <td>${r.location || '—'}</td>
+                <td style="font-size:10px;">${r.surveyor || '—'}</td>
+                <td style="text-align:center;font-family:'DM Mono',monospace;">${r.treeCount}</td>
+                <td style="text-align:center;color:var(--rust);font-weight:600;">${r.highRisk}</td>
+                <td style="text-align:center;color:var(--amber);font-weight:600;">${r.moderateRisk}</td>
+                <td style="text-align:center;color:var(--moss);font-weight:600;">${r.lowRisk}</td>
+                <td>
+                  <button onclick="showHistoryDetail(${r.id})" style="padding:3px 8px;font-size:10px;border:1px solid var(--mist);border-radius:2px;cursor:pointer;background:white;">詳細</button>
+                  <button onclick="deleteHistoryRecord(${r.id})" style="padding:3px 8px;font-size:10px;border:1px solid var(--rust);border-radius:2px;cursor:pointer;color:var(--rust);background:white;margin-left:4px;">削除</button>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    };
+  } catch(e) { console.error('History load error:', e); }
+}
+
+async function showHistoryDetail(histId) {
+  if (!db) return;
+  const tx = db.transaction(HISTORY_STORE, 'readonly');
+  const req = tx.objectStore(HISTORY_STORE).get(histId);
+  req.onsuccess = () => {
+    const r = req.result;
+    if (!r) return;
+    const treeList = r.trees.map(t => {
+      const d = t.data || {};
+      const riskLabel = t.risk === 'high' ? '🔴高' : t.risk === 'moderate' ? '🟡中' : t.risk === 'low' ? '🟢低' : '—';
+      return `${d.tid||'#'+t.id} ${d.species||'—'} DBH:${d.dbh||'—'}cm ${riskLabel}`;
+    }).join('\n');
+    alert(`📊 調査詳細\n調査日: ${r.surveyDate}\n場所: ${r.location||'—'}\n調査者: ${r.surveyor||'—'}\n\n【樹木一覧】\n${treeList}`);
+  };
+}
+
+async function deleteHistoryRecord(histId) {
+  if (!confirm('この履歴を削除しますか？')) return;
+  if (!db) return;
+  const tx = db.transaction(HISTORY_STORE, 'readwrite');
+  tx.objectStore(HISTORY_STORE).delete(histId);
+  tx.oncomplete = () => loadHistoryList();
+}
+
+async function clearHistory() {
+  if (!confirm('すべての履歴を削除しますか？この操作は取り消せません。')) return;
+  if (!db) return;
+  const tx = db.transaction(HISTORY_STORE, 'readwrite');
+  tx.objectStore(HISTORY_STORE).clear();
+  tx.oncomplete = () => {
+    loadHistoryList();
+    alert('履歴を削除しました。');
+  };
+}
+
 // ===== 樹種サジェスト =====
 const SPECIES_LIST = [
   'マツ（クロマツ）','マツ（アカマツ）','スギ','ヒノキ','カラマツ','モミ','ツガ',
@@ -1679,8 +2096,10 @@ function startVoice(id) {
 const _origRenderTree2 = renderTree;
 window.renderTree = function(tree) {
   _origRenderTree2(tree);
-  // 少し遅延してサジェストを初期化（DOM生成完了後）
-  setTimeout(() => initSpeciesSuggest(tree.id), 200);
+  setTimeout(() => {
+    initSpeciesSuggest(tree.id);
+    loadPhotosForTree(tree.id); // 写真を復元
+  }, 200);
 };
 
 </script>
