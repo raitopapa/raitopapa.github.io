@@ -15,6 +15,7 @@ const CACHE_FILES = [
   '/embed/pruning.html',
   '/privacy.html',
   '/contact.html',
+  '/assets/css/tokens.css',
   '/assets/css/layout.css',
   '/assets/js/analytics.js',
   '/assets/js/affiliate.js',

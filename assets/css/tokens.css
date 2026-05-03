@@ -1,0 +1,40 @@
+/* 樹木ナビ Design Tokens v1.0
+   Base palette: garden (index, diagnosis, checklist, pruning)
+   Forest pages (traq, ctla, survey) override 8 vars in their own <style> */
+
+:root {
+  /* === Base Palette === */
+  --ink:    #1A1208;
+  --bark:   #2C1A0E;
+  --forest: #1A2F1A;
+  --moss:   #3D5A3E;
+  --moss-l: #5A7A5B;
+  --leaf:   #7AAE6E;
+  --cream:  #F5F0E8;
+  --pale:   #E8F0E1;
+  --mist:   #D4DFD0;
+  --amber:  #C8842A;
+  --rust:   #8B3A2A;
+  --sky:    #2A5A8A;
+  --gold:   #C8A820;
+
+  /* === Checklist Score Grades === */
+  --score-a: #2E6B30;
+  --score-b: #7AAE6E;
+  --score-c: #C8842A;
+  --score-d: #8B3A2A;
+
+  /* === TRAQ Risk Matrix === */
+  --risk-low:      #2E6B30;
+  --risk-moderate: #7A9A20;
+  --risk-high:     #C8842A;
+  --risk-extreme:  #8B2A1A;
+  --risk-imminent: #5A0A0A;
+
+  /* === Pruning Guidance === */
+  --best:    #3D5A3E;
+  --good:    #7AAE6E;
+  --caution: #C8842A;
+  --avoid:   #8B3A2A;
+  --neutral: #D4DFD0;
+}
