@@ -1,8 +1,8 @@
 {
   "index": {
-    "hero-badge": "🌿 Arborist Tools — Japan",
-    "hero-h1": "Free Tree Care Tools<br><span>by a Certified Arborist</span>",
-    "hero-sub": "From early pest detection to pruning timing and field surveys.<br>Professional arboricultural knowledge, freely available online.",
+    "hero-badge": "🌿 Tree Navi Japan",
+    "hero-h1": "Tree Care Decisions<br><span>Made Clear</span>",
+    "hero-sub": "Support for pest checks, pruning timing, health checklists, and field surveys<br>for garden trees, street trees, parks, and professional tree work.",
     "stat-tools": "Professional Tools",
     "stat-species": "Tree Species",
     "stat-free": "Completely Free",
@@ -11,8 +11,8 @@
     "free-label": "Free Tools",
     "free-title": "3 Diagnosis & Management Tools",
     "pro-label": "Pro Tools",
-    "pro-title": "Professional Arborist Tools",
-    "pro-desc": "Tools for certified arborists, landscape architects, and municipal officers — based on ISA and CTLA international standards.",
+    "pro-title": "Professional Tree Management Tools",
+    "pro-desc": "Tools for landscape professionals, municipal officers, and tree managers based on ISA and CTLA international standards.",
     "about-label": "About",
     "about-title": "About This Site",
     "pwa-msg": "📲 Add to Home Screen for offline access",
@@ -41,12 +41,12 @@
     "pro3-title": "Field Survey<br>Multi-Tree Recording Sheet",
     "pro3-desc": "Record multiple trees consecutively on one site. Auto-generates a sortable risk report. Offline-capable.",
     "pro3-btn": "Start Survey →",
-    "footer-copy": "© 2025 Arborist Tools Japan — All tools are free to use.",
-    "page-title": "Arborist Tools Japan | Free Tree Diagnosis & Pruning Calendar"
+    "footer-copy": "© 2025 Tree Navi Japan — All tools are free to use.",
+    "page-title": "Tree Navi Japan | Tree Management, Pruning Calendar, Health Checklist"
   },
   "diagnosis": {
-    "title": "Pest & Disease Risk Diagnosis | Arborist Tools Japan",
-    "badge": "🌿 Certified Arborist Tool",
+    "title": "Pest & Disease Risk Diagnosis | Tree Navi Japan",
+    "badge": "🌿 Tree Navi Tool",
     "h1": "Pest & Disease<br>Risk Diagnosis",
     "sub": "Supervised by a certified arborist. Select symptoms to instantly identify<br>likely pests/diseases and recommended initial responses.",
     "q1": "Select the Tree Species",
@@ -91,8 +91,8 @@
     "loc_farm": "Farmland / orchard"
   },
   "pruning": {
-    "title": "Pruning Season Calendar | Arborist Tools Japan",
-    "badge": "🌿 Certified Arborist Tool",
+    "title": "Pruning Season Calendar | Tree Navi Japan",
+    "badge": "🌿 Tree Navi Tool",
     "h1": "Pruning Season<br>Calendar Calculator",
     "sub": "Select species and pruning goal to see a monthly color-coded calendar<br>with timing guidance — based on professional arboricultural standards.",
     "treeLabel": "Tree Species",
@@ -142,8 +142,8 @@
     "refTitle": "📚 References & Data Sources"
   },
   "checklist": {
-    "title": "Tree Health Checklist | Arborist Tools Japan",
-    "badge": "🌿 Certified Arborist Tool",
+    "title": "Tree Health Checklist | Tree Navi Japan",
+    "badge": "🌿 Tree Navi Tool",
     "h1": "Tree Health<br>Checklist",
     "sub": "A field inspection sheet. Record root, trunk, branch, and foliage conditions<br>to automatically calculate a health score and action priority list.",
     "fieldTree": "Tree Name / ID",
@@ -325,8 +325,8 @@
     ]
   },
   "traq": {
-    "page-title": "Tree Risk Assessment (ISA TRAQ) | Arborist Tools Japan",
-    "nav-home": "🌿 Arborist Tools",
+    "page-title": "Tree Risk Assessment (ISA TRAQ) | Tree Navi Japan",
+    "nav-home": "🌿 Tree Navi",
     "nav-back": "← Home",
     "page-label": "Professional Tool — ISA TRAQ Level II",
     "h1": "Tree Risk Assessment<br>(ISA TRAQ Compliant)",
@@ -435,8 +435,8 @@
     "footer1": "This tool references ISA TRAQ Level II for professional use. It is not a substitute for a legally binding assessment report."
   },
   "ctla": {
-    "page-title": "Tree Appraisal (CTLA Method) | Arborist Tools Japan",
-    "nav-home": "🌿 Arborist Tools",
+    "page-title": "Tree Appraisal (CTLA Method) | Tree Navi Japan",
+    "nav-home": "🌿 Tree Navi",
     "nav-back": "← Home",
     "page-label": "Professional Tool — CTLA Method",
     "h1": "Tree Appraisal<br>(CTLA Method)",
@@ -534,7 +534,7 @@
     "cta-title": "📄 Export Tree Appraisal Report",
     "cta-desc": "Use this result for transplant compensation negotiation, insurance appraisal, or regulatory submissions.",
     "ref-title": "📚 References & Methodology",
-    "footer1": "© 2025 Arborist Tools Japan — CTLA Method Tree Appraisal",
+    "footer1": "© 2025 Tree Navi Japan — CTLA Method Tree Appraisal",
     "bd-dbh": "DBH (Diameter at Breast Height)",
     "bd-area": "Cross-Sectional Area",
     "bd-unit": "Unit Price",
@@ -547,8 +547,8 @@
     "bd-final": "Appraised Tree Value"
   },
   "survey": {
-    "page-title": "Field Survey — Multi-Tree Recording | Arborist Tools Japan",
-    "nav-home": "🌿 Arborist Tools",
+    "page-title": "Field Survey — Multi-Tree Recording | Tree Navi Japan",
+    "nav-home": "🌿 Tree Navi",
     "nav-back": "← Home",
     "page-label": "Field Survey Tool — Multi-Tree Recording",
     "h1": "Field Survey<br>Multi-Tree Recording Sheet",
@@ -575,7 +575,7 @@
     "btn-clear": "🗑 Clear All",
     "empty-msg": "Press \"＋ Add Tree\" to begin<br>your field survey.",
     "footer1": "Data is stored in this browser only. Nothing is sent to a server.",
-    "footer2": "© 2025 Arborist Tools Japan — Field Survey Tool",
+    "footer2": "© 2025 Tree Navi Japan — Field Survey Tool",
     "card-lbl-tid": "Tree ID / Reference No.",
     "card-ph-tid": "e.g. A-{n}",
     "card-lbl-species": "Tree Species",
@@ -647,7 +647,7 @@
     ],
     "report-urgent": "Trees Requiring Action — Details",
     "report-disclaimer": "Disclaimer",
-    "report-disclaimer-txt": "This report was generated using Arborist Tools Japan (raitopapa.github.io). This tool is for general informational purposes only and is not a substitute for a legally binding arborist report or certified assessment.",
+    "report-disclaimer-txt": "This report was generated using Tree Navi Japan (raitopapa.github.io). This tool is for general informational purposes only and is not a substitute for a legally binding arborist report or certified assessment.",
     "btn-print": "🖨 Save as PDF / Print",
     "btn-close": "Close",
     "not-rated": "Not Rated"

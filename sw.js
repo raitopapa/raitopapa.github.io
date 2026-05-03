@@ -1,4 +1,4 @@
-// 樹木医ツール Service Worker v3.5
+// 樹木ナビ Service Worker v3.5
 const CACHE_NAME = 'arborist-tools-v3.5';
 
 // オフラインでキャッシュするファイル
