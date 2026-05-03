@@ -46,26 +46,8 @@
 <meta name="description" content="樹木医監修。樹種と目的を選ぶだけで、最適な剪定時期・注意事項を月別カレンダーで確認できます。">
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Noto+Serif+JP:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8180543096745567" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/assets/css/tokens.css">
 <style>
-:root {
-  --ink: #1A1208;
-  --bark: #2C1A0E;
-  --moss: #3D5A3E;
-  --moss-light: #5A7A5B;
-  --leaf: #7AAE6E;
-  --cream: #F5F0E8;
-  --pale: #E8F0E1;
-  --mist: #D4DFD0;
-  --amber: #C8842A;
-  --rust: #8B3A2A;
-  --sky: #6B9BAA;
-
-  --best: #3D5A3E;
-  --good: #7AAE6E;
-  --caution: #C8842A;
-  --avoid: #8B3A2A;
-  --neutral: #D4DFD0;
-}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -97,7 +79,7 @@ header {
   font-size: 10px;
   letter-spacing: 0.2em;
   color: var(--moss);
-  border: 1px solid var(--moss-light);
+  border: 1px solid var(--moss-l);
   padding: 3px 10px;
   border-radius: 2px;
   display: inline-block;
@@ -342,7 +324,7 @@ select:focus {
   content: '–';
   position: absolute;
   left: 0;
-  color: var(--moss-light);
+  color: var(--moss-l);
   font-family: 'DM Mono', monospace;
 }
 
@@ -372,7 +354,7 @@ select:focus {
 /* Best period highlight */
 .best-period-box {
   background: var(--pale);
-  border: 1px solid var(--moss-light);
+  border: 1px solid var(--moss-l);
   border-left: 4px solid var(--moss);
   border-radius: 3px;
   padding: 14px 18px;

@@ -46,7 +46,7 @@ raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 | T-P1-103 | AdSense 配置の最適化 | done | 2026-05-03 | task/T-P1-103-adsense-placement |
 | T-P1-104 | アフィリエイト導線追加 | done | 2026-05-03 | PR #5 |
 | T-P1-105 | SW の整理（push/sync） | done | 2026-05-03 | PR #6 |
-| T-P1-106 | デザイントークン化 | todo |  | — |
+| T-P1-106 | デザイントークン化 | done | 2026-05-03 | task/T-P1-106-design-tokens |
 | T-P1-107 | SEO 強化（構造化データ） | done | 2026-05-03 | task/T-P1-107-seo-structured-data |
 | T-P1-108 | ブランド名・コピー整合（樹木ナビ） | done | 2026-05-03 | PR #8 |
 

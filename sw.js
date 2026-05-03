@@ -20,6 +20,7 @@ const CACHE_FILES = [
   '/feed.xml',
   '/privacy.html',
   '/contact.html',
+  '/assets/css/tokens.css',
   '/assets/css/layout.css',
   '/assets/js/analytics.js',
   '/assets/js/affiliate.js',
@@ -136,4 +137,3 @@ self.addEventListener('fetch', event => {
     })
   );
 });
-

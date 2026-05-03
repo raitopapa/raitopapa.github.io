@@ -57,21 +57,20 @@
 <meta name="apple-mobile-web-app-title" content="樹木ナビ">
 <link rel="apple-touch-icon" href="/icons/icon-192.png">
 <link rel="preload" as="fetch" href="/assets/partials/langbar.html" crossorigin>
+<link rel="stylesheet" href="/assets/css/tokens.css">
 <link rel="stylesheet" href="/assets/css/layout.css">
 <script defer src="/assets/js/layout.js"></script>
 <style>
 :root {
-  --ink: #0D1A0D;
-  --forest: #1A2F1A;
-  --moss: #2E5E2E;
+  /* forest palette overrides */
+  --ink:    #0D1A0D;
+  --moss:   #2E5E2E;
   --moss-l: #4A8A4A;
-  --leaf: #6AAE6A;
-  --cream: #F4F1EB;
-  --pale: #E8F0E1;
-  --mist: #C8D8C0;
-  --amber: #B87820;
-  --rust: #8B2A1A;
-  --sky: #2A5A8A;
+  --leaf:   #6AAE6A;
+  --cream:  #F4F1EB;
+  --mist:   #C8D8C0;
+  --amber:  #B87820;
+  --rust:   #8B2A1A;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--cream); color: var(--ink); font-family: 'Noto Serif JP', serif; min-height: 100vh; }
