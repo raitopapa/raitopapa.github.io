@@ -1,5 +1,5 @@
-// 樹木医ツール Service Worker v3.3
-const CACHE_NAME = 'arborist-tools-v3.3';
+// 樹木医ツール Service Worker v3.4
+const CACHE_NAME = 'arborist-tools-v3.4';
 
 // オフラインでキャッシュするファイル
 const CACHE_FILES = [
@@ -26,7 +26,7 @@ const CACHE_FILES = [
 
 // インストール：キャッシュを構築
 self.addEventListener('install', event => {
-  console.log('[SW] Installing v3.3...');
+  console.log('[SW] Installing v3.4...');
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       // Google Fontsなど外部リソースは失敗してもOK
@@ -43,7 +43,7 @@ self.addEventListener('install', event => {
 
 // アクティベート：古いキャッシュを削除
 self.addEventListener('activate', event => {
-  console.log('[SW] Activating v3.3...');
+  console.log('[SW] Activating v3.4...');
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
@@ -58,7 +58,7 @@ self.addEventListener('activate', event => {
   );
 });
 
-// フェッチ：Cache First戦略（オフライン優先）
+// フェッチ：HTMLはNetwork First、静的アセットはCache First + background update
 self.addEventListener('fetch', event => {
   // POSTリクエストはキャッシュしない
   if (event.request.method !== 'GET') return;
@@ -127,18 +127,3 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// バックグラウンド同期（将来の拡張用）
-self.addEventListener('sync', event => {
-  console.log('[SW] Background sync:', event.tag);
-});
-
-// プッシュ通知（将来の拡張用）
-self.addEventListener('push', event => {
-  if (!event.data) return;
-  const data = event.data.json();
-  self.registration.showNotification(data.title, {
-    body: data.body,
-    icon: '/icons/icon-192.png',
-    badge: '/icons/icon-192.png'
-  });
-});
