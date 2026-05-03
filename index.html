@@ -23,21 +23,83 @@
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "樹木医ツール — Arborist Tools Japan",
-    "url": "https://raitopapa.github.io/",
-    "description": "樹木医が監修した無料ツール集。病害虫リスク診断・剪定適期カレンダー・樹木健全度チェックリスト・ISA TRAQ準拠リスク評価・CTLA式価値算定を無料提供。40+樹種対応・PWA対応。",
-    "inLanguage": ["ja", "en"],
-    "author": {
-      "@type": "Person",
-      "jobTitle": "樹木医（Certified Japanese Arborist）",
-      "url": "https://raitopapa.github.io"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Arborist Tools Japan",
-      "url": "https://raitopapa.github.io"
-    }
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "name": "樹木医ツール — Arborist Tools Japan",
+        "url": "https://raitopapa.github.io/",
+        "description": "樹木医が監修した無料ツール集。病害虫リスク診断・剪定適期カレンダー・樹木健全度チェックリスト・ISA TRAQ準拠リスク評価・CTLA式価値算定を無料提供。40+樹種対応・PWA対応。",
+        "inLanguage": ["ja", "en"],
+        "author": {
+          "@type": "Person",
+          "jobTitle": "樹木医（Certified Japanese Arborist）",
+          "url": "https://raitopapa.github.io"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Arborist Tools Japan",
+          "url": "https://raitopapa.github.io"
+        }
+      },
+      {
+        "@type": "ItemList",
+        "name": "樹木医ツール一覧",
+        "description": "樹木医監修の無料ツール集。診断・カレンダー・チェックリスト・リスク評価・価値算定・現地調査の6ツール。",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "病害虫リスク診断", "url": "https://raitopapa.github.io/diagnosis.html"},
+          {"@type": "ListItem", "position": 2, "name": "剪定適期カレンダー", "url": "https://raitopapa.github.io/pruning.html"},
+          {"@type": "ListItem", "position": 3, "name": "樹木健全度チェックリスト", "url": "https://raitopapa.github.io/checklist.html"},
+          {"@type": "ListItem", "position": 4, "name": "ISA TRAQ樹木リスク評価", "url": "https://raitopapa.github.io/traq.html"},
+          {"@type": "ListItem", "position": 5, "name": "CTLA樹木価値算定", "url": "https://raitopapa.github.io/ctla.html"},
+          {"@type": "ListItem", "position": 6, "name": "現地調査・複数樹木記録", "url": "https://raitopapa.github.io/survey.html"}
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "本ツールの診断結果は専門的な診断と同等ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。本ツールは初期スクリーニングを目的としており、樹木医による現地診断の代替ではありません。症状が重篤な場合・倒木リスクが疑われる場合は、必ず専門家による現地調査を依頼してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "剪定カレンダーの時期は地域によって異なりますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。本ツールは関東〜関西平野部を基準にしています。北海道・東北では1〜2週間程度遅め、九州・沖縄では早めに調整してください。標高の高い地域も同様です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "チェックリストの結果を記録・保存できますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "印刷またはPDF保存（ブラウザの印刷機能）でご利用ください。ツール上での入力データはサーバーに保存されず、ページを閉じると消去されます。現地調査記録ツールはIndexedDBによりオフラインでデータを保持します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "対応していない樹種の診断はできますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "現在対応していない樹種については、近縁種や同系統の樹木の診断結果を参考にしてください。今後も対応樹種を順次拡大予定です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "業務・商用利用は可能ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "造園業者・自治体・管理会社等の業務での利用は無償でご自由にどうぞ。ただし、ツールのコードや内容の無断転載・再配布はご遠慮ください。"
+            }
+          }
+        ]
+      }
+    ]
   }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
