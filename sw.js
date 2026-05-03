@@ -1,5 +1,5 @@
-// 樹木医ツール Service Worker v1.3
-const CACHE_NAME = 'arborist-tools-v2.4';
+// 樹木医ツール Service Worker v3.1
+const CACHE_NAME = 'arborist-tools-v3.1';
 
 // オフラインでキャッシュするファイル
 const CACHE_FILES = [
@@ -21,7 +21,7 @@ const CACHE_FILES = [
 
 // インストール：キャッシュを構築
 self.addEventListener('install', event => {
-  console.log('[SW] Installing v1.3...');
+  console.log('[SW] Installing v3.1...');
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       // Google Fontsなど外部リソースは失敗してもOK
@@ -38,7 +38,7 @@ self.addEventListener('install', event => {
 
 // アクティベート：古いキャッシュを削除
 self.addEventListener('activate', event => {
-  console.log('[SW] Activating v1.3...');
+  console.log('[SW] Activating v3.1...');
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
@@ -61,6 +61,24 @@ self.addEventListener('fetch', event => {
   // AdSenseなど広告リクエストはキャッシュしない
   const url = event.request.url;
   if (url.includes('googlesyndication') || url.includes('googletagmanager') || url.includes('doubleclick')) {
+    return;
+  }
+
+  // HTMLは常にネットワーク優先。問い合わせフォーム等の更新が古いキャッシュで残る事故を防ぐ。
+  if (event.request.destination === 'document') {
+    event.respondWith(
+      fetch(event.request)
+        .then(networkResponse => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(event.request, responseClone);
+            });
+          }
+          return networkResponse;
+        })
+        .catch(() => caches.match(event.request).then(cached => cached || caches.match('/index.html')))
+    );
     return;
   }
 
