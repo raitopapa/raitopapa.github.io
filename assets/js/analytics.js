@@ -4,6 +4,7 @@
   const isConfigured = /^G-[A-Z0-9]+$/.test(GA_MEASUREMENT_ID) && !GA_MEASUREMENT_ID.includes('REPLACE');
 
   function injectBanner() {
+    if (window.ARBORIST_ANALYTICS_SUPPRESS_BANNER) return;
     if (!isConfigured || localStorage.getItem(CONSENT_KEY)) return;
 
     const style = document.createElement('style');

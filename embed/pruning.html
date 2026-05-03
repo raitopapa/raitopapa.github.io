@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<title>剪定時期チェッカー | 樹木ナビ</title>
+<style>
+:root {
+  --ink: #1A1208;
+  --bark: #2C1A0E;
+  --moss: #3D5A3E;
+  --leaf: #7AAE6E;
+  --cream: #F5F0E8;
+  --pale: #E8F0E1;
+  --mist: #D4DFD0;
+  --amber: #C8842A;
+  --danger: #8B2A1A;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans JP", sans-serif;
+}
+body {
+  width: 100%;
+  min-width: 300px;
+}
+.widget {
+  width: 100%;
+  max-width: 360px;
+  min-height: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(44, 26, 14, .16);
+  background: #fffdf8;
+}
+header {
+  padding: 14px 14px 10px;
+  background: var(--bark);
+  color: var(--cream);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 1.2;
+}
+.brand a {
+  color: inherit;
+  text-decoration: none;
+}
+.badge {
+  border: 1px solid rgba(245, 240, 232, .45);
+  border-radius: 999px;
+  padding: 3px 7px;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.lead {
+  margin: 8px 0 0;
+  color: rgba(245, 240, 232, .82);
+  font-size: 11px;
+  line-height: 1.55;
+}
+main {
+  flex: 1;
+  padding: 12px;
+}
+.field {
+  margin-bottom: 10px;
+}
+label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--moss);
+  font-size: 11px;
+  font-weight: 800;
+}
+select {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--mist);
+  border-radius: 4px;
+  background: white;
+  color: var(--ink);
+  font-size: 13px;
+  padding: 7px 9px;
+}
+.result {
+  display: none;
+  margin-top: 12px;
+  border-top: 1px solid var(--mist);
+  padding-top: 12px;
+}
+.result[data-visible="true"] {
+  display: block;
+}
+.tree-name {
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+.purpose {
+  margin-top: 2px;
+  color: #667466;
+  font-size: 11px;
+}
+.summary {
+  margin-top: 10px;
+  border-left: 4px solid var(--moss);
+  background: var(--pale);
+  padding: 9px 10px;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.summary strong {
+  display: block;
+  color: var(--moss);
+  font-size: 13px;
+}
+.months {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+  margin-top: 10px;
+}
+.month {
+  min-height: 34px;
+  border-radius: 4px;
+  border: 1px solid rgba(44, 26, 14, .08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  line-height: 1.1;
+}
+.month span {
+  font-size: 9px;
+  margin-top: 2px;
+}
+.best { background: var(--moss); color: white; }
+.good { background: var(--leaf); color: #102010; }
+.caution { background: #F4D28A; color: #4A3105; }
+.avoid { background: #E6C8BD; color: var(--danger); }
+.neutral { background: #F4F1EB; color: #7B8078; }
+.note {
+  margin: 10px 0 0;
+  color: #526052;
+  font-size: 11px;
+  line-height: 1.55;
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+  color: #5f6d5f;
+  font-size: 10px;
+}
+.legend i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 3px;
+  border-radius: 2px;
+  vertical-align: -1px;
+}
+footer {
+  border-top: 1px solid rgba(44, 26, 14, .12);
+  padding: 8px 12px 10px;
+  color: #6b776b;
+  font-size: 10px;
+  line-height: 1.45;
+}
+footer a {
+  color: var(--moss);
+  font-weight: 800;
+  text-decoration: none;
+}
+.empty {
+  min-height: 124px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7a857a;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.6;
+}
+@media (max-width: 319px) {
+  .brand { font-size: 14px; }
+  main { padding: 10px; }
+  .months { gap: 3px; }
+}
+</style>
+</head>
+<body>
+<div class="widget">
+  <header>
+    <div class="brand">
+      <a href="https://raitopapa.github.io/" target="_blank" rel="noopener">🌿 樹木ナビ</a>
+      <span class="badge">剪定時期</span>
+    </div>
+    <p class="lead">樹種・目的・地域から、剪定しやすい月を簡易判定します。</p>
+  </header>
+
+  <main>
+    <div class="field">
+      <label for="tree">樹種</label>
+      <select id="tree">
+        <option value="">選択してください</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="purpose">剪定の目的</label>
+      <select id="purpose">
+        <option value="shape">樹形整理・透かし剪定</option>
+        <option value="size">樹高・樹幅の縮小</option>
+        <option value="flower">花付きの向上</option>
+        <option value="fruit">果実の品質向上</option>
+        <option value="health">枯れ枝・病枝の除去</option>
+        <option value="hedge">生垣の刈り込み</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="region">地域補正</label>
+      <select id="region">
+        <option value="0">標準（関東〜関西平野部）</option>
+        <option value="-2">北海道（約1ヶ月遅め）</option>
+        <option value="-1">東北北部・高標高地（約3週間遅め）</option>
+        <option value="-0.5">東北南部・北陸・長野高地（約2週間遅め）</option>
+        <option value="0.5">九州・四国（約1週間早め）</option>
+      </select>
+    </div>
+
+    <div id="empty" class="empty">樹種を選ぶと<br>剪定時期の目安が表示されます。</div>
+    <section id="result" class="result" aria-live="polite">
+      <div class="tree-name" id="tree-name"></div>
+      <div class="purpose" id="purpose-name"></div>
+      <div class="summary" id="summary"></div>
+      <div class="months" id="months"></div>
+      <div class="legend">
+        <span><i class="best"></i>最適</span>
+        <span><i class="good"></i>適期</span>
+        <span><i class="caution"></i>注意</span>
+        <span><i class="avoid"></i>避ける</span>
+      </div>
+      <p class="note" id="note"></p>
+    </section>
+  </main>
+
+  <footer>
+    参考情報です。高木・危険木・強剪定は専門家へ。<br>
+    powered by <a href="https://raitopapa.github.io/pruning.html" target="_blank" rel="noopener">樹木ナビ</a>
+  </footer>
+</div>
+
+<script>window.ARBORIST_ANALYTICS_SUPPRESS_BANNER = true;</script>
+<script src="/assets/js/analytics.js"></script>
+<script>
+const MONTHS = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+const STATUS = {
+  best: '最適',
+  good: '適期',
+  caution: '注意',
+  avoid: '避ける',
+  neutral: '不適'
+};
+const PURPOSES = {
+  shape: '樹形整理・透かし剪定',
+  size: '樹高・樹幅の縮小',
+  flower: '花付きの向上',
+  fruit: '果実の品質向上',
+  health: '枯れ枝・病枝の除去',
+  hedge: '生垣の刈り込み'
+};
+const TREES = {
+  pine: {
+    label: 'マツ類',
+    cal: {
+      shape: ['neutral','neutral','good','good','neutral','neutral','neutral','neutral','best','best','good','neutral'],
+      size: ['neutral','neutral','good','neutral','neutral','neutral','neutral','neutral','best','good','neutral','neutral'],
+      health: ['good','good','good','good','good','good','good','good','good','good','good','good']
+    },
+    note: 'みどり摘みは春、古葉取りは秋が目安です。強剪定は避け、枯れ枝処理を優先します。'
+  },
+  cherry: {
+    label: 'サクラ類',
+    cal: {
+      shape: ['best','best','caution','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+      size: ['best','good','caution','avoid','avoid','avoid','avoid','avoid','avoid','avoid','neutral','good'],
+      flower: ['neutral','neutral','neutral','neutral','neutral','neutral','caution','good','best','best','neutral','neutral'],
+      health: ['good','good','good','avoid','avoid','avoid','avoid','avoid','avoid','good','good','good']
+    },
+    note: '休眠期に最小限の剪定が基本です。太枝の切除は腐朽リスクがあるため慎重に判断します。'
+  },
+  zelkova: {
+    label: 'ケヤキ',
+    cal: {
+      shape: ['best','best','caution','neutral','neutral','neutral','neutral','neutral','neutral','neutral','caution','good'],
+      size: ['best','good','caution','avoid','avoid','avoid','avoid','avoid','avoid','avoid','neutral','good'],
+      health: ['good','good','good','good','good','avoid','avoid','avoid','good','good','good','good']
+    },
+    note: '落葉休眠期が基本です。自然樹形を活かし、こぶ状の強剪定は避けます。'
+  },
+  maple: {
+    label: 'カエデ・モミジ',
+    cal: {
+      shape: ['neutral','neutral','neutral','neutral','neutral','best','best','caution','neutral','neutral','best','good'],
+      size: ['neutral','neutral','neutral','neutral','neutral','good','best','caution','neutral','neutral','good','neutral'],
+      health: ['good','good','good','good','good','good','good','good','good','good','good','good']
+    },
+    note: '春は樹液流出が多いため避け、梅雨明け頃または落葉後を目安にします。'
+  },
+  ginkgo: {
+    label: 'イチョウ',
+    cal: {
+      shape: ['good','good','best','best','neutral','neutral','neutral','neutral','neutral','neutral','best','best'],
+      size: ['good','good','best','good','neutral','neutral','neutral','neutral','neutral','neutral','best','best'],
+      health: ['good','good','good','good','good','good','good','good','good','good','good','good']
+    },
+    note: '萌芽力が強い樹種です。大径木は樹形回復に時間がかかるため段階的に剪定します。'
+  },
+  plum: {
+    label: 'ウメ',
+    cal: {
+      shape: ['neutral','neutral','neutral','neutral','best','best','good','neutral','neutral','neutral','neutral','caution'],
+      size: ['neutral','neutral','neutral','neutral','best','good','good','neutral','neutral','neutral','caution','neutral'],
+      flower: ['neutral','neutral','neutral','neutral','best','best','neutral','neutral','neutral','neutral','neutral','neutral'],
+      health: ['good','good','good','good','good','good','good','good','good','good','good','good']
+    },
+    note: '花後から初夏が目安です。花芽を残すため、秋以降の強い剪定は控えます。'
+  },
+  camellia: {
+    label: 'ツバキ・サザンカ',
+    cal: {
+      shape: ['neutral','neutral','neutral','best','best','good','neutral','neutral','neutral','neutral','neutral','neutral'],
+      size: ['neutral','neutral','neutral','good','best','good','neutral','neutral','neutral','neutral','neutral','neutral'],
+      flower: ['neutral','neutral','neutral','neutral','best','good','neutral','neutral','neutral','neutral','neutral','neutral'],
+      health: ['good','good','good','good','good','good','good','good','good','good','good','good']
+    },
+    note: '花後すぐが基本です。チャドクガが発生しやすいため、防護して葉裏を確認します。'
+  },
+  camphor: {
+    label: 'クスノキ',
+    cal: {
+      shape: ['neutral','neutral','neutral','best','best','good','neutral','neutral','neutral','neutral','neutral','neutral'],
+      size: ['neutral','neutral','neutral','best','good','neutral','neutral','neutral','neutral','neutral','neutral','neutral'],
+      health: ['good','good','good','good','good','good','good','good','good','good','good','good']
+    },
+    note: '新葉展開後が目安です。大木になりやすいため、高所作業は専門業者へ相談します。'
+  },
+  citrus: {
+    label: 'カンキツ類',
+    cal: {
+      shape: ['neutral','neutral','best','best','neutral','neutral','neutral','neutral','best','neutral','neutral','neutral'],
+      size: ['neutral','neutral','best','good','neutral','neutral','neutral','neutral','good','neutral','neutral','neutral'],
+      fruit: ['neutral','neutral','best','good','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral'],
+      health: ['good','good','good','good','good','good','good','good','good','good','good','good']
+    },
+    note: '春剪定が基本です。寒冷地では霜が明けてから実施します。'
+  },
+  persimmon: {
+    label: 'カキ',
+    cal: {
+      shape: ['best','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+      size: ['best','good','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+      fruit: ['best','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral'],
+      health: ['good','good','good','good','good','good','good','good','good','good','good','good']
+    },
+    note: '落葉後の休眠期が目安です。結果母枝を残しながら整理します。'
+  },
+  apple: {
+    label: 'リンゴ・ナシ',
+    cal: {
+      shape: ['best','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+      size: ['best','good','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','good'],
+      fruit: ['best','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral'],
+      health: ['good','good','good','good','good','good','good','good','good','good','good','good']
+    },
+    note: '落葉休眠期が基本です。日照と通気を確保し、病害虫防除と合わせて管理します。'
+  },
+  rose: {
+    label: 'バラ類',
+    cal: {
+      shape: ['neutral','neutral','best','good','neutral','neutral','neutral','neutral','neutral','neutral','good','best'],
+      size: ['neutral','neutral','best','neutral','neutral','neutral','neutral','neutral','neutral','neutral','neutral','best'],
+      flower: ['neutral','neutral','best','neutral','neutral','best','neutral','neutral','best','neutral','neutral','neutral'],
+      health: ['good','good','good','good','good','good','good','good','good','good','good','good']
+    },
+    note: '冬剪定と花後剪定を組み合わせます。トゲと病害の拡散に注意し、清潔な鋏を使います。'
+  },
+  hedge: {
+    label: '生垣（ツゲ・レッドロビン等）',
+    cal: {
+      shape: ['neutral','neutral','best','best','good','neutral','neutral','good','best','best','neutral','neutral'],
+      size: ['neutral','neutral','best','best','good','neutral','neutral','good','best','good','neutral','neutral'],
+      hedge: ['neutral','neutral','best','best','good','neutral','neutral','good','best','best','neutral','neutral'],
+      health: ['good','good','good','good','good','good','good','good','good','good','good','good']
+    },
+    note: '春と秋の年2回が目安です。真夏の強い刈り込みは葉焼けに注意します。'
+  }
+};
+
+function applyRegionOffset(calendar, offset) {
+  const n = Math.round(Math.abs(offset));
+  if (!n) return calendar.slice();
+  const result = calendar.slice();
+  if (offset < 0) {
+    for (let i = 11; i >= n; i--) result[i] = calendar[i - n];
+    for (let i = 0; i < n; i++) result[i] = 'neutral';
+  } else {
+    for (let i = 0; i <= 11 - n; i++) result[i] = calendar[i + n];
+    for (let i = 12 - n; i <= 11; i++) result[i] = 'neutral';
+  }
+  return result;
+}
+
+function renderOptions() {
+  const select = document.getElementById('tree');
+  Object.entries(TREES).forEach(([value, data]) => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = data.label;
+    select.appendChild(option);
+  });
+}
+
+function getCalendar(tree, purpose) {
+  return tree.cal[purpose] || tree.cal.shape || tree.cal.health;
+}
+
+function updateWidget() {
+  const treeKey = document.getElementById('tree').value;
+  const purpose = document.getElementById('purpose').value;
+  const offset = parseFloat(document.getElementById('region').value || '0');
+  const result = document.getElementById('result');
+  const empty = document.getElementById('empty');
+  if (!treeKey) {
+    result.dataset.visible = 'false';
+    empty.style.display = 'flex';
+    return;
+  }
+
+  const tree = TREES[treeKey];
+  const calendar = applyRegionOffset(getCalendar(tree, purpose), offset);
+  const bestMonths = calendar
+    .map((status, index) => status === 'best' ? MONTHS[index] : null)
+    .filter(Boolean);
+
+  document.getElementById('tree-name').textContent = tree.label;
+  document.getElementById('purpose-name').textContent = '目的: ' + PURPOSES[purpose];
+  document.getElementById('summary').innerHTML =
+    '<strong>最適期: ' + (bestMonths.join('・') || '通年対応可') + '</strong>' +
+    '<span>地域差・樹勢・安全条件により前後します。</span>';
+  document.getElementById('months').innerHTML = calendar.map((status, index) =>
+    '<div class="month ' + status + '"><b>' + (index + 1) + '</b><span>' + STATUS[status] + '</span></div>'
+  ).join('');
+  document.getElementById('note').textContent = tree.note;
+
+  empty.style.display = 'none';
+  result.dataset.visible = 'true';
+  track('pruning_embed_result', {
+    tree: treeKey,
+    purpose: purpose,
+    region_offset: String(offset)
+  });
+}
+
+function track(eventName, params) {
+  const payload = Object.assign({
+    embed_referrer: document.referrer || 'direct',
+    embed_host: location.hostname
+  }, params || {});
+  if (typeof window.trackToolEvent === 'function') {
+    window.trackToolEvent(eventName, payload);
+  }
+}
+
+renderOptions();
+['tree', 'purpose', 'region'].forEach(id => {
+  document.getElementById(id).addEventListener('change', updateWidget);
+});
+window.addEventListener('load', () => {
+  setTimeout(() => track('pruning_embed_view'), 400);
+});
+</script>
+</body>
+</html>
