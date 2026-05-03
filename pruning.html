@@ -1382,6 +1382,7 @@ function exportPDF() {
 
 document.getElementById('print-date').textContent = new Date().toLocaleDateString('ja-JP');
 </script>
+<script src="assets/js/i18n.js"></script>
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -1392,50 +1393,7 @@ if ("serviceWorker" in navigator) {
 }
 
 // ===== i18n =====
-const PRUNE_I18N = {
-  ja: {
-    title: '剪定適期カレンダー | 樹木医監修',
-    badge: '🌿 樹木医監修ツール',
-    h1: '剪定適期<br>カレンダー計算機',
-    sub: '樹種と目的を選ぶだけで、月別の剪定適否と注意事項を即表示。<br>樹木医の知識をベースにした判断基準です。',
-    treeLabel: '樹種', purposeLabel: '剪定の目的',
-    regionLabel: '🗾 地域補正（気象庁生物季節観測データ基準）',
-    purposeOpts: ['— 選択してください —','樹形整理・透かし剪定','樹高・樹幅の縮小','花付きの向上','果実の品質向上','枯れ枝・病枝の除去','生垣の刈り込み'],
-    months: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
-    best: '最適期', good: '適期', caution: '要注意', avoid: '避ける', neutral: '不適',
-    bestPeriod: '🗓 最適な剪定時期：',
-    detailCaution: '⚠️ 注意事項', detailTools: '🔧 使用ツール・準備',
-    detailQuality: '✨ 品質向上のポイント', annualCal: '📅 年間管理カレンダー',
-    calMonth: '月', calPrune: '剪定作業', calOther: 'その他の管理作業',
-    ctaTitle: '🌲 剪定を安全に進めたい方へ',
-    ctaDesc: '大木の剪定・強剪定は樹木へのダメージが大きく、誤った時期・方法は枯死の原因になります。<br>プロの樹木医・造園業者への相談をお勧めします。',
-    pdfBtn: '📄 PDF・印刷で保存',
-    anotherBtn: '📅 別の樹種を調べる',
-    consultBtn: '📞 専門家に相談する',
-    refTitle: '📚 剪定情報の根拠・出典',
-  },
-  en: {
-    title: 'Pruning Season Calendar | Arborist Tools Japan',
-    badge: '🌿 Certified Arborist Tool',
-    h1: 'Pruning Season<br>Calendar Calculator',
-    sub: 'Select species and pruning goal to see a monthly color-coded calendar<br>with timing guidance — based on professional arboricultural standards.',
-    treeLabel: 'Tree Species', purposeLabel: 'Pruning Goal',
-    regionLabel: '🗾 Regional Adjustment (JMA Phenological Data)',
-    purposeOpts: ['— Select —','Shaping / Thinning','Size Reduction','Improving Flowering','Improving Fruit Quality','Deadwood / Diseased Branch Removal','Hedge Trimming'],
-    months: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-    best: 'Best', good: 'Good', caution: 'Caution', avoid: 'Avoid', neutral: 'Not Suitable',
-    bestPeriod: '🗓 Best Pruning Period: ',
-    detailCaution: '⚠️ Cautions', detailTools: '🔧 Tools & Preparation',
-    detailQuality: '✨ Quality Tips', annualCal: '📅 Annual Management Calendar',
-    calMonth: 'Month', calPrune: 'Pruning Work', calOther: 'Other Management Tasks',
-    ctaTitle: '🌲 Need Help with Safe Pruning?',
-    ctaDesc: 'Heavy pruning of large trees carries significant risk. Incorrect timing or technique<br>can lead to tree death. Consult a certified arborist or tree care professional.',
-    pdfBtn: '📄 Save as PDF / Print',
-    anotherBtn: '📅 Check Another Species',
-    consultBtn: '📞 Consult a Professional',
-    refTitle: '📚 References & Data Sources',
-  }
-};
+const PRUNE_I18N = window.TreeToolsI18n.loadSync('pruning');
 
 function setLang(lang) {
   document.getElementById('btn-ja').classList.toggle('active', lang === 'ja');
