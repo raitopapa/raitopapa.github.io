@@ -33,7 +33,7 @@ raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 | ID | タイトル | Status | 着手日 | Branch / PR |
 |---|---|---|---|---|
 | T-P0-001 | index.html の `.hero` CSS 破損修正 | done | 2026-05-03 | local |
-| T-P0-002 | contact.html フォーム接続（Web3Forms 推奨） | blocked(browser send verification) | 2026-05-03 | local |
+| T-P0-002 | contact.html フォーム接続（Web3Forms 推奨） | done | 2026-05-03 | local |
 | T-P0-003 | GA4 + Search Console 設置 | blocked(GA4 measurement id / realtime verification) | 2026-05-03 | local |
 | T-P0-004 | 外部CDN ライブラリの SRI 化 | todo |  | — |
 
