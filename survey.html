@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>現地調査・複数樹木記録 | 樹木医ツール</title>
+<title>現地調査・複数樹木記録 | 樹木ナビ</title>
 <meta property="og:title" content="現地調査・複数樹木記録 | GPS・地図・CSV出力 | 樹木医プロツール">
 <meta property="og:description" content="複数本の樹木を現地で連続記録。GPS位置記録・OpenStreetMap地図・国土地理院地形図・衛星画像・CSV台帳出力・GeoJSON出力・QRコード生成に対応。オフライン動作。">
 <meta property="og:type" content="website">
@@ -11,7 +11,7 @@
 <meta property="og:image" content="https://raitopapa.github.io/icons/icon-512.png">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
-<meta property="og:site_name" content="樹木医ツール — Arborist Tools Japan">
+<meta property="og:site_name" content="樹木ナビ — Tree Navi Japan">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary">
@@ -32,12 +32,12 @@
     "isAccessibleForFree": true,
     "author": {
       "@type": "Person",
-      "jobTitle": "樹木医（Certified Japanese Arborist）"
+      "jobTitle": "樹木医（監修）"
     },
     "breadcrumb": {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "樹木医ツール", "item": "https://raitopapa.github.io/"},
+        {"@type": "ListItem", "position": 1, "name": "樹木ナビ", "item": "https://raitopapa.github.io/"},
         {"@type": "ListItem", "position": 2, "name": "現地調査・複数樹木記録", "item": "https://raitopapa.github.io/survey.html"}
       ]
     }
@@ -54,7 +54,7 @@
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#1A2F1A">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="樹木医ツール">
+<meta name="apple-mobile-web-app-title" content="樹木ナビ">
 <link rel="apple-touch-icon" href="/icons/icon-192.png">
 <link rel="preload" as="fetch" href="/assets/partials/langbar.html" crossorigin>
 <link rel="stylesheet" href="/assets/css/layout.css">
@@ -457,7 +457,7 @@ body.dark-mode .card-header { background: #0F1F0F; }
 
 <nav>
   <div>
-    <a href="index.html">🌿 樹木医ツール</a>
+    <a href="index.html">🌿 樹木ナビ</a>
     <span class="nav-badge">FIELD</span>
   </div>
   <div style="display:flex;gap:8px;align-items:center;">
@@ -630,7 +630,7 @@ body.dark-mode .card-header { background: #0F1F0F; }
 
 <footer>
   <p>データはこのブラウザのみに保存されます。サーバーには送信されません。</p>
-  <p>© 2025 樹木医ツール — ARBORIST TOOLS PRO | Field Survey</p>
+  <p>© 2025 樹木ナビ — TREE NAVI PRO | Field Survey</p>
 </footer>
 
 </div>
@@ -1071,7 +1071,7 @@ function generateReport() {
     <div class="report-section">
       <h3>免責事項</h3>
       <p style="font-size:11px;color:#8fa085;line-height:1.8;">
-        本調査レポートは樹木医ツール（raitopapa.github.io）を使用して作成されました。本ツールは一般的な情報提供を目的としており、法的拘束力を持つ診断書・鑑定書の代替ではありません。倒木・落枝等の安全性に関わる最終判断は、樹木医資格保有者による現地調査に基づくものとしてください。
+        本調査レポートは樹木ナビ（raitopapa.github.io）を使用して作成されました。本ツールは一般的な情報提供を目的としており、法的拘束力を持つ診断書・鑑定書の代替ではありません。倒木・落枝等の安全性に関わる最終判断は、樹木医資格保有者による現地調査に基づくものとしてください。
       </p>
     </div>
   `;
@@ -1567,7 +1567,7 @@ function exportGeoJSON() {
     name:`樹木台帳_${location||'現地調査'}`,
     crs:{type:'name',properties:{name:'urn:ogc:def:crs:OGC:1.3:CRS84'}},
     metadata:{survey_date:date,surveyor,location,generated:new Date().toISOString(),
-      tool:'Arborist Tools Japan (raitopapa.github.io)',coordinate_system:'WGS84 (EPSG:4326)'},
+      tool:'Tree Navi Japan (raitopapa.github.io)',coordinate_system:'WGS84 (EPSG:4326)'},
     features:geoTrees.map(t=>{
       const d=t.data||{};
       return {type:'Feature',
@@ -1643,7 +1643,7 @@ function showQR(id) {
   const date = document.getElementById('survey-date').value;
 
   const qrData = JSON.stringify({
-    tool: 'Arborist Tools Japan',
+    tool: 'Tree Navi Japan',
     url: 'https://raitopapa.github.io/survey.html',
     site: location,
     tree_id: d.tid || '#' + id,
@@ -1880,7 +1880,7 @@ async function requestNotifyPermission() {
   }
   const perm = await Notification.requestPermission();
   if (perm === 'granted') {
-    new Notification('🌿 樹木医ツール', {
+    new Notification('🌿 樹木ナビ', {
       body: '点検アラートの通知を有効にしました。',
       icon: '/icons/icon-192.png'
     });

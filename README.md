@@ -1,8 +1,8 @@
-# 🌿 樹木医ツール — Arborist Tools Japan
+# 🌿 樹木ナビ — Tree Navi Japan
 
-> **樹木医が監修した、無料の樹木管理Webツール集。**
+> **庭木・街路樹・公園樹の管理を支援する、樹木医監修のWebツール集。**
 > 病害虫の早期発見から剪定適期・現地調査・ISA準拠リスク評価・CTLA式価値算定まで。
-> **Supervised by a Certified Japanese Arborist. Free to use.**
+> **Supervised by a Certified Japanese Arborist Supervisor. Free to use.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Tools](https://img.shields.io/badge/Tools-6-brightgreen)]()

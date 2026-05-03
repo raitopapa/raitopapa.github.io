@@ -1,7 +1,7 @@
 {
-  "name": "樹木医ツール — 無料診断・剪定カレンダー",
-  "short_name": "樹木医ツール",
-  "description": "樹木医監修。病害虫リスク診断・剪定適期カレンダー・健全度チェックリストをオフラインで利用可能。",
+  "name": "樹木ナビ — 樹木管理・剪定カレンダー",
+  "short_name": "樹木ナビ",
+  "description": "庭木・街路樹・公園樹の病害虫確認、剪定時期、健全度チェックをオフラインで利用可能。",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -9,7 +9,10 @@
   "background_color": "#F5F0E8",
   "theme_color": "#2C1A0E",
   "lang": "ja",
-  "categories": ["utilities", "education"],
+  "categories": [
+    "utilities",
+    "education"
+  ],
   "icons": [
     {
       "src": "icons/icon-192.png",
@@ -38,21 +41,36 @@
       "short_name": "病害虫診断",
       "description": "樹種・症状から病害虫を診断",
       "url": "/diagnosis.html",
-      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "剪定適期カレンダー",
       "short_name": "剪定カレンダー",
       "description": "樹種別・目的別の剪定適期を確認",
       "url": "/pruning.html",
-      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "健全度チェックリスト",
       "short_name": "チェックリスト",
       "description": "32項目の現地調査シート",
       "url": "/checklist.html",
-      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }
