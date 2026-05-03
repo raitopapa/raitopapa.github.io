@@ -35,7 +35,7 @@ raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 | T-P0-001 | index.html の `.hero` CSS 破損修正 | done | 2026-05-03 | local |
 | T-P0-002 | contact.html フォーム接続（Web3Forms 推奨） | done | 2026-05-03 | local |
 | T-P0-003 | GA4 + Search Console 設置 | done | 2026-05-03 | local |
-| T-P0-004 | 外部CDN ライブラリの SRI 化 | todo |  | — |
+| T-P0-004 | 外部CDN ライブラリの SRI 化 | done | 2026-05-03 | local |
 
 ## Phase 1: 広告最適化
 
