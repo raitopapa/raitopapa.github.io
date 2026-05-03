@@ -43,8 +43,8 @@ raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 |---|---|---|---|---|
 | T-P1-101 | 共通レイアウト抽出（partials） | done | 2026-05-03 | task/T-P1-101-partials |
 | T-P1-102 | i18n を JSON 外出し化 | todo |  | — |
-| T-P1-103 | AdSense 配置の最適化 | blocked(AdSense ad unit slot ids / CLS validation) | 2026-05-03 | local |
-| T-P1-104 | アフィリエイト導線追加 | blocked(T-P1-103) |  | — |
+| T-P1-103 | AdSense 配置の最適化 | done | 2026-05-03 | task/T-P1-103-adsense-placement |
+| T-P1-104 | アフィリエイト導線追加 | todo |  | — |
 | T-P1-105 | SW の整理（push/sync） | todo |  | — |
 | T-P1-106 | デザイントークン化 | todo |  | — |
 | T-P1-107 | SEO 強化（構造化データ） | done | 2026-05-03 | task/T-P1-107-seo-structured-data |
