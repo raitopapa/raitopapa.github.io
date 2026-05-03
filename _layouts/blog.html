@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% if page.title %}{{ page.title }} | {% endif %}樹木ナビ</title>
+<meta name="description" content="{{ page.description | default: site.description | strip_html | strip_newlines }}">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+<meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+<meta property="og:title" content="{% if page.title %}{{ page.title }} | {% endif %}樹木ナビ">
+<meta property="og:description" content="{{ page.description | default: site.description | strip_html | strip_newlines }}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:image" content="{{ page.image | default: '/icons/icon-512.png' | absolute_url }}">
+<meta property="og:site_name" content="樹木ナビ — Tree Navi Japan">
+<meta name="twitter:card" content="summary">
+<link rel="alternate" type="application/rss+xml" title="樹木ナビ 記事フィード" href="{{ '/feed.xml' | absolute_url }}">
+<style>
+:root {
+  --ink: #1A1208;
+  --bark: #2C1A0E;
+  --moss: #3D5A3E;
+  --leaf: #7AAE6E;
+  --cream: #F5F0E8;
+  --pale: #E8F0E1;
+  --mist: #D4DFD0;
+  --amber: #C8842A;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans JP", sans-serif;
+}
+a { color: var(--moss); }
+.site-header {
+  min-height: 72px;
+  padding: 18px clamp(18px, 5vw, 52px);
+  background: var(--bark);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+.brand {
+  color: inherit;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 900;
+}
+.site-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.site-header nav a {
+  color: rgba(245, 240, 232, .86);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+}
+.wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: clamp(30px, 6vw, 70px) clamp(18px, 4vw, 32px);
+}
+.eyebrow {
+  color: var(--moss);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+h1 {
+  margin: 10px 0 14px;
+  font-size: clamp(30px, 6vw, 54px);
+  line-height: 1.13;
+  letter-spacing: 0;
+}
+.lead {
+  max-width: 760px;
+  color: #4d5d4d;
+  font-size: 16px;
+  line-height: 1.9;
+}
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 34px;
+}
+.post-card {
+  min-height: 220px;
+  border: 1px solid var(--mist);
+  background: #fffdf8;
+  border-radius: 6px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.post-card time, .post-meta {
+  color: #6e7a6e;
+  font-size: 12px;
+}
+.post-card h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 20px;
+  line-height: 1.45;
+}
+.post-card p {
+  margin: 0;
+  color: #4d5d4d;
+  font-size: 13px;
+  line-height: 1.75;
+}
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+}
+.tag-list span, .tag-list a {
+  border: 1px solid var(--mist);
+  border-radius: 999px;
+  color: var(--moss);
+  padding: 4px 8px;
+  font-size: 11px;
+  text-decoration: none;
+}
+.post-body {
+  max-width: 760px;
+  margin-top: 32px;
+  color: #2f3a2f;
+  font-size: 16px;
+  line-height: 2;
+}
+.post-body h2 {
+  margin: 42px 0 12px;
+  padding-top: 18px;
+  border-top: 1px solid var(--mist);
+  color: var(--ink);
+  font-size: 25px;
+  line-height: 1.45;
+}
+.post-body h3 {
+  margin: 28px 0 10px;
+  color: var(--moss);
+  font-size: 19px;
+}
+.post-body p { margin: 0 0 18px; }
+.post-body ul, .post-body ol { padding-left: 1.4em; }
+.related-tools {
+  max-width: 760px;
+  margin-top: 42px;
+  padding: 22px;
+  border: 1px solid var(--mist);
+  background: var(--pale);
+  border-radius: 6px;
+}
+.related-tools h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+.tool-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.tool-links a {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 4px;
+  background: var(--moss);
+  color: white;
+  padding: 8px 12px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 800;
+}
+.site-footer {
+  border-top: 1px solid var(--mist);
+  padding: 24px clamp(18px, 5vw, 52px);
+  color: #5d6a5d;
+  font-size: 12px;
+}
+@media (max-width: 780px) {
+  .site-header { align-items: flex-start; flex-direction: column; }
+  .post-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+{% include blog-header.html %}
+{{ content }}
+<footer class="site-footer">© 2025 樹木ナビ — Tree Navi Japan</footer>
+<script src="/assets/js/analytics.js" defer></script>
+</body>
+</html>
