@@ -1,5 +1,5 @@
 (function () {
-  const GA_MEASUREMENT_ID = 'G-REPLACE_WITH_GA4_ID';
+  const GA_MEASUREMENT_ID = 'G-RFMM494C4W';
   const CONSENT_KEY = 'arborist-analytics-consent';
   const isConfigured = /^G-[A-Z0-9]+$/.test(GA_MEASUREMENT_ID) && !GA_MEASUREMENT_ID.includes('REPLACE');
 
