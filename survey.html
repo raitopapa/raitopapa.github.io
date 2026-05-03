@@ -56,6 +56,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="樹木医ツール">
 <link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="preload" as="fetch" href="/assets/partials/langbar.html" crossorigin>
+<link rel="stylesheet" href="/assets/css/layout.css">
+<script defer src="/assets/js/layout.js"></script>
 <style>
 :root {
   --ink: #0D1A0D;
@@ -223,11 +226,6 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(18px, 3.5vw, 26px);
 
 .ad-slot { background: var(--mist); border: 1px dashed #a0b8a0; border-radius: 3px; padding: 16px; text-align: center; font-family: 'DM Mono', monospace; font-size: 10px; color: #8fa085; margin: 20px 0; }
 footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--mist); font-family: 'DM Mono', monospace; font-size: 10px; color: #8fa085; text-align: center; line-height: 2; }
-
-/* Language switcher */
-.lang-bar { background: rgba(26,47,26,0.95); padding: 6px 20px; display: flex; justify-content: flex-end; align-items: center; gap: 6px; }
-.lang-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 4px 10px; border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: rgba(200,216,192,0.6); cursor: pointer; transition: all 0.15s; }
-.lang-btn.active { background: #6AAE6A; color: #1A2F1A; border-color: #6AAE6A; font-weight: 600; }
 
 /* ===== モバイル最適化 ===== */
 @media(max-width:600px){
@@ -455,11 +453,7 @@ body.dark-mode .card-header { background: #0F1F0F; }
 </head>
 <body>
 <div class="offline-banner" id="offline-banner">⚠️ オフライン — データはデバイスに保存されています</div>
-<div class="lang-bar">
-  <button class="lang-btn active" onclick="setLang('ja')" id="btn-ja">🇯🇵 日本語</button>
-  <button class="lang-btn" onclick="setLang('en')" id="btn-en">🇺🇸 English</button>
-  <button class="btn-dark" onclick="toggleDark(this)" id="btn-dark" title="屋外向けダークモード">🌙 夜間モード</button>
-</div>
+<div id="langbar-ph"></div>
 
 <nav>
   <div>

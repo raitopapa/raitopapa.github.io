@@ -105,6 +105,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="樹木医ツール">
 <link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="preload" as="fetch" href="/assets/partials/langbar.html" crossorigin>
+<link rel="preload" as="fetch" href="/assets/partials/navbar.html" crossorigin>
+<link rel="stylesheet" href="/assets/css/layout.css">
+<script defer src="/assets/js/layout.js"></script>
 <style>
 :root {
   --ink: #0D1A0D;
@@ -120,11 +124,6 @@
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--cream); color: var(--ink); font-family: 'Noto Serif JP', serif; min-height: 100vh; }
-
-nav { background: var(--forest); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-nav a { color: #C8D8C0; text-decoration: none; font-family: 'Shippori Mincho', serif; font-size: 15px; font-weight: 700; }
-.nav-back { font-size: 11px; font-family: 'DM Mono', monospace; letter-spacing: 0.1em; border: 1px solid rgba(200,216,192,0.3); padding: 5px 12px; border-radius: 2px; }
-.nav-badge { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; background: var(--amber); color: white; padding: 2px 8px; border-radius: 2px; margin-left: 8px; }
 
 .wrap { max-width: 820px; margin: 0 auto; padding: 40px 20px 80px; }
 
@@ -205,11 +204,6 @@ input[type="range"] { flex: 1; accent-color: var(--amber); }
 .ad-slot { background: var(--mist); border: 1px dashed #a0b8a0; border-radius: 3px; padding: 18px; text-align: center; font-family: 'DM Mono', monospace; font-size: 10px; color: #8fa085; margin: 24px 0; }
 footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--mist); font-family: 'DM Mono', monospace; font-size: 10px; color: #8fa085; text-align: center; line-height: 2; }
 
-/* Language switcher */
-.lang-bar { background: rgba(26,47,26,0.95); padding: 6px 20px; display: flex; justify-content: flex-end; align-items: center; gap: 6px; }
-.lang-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 4px 10px; border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: rgba(200,216,192,0.6); cursor: pointer; transition: all 0.15s; }
-.lang-btn.active { background: #6AAE6A; color: #1A2F1A; border-color: #6AAE6A; font-weight: 600; }
-
 @media print {
   nav, .ad-slot, .cta-box, .btn-calc { display: none !important; }
   body { background: white; }
@@ -218,18 +212,8 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--mist);
 </style>
 </head>
 <body>
-<div class="lang-bar">
-  <button class="lang-btn active" onclick="setLang('ja')" id="btn-ja">🇯🇵 日本語</button>
-  <button class="lang-btn" onclick="setLang('en')" id="btn-en">🇺🇸 English</button>
-</div>
-
-<nav>
-  <div>
-    <a href="index.html">🌿 樹木医ツール</a>
-    <span class="nav-badge">PRO</span>
-  </div>
-  <a href="index.html" class="nav-back">← ホームへ</a>
-</nav>
+<div id="langbar-ph"></div>
+<div id="navbar-ph"></div>
 
 <div class="wrap">
 

@@ -549,9 +549,6 @@
     .result-card { padding: 20px 16px; }
     .result-header { padding: 20px 16px; }
   }
-  .lang-bar { background: rgba(44,26,14,0.95); padding: 5px 20px; display: flex; justify-content: flex-end; gap: 6px; }
-  .lang-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 3px 9px; border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: rgba(232,240,225,0.6); cursor: pointer; }
-  .lang-btn.active { background: var(--leaf); color: var(--bark); border-color: var(--leaf); font-weight: 600; }
 </style>
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#2C1A0E">
@@ -560,22 +557,14 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="樹木医ツール">
   <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <link rel="preload" as="fetch" href="/assets/partials/langbar.html" crossorigin>
+  <link rel="preload" as="fetch" href="/assets/partials/navbar.html" crossorigin>
+  <link rel="stylesheet" href="/assets/css/layout.css">
+  <script defer src="/assets/js/layout.js"></script>
 </head>
 <body>
-<div class="lang-bar">
-  <button class="lang-btn active" onclick="setLang('ja')" id="btn-ja">🇯🇵 日本語</button>
-  <button class="lang-btn" onclick="setLang('en')" id="btn-en">🇺🇸 English</button>
-</div>
-<nav style="background:var(--bark);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;">
-  <a href="index.html" style="color:#E8F0E1;text-decoration:none;font-family:'Shippori Mincho',serif;font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px;">
-    🌿 樹木医ツール
-  </a>
-  <a href="index.html" style="color:rgba(232,240,225,0.75);text-decoration:none;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;border:1px solid rgba(255,255,255,0.25);padding:5px 12px;border-radius:2px;transition:all 0.15s;"
-     onmouseover="this.style.background='rgba(255,255,255,0.1)'"
-     onmouseout="this.style.background='transparent'">
-    ← ホームへ
-  </a>
-</nav>
+<div id="langbar-ph"></div>
+<div id="navbar-ph"></div>
 
 <div class="container">
 
