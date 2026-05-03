@@ -1,0 +1,65 @@
+/* Shared layout: lang-bar + nav  (T-P1-101) */
+
+.lang-bar {
+  background: rgba(26,47,26,0.95);
+  padding: 6px 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+}
+.lang-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: rgba(200,216,192,0.6);
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.05em;
+}
+.lang-btn.active { background: #6AAE6A; color: #1A2F1A; border-color: #6AAE6A; font-weight: 600; }
+.lang-btn:hover { color: #F4F1EB; }
+
+nav {
+  background: #1A2F1A;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+nav a {
+  color: #C8D8C0;
+  text-decoration: none;
+  font-family: 'Shippori Mincho', serif;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-back {
+  font-size: 11px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.1em;
+  border: 1px solid rgba(200,216,192,0.3);
+  padding: 5px 12px;
+  border-radius: 2px;
+  transition: background 0.15s;
+}
+.nav-back:hover { background: rgba(255,255,255,0.1); }
+.nav-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  background: #2E5E2E;
+  color: #C8D8C0;
+  padding: 2px 8px;
+  border-radius: 2px;
+  margin-left: 8px;
+}
