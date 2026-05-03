@@ -1378,6 +1378,7 @@ function resetForm() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
+<script src="assets/js/i18n.js"></script>
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -1388,102 +1389,7 @@ if ("serviceWorker" in navigator) {
 }
 
 // ===== i18n =====
-const DIAG_I18N = {
-  ja: {
-    title: '樹木病害虫リスク診断 | 樹木医監修',
-    badge: '🌿 樹木医監修ツール',
-    h1: '樹木病害虫<br>リスク診断',
-    sub: '樹木医が監修。症状を選択するだけで、考えられる病害虫と<br>初期対処法を即座に確認できます。',
-    q1: '対象の樹木を選択してください',
-    q1desc: '最も近いものを選択してください',
-    q2: '症状が現れた時期',
-    q2desc: '症状を最初に確認した季節を選択してください',
-    q3: '確認できる症状（複数選択可）',
-    q3desc: '当てはまるものをすべて選択してください',
-    q4: '立地環境',
-    q4desc: '樹木が置かれている環境を選択してください',
-    btn: '🔍　診断する',
-    reset: '↩ もう一度診断する',
-    resultLabel: 'DIAGNOSIS RESULT',
-    pestTitle: '疑われる病害虫',
-    actionTitle: '推奨される初期対処',
-    cautionTitle: '注意事項',
-    ctaTitle: '🌲 より詳しい診断が必要ですか？',
-    ctaDesc: '本ツールは初期スクリーニングです。正確な診断と処置計画には、<br>樹木医による現地調査をお勧めします。',
-    ctaBtn: '📞 樹木医に相談する',
-    footer1: '本ツールは一般的な情報提供を目的としており、専門的な診断の代替ではありません。',
-    // Symptoms
-    s_leaf_yellow: '葉が黄変・褐変',
-    s_leaf_fall: '時期外れの落葉',
-    s_leaf_spot: '葉に斑点・病斑',
-    s_leaf_wilt: '葉のしおれ・萎縮',
-    s_leaf_hole: '葉に穴・食害痕',
-    s_leaf_powder: '葉に白い粉状物',
-    s_branch_dead: '枝枯れ・胴枯れ',
-    s_bark_crack: '樹皮の亀裂・剥離',
-    s_resin: 'ヤニ・樹液の滲出',
-    s_insect: '虫・卵・糞の確認',
-    s_mushroom: 'キノコ・子実体の発生',
-    s_growth_slow: '生長の著しい停滞',
-    // Seasons
-    spring: '春（3〜5月）', summer: '夏（6〜8月）',
-    autumn: '秋（9〜11月）', winter: '冬（12〜2月）',
-    // Locations
-    loc_urban: '市街地（舗装・建物に囲まれた環境）',
-    loc_park: '公園・緑地',
-    loc_garden: '住宅庭園',
-    loc_forest: '林・山地',
-    loc_coast: '沿岸部・海沿い',
-    loc_farm: '農地・果樹園',
-  },
-  en: {
-    title: 'Pest & Disease Risk Diagnosis | Arborist Tools Japan',
-    badge: '🌿 Certified Arborist Tool',
-    h1: 'Pest & Disease<br>Risk Diagnosis',
-    sub: 'Supervised by a certified arborist. Select symptoms to instantly identify<br>likely pests/diseases and recommended initial responses.',
-    q1: 'Select the Tree Species',
-    q1desc: 'Choose the closest match',
-    q2: 'When did symptoms appear?',
-    q2desc: 'Select the season when symptoms were first noticed',
-    q3: 'Visible Symptoms (multiple selection)',
-    q3desc: 'Check all that apply',
-    q4: 'Site Environment',
-    q4desc: 'Select the environment where the tree is located',
-    btn: '🔍　Diagnose',
-    reset: '↩ Diagnose Again',
-    resultLabel: 'DIAGNOSIS RESULT',
-    pestTitle: 'Suspected Pests / Diseases',
-    actionTitle: 'Recommended Initial Actions',
-    cautionTitle: 'Cautions',
-    ctaTitle: '🌲 Need a More Detailed Diagnosis?',
-    ctaDesc: 'This tool is for initial screening only. For accurate diagnosis and treatment planning,<br>an on-site inspection by a certified arborist is recommended.',
-    ctaBtn: '📞 Consult an Arborist',
-    footer1: 'This tool is for general information only and is not a substitute for professional diagnosis.',
-    // Symptoms
-    s_leaf_yellow: 'Leaf yellowing / browning',
-    s_leaf_fall: 'Premature leaf drop',
-    s_leaf_spot: 'Leaf spots / lesions',
-    s_leaf_wilt: 'Leaf wilting / curling',
-    s_leaf_hole: 'Holes / feeding damage on leaves',
-    s_leaf_powder: 'White powdery coating on leaves',
-    s_branch_dead: 'Branch dieback / canker',
-    s_bark_crack: 'Bark cracking / peeling',
-    s_resin: 'Resin / sap oozing',
-    s_insect: 'Insects / eggs / frass observed',
-    s_mushroom: 'Fungal fruiting bodies present',
-    s_growth_slow: 'Significantly reduced growth',
-    // Seasons
-    spring: 'Spring (Mar–May)', summer: 'Summer (Jun–Aug)',
-    autumn: 'Autumn (Sep–Nov)', winter: 'Winter (Dec–Feb)',
-    // Locations
-    loc_urban: 'Urban (paved / built-up area)',
-    loc_park: 'Park / green space',
-    loc_garden: 'Residential garden',
-    loc_forest: 'Woodland / mountain',
-    loc_coast: 'Coastal / seaside',
-    loc_farm: 'Farmland / orchard',
-  }
-};
+const DIAG_I18N = window.TreeToolsI18n.loadSync('diagnosis');
 
 function setLang(lang) {
   document.getElementById('btn-ja').classList.toggle('active', lang === 'ja');

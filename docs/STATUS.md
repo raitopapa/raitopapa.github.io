@@ -42,7 +42,7 @@ raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 | ID | タイトル | Status | 着手日 | Branch / PR |
 |---|---|---|---|---|
 | T-P1-101 | 共通レイアウト抽出（partials） | done | 2026-05-03 | task/T-P1-101-partials |
-| T-P1-102 | i18n を JSON 外出し化 | todo |  | — |
+| T-P1-102 | i18n を JSON 外出し化 | review | 2026-05-03 | task/T-P1-102-i18n-json |
 | T-P1-103 | AdSense 配置の最適化 | done | 2026-05-03 | task/T-P1-103-adsense-placement |
 | T-P1-104 | アフィリエイト導線追加 | done | 2026-05-03 | PR #5 |
 | T-P1-105 | SW の整理（push/sync） | done | 2026-05-03 | PR #6 |
