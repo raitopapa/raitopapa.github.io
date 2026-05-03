@@ -1,8 +1,27 @@
-# GitHub Pages設定
+title: 樹木ナビ
+description: 庭木・街路樹・公園樹の管理を支援する樹木管理ツール集。
+url: https://raitopapa.github.io
+baseurl: ""
+lang: ja
+timezone: Asia/Tokyo
+
 include:
   - sitemap.xml
   - robots.txt
   - ads.txt
 
+permalink: /blog/:year/:month/:day/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      author: 樹木ナビ編集部
+      image: /icons/icon-512.png
+
 plugins: []
 markdown: kramdown
+kramdown:
+  input: GFM

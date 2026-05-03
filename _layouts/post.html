@@ -1,0 +1,25 @@
+---
+layout: blog
+---
+<main class="wrap">
+  <div class="eyebrow">{{ page.category_label | default: "Tree Care Guide" }}</div>
+  <h1>{{ page.title }}</h1>
+  <p class="lead">{{ page.description }}</p>
+  <div class="post-meta">
+    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y.%m.%d" }}</time>
+    {% if page.author %}<span> / {{ page.author }}</span>{% endif %}
+  </div>
+  {% if page.tags %}
+  <div class="tag-list" style="margin-top:14px;">
+    {% for tag in page.tags %}
+      <span>{{ tag }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <article class="post-body">
+    {{ content }}
+  </article>
+
+  {% include related-tools.html %}
+</main>

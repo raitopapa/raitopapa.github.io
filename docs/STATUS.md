@@ -54,11 +54,11 @@ raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 
 | ID | タイトル | Status | 着手日 | Branch / PR |
 |---|---|---|---|---|
-| T-P2-201 | ブログ基盤（Jekyll posts） | todo |  | — |
-| T-P2-202 | 季節記事25本執筆 | blocked(T-P2-201) |  | — |
-| T-P2-203 | 樹木用語集ページ | blocked(T-P2-201) |  | — |
+| T-P2-201 | ブログ基盤（Jekyll posts） | review | 2026-05-04 | task/T-P2-201-blog-jekyll |
+| T-P2-202 | 季節記事25本執筆 | todo |  | — |
+| T-P2-203 | 樹木用語集ページ | todo |  | — |
 | T-P2-204 | 埋め込みウィジェット配布 | done | 2026-05-03 | PR #9 |
-| T-P2-205 | メール購読 + 季節リマインダー | blocked(T-P2-201) |  | — |
+| T-P2-205 | メール購読 + 季節リマインダー | todo |  | — |
 | T-P2-206 | 内部リンク網の整備 | blocked(T-P2-201, T-P2-203) |  | — |
 
 ## Phase 3: Freemium + B2B SaaS（全件 Gate 通過まで凍結）
