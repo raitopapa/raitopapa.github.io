@@ -1,5 +1,5 @@
 (function () {
-  const AMAZON_ASSOCIATE_TAG = '';
+  const AMAZON_ASSOCIATE_TAG = 'jumokui-22';
   const RAKUTEN_AFFILIATE_ID = '';
 
   const catalog = {
