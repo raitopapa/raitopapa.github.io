@@ -1,5 +1,5 @@
-// 樹木医ツール Service Worker v3.1
-const CACHE_NAME = 'arborist-tools-v3.1';
+// 樹木医ツール Service Worker v3.3
+const CACHE_NAME = 'arborist-tools-v3.3';
 
 // オフラインでキャッシュするファイル
 const CACHE_FILES = [
@@ -14,6 +14,7 @@ const CACHE_FILES = [
   '/privacy.html',
   '/contact.html',
   '/assets/js/analytics.js',
+  '/assets/js/affiliate.js',
   '/manifest.json',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
@@ -21,7 +22,7 @@ const CACHE_FILES = [
 
 // インストール：キャッシュを構築
 self.addEventListener('install', event => {
-  console.log('[SW] Installing v3.1...');
+  console.log('[SW] Installing v3.3...');
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       // Google Fontsなど外部リソースは失敗してもOK
@@ -38,7 +39,7 @@ self.addEventListener('install', event => {
 
 // アクティベート：古いキャッシュを削除
 self.addEventListener('activate', event => {
-  console.log('[SW] Activating v3.1...');
+  console.log('[SW] Activating v3.3...');
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
