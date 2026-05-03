@@ -1,0 +1,27 @@
+---
+layout: blog
+title: 樹木管理の記事
+description: 庭木・街路樹・公園樹の病害虫、剪定、健全度確認に関する樹木管理ガイド。
+---
+<main class="wrap">
+  <div class="eyebrow">Tree Care Articles</div>
+  <h1>樹木管理の記事</h1>
+  <p class="lead">庭木・街路樹・公園樹の病害虫確認、剪定時期、健全度チェックに関する実用記事をまとめています。各記事から関連ツールへ移動できます。</p>
+
+  <section class="post-grid" aria-label="記事一覧">
+    {% for post in site.posts %}
+    <a class="post-card" href="{{ post.url }}">
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y.%m.%d" }}</time>
+      <h2>{{ post.title }}</h2>
+      <p>{{ post.description }}</p>
+      {% if post.tags %}
+      <div class="tag-list">
+        {% for tag in post.tags limit:3 %}
+          <span>{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </a>
+    {% endfor %}
+  </section>
+</main>

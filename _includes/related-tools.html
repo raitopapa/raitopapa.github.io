@@ -1,0 +1,24 @@
+{% assign tools = include.tools | default: page.related_tools %}
+{% if tools %}
+<section class="related-tools" aria-labelledby="related-tools-title">
+  <h2 id="related-tools-title">関連ツール</h2>
+  <div class="tool-links">
+    {% for tool in tools %}
+      {% case tool %}
+      {% when "diagnosis" %}
+        <a href="/diagnosis.html">病害虫リスク診断</a>
+      {% when "pruning" %}
+        <a href="/pruning.html">剪定適期カレンダー</a>
+      {% when "checklist" %}
+        <a href="/checklist.html">樹木健全度チェックリスト</a>
+      {% when "survey" %}
+        <a href="/survey.html">現地調査記録</a>
+      {% when "traq" %}
+        <a href="/traq.html">樹木リスク評価</a>
+      {% when "ctla" %}
+        <a href="/ctla.html">樹木価値算定</a>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
