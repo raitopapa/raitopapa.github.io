@@ -1,5 +1,5 @@
-// 樹木医ツール Service Worker v3.1
-const CACHE_NAME = 'arborist-tools-v3.1';
+// 樹木医ツール Service Worker v3.2
+const CACHE_NAME = 'arborist-tools-v3.2';
 
 // オフラインでキャッシュするファイル
 const CACHE_FILES = [
@@ -13,7 +13,11 @@ const CACHE_FILES = [
   '/survey.html',
   '/privacy.html',
   '/contact.html',
+  '/assets/css/layout.css',
   '/assets/js/analytics.js',
+  '/assets/js/layout.js',
+  '/assets/partials/langbar.html',
+  '/assets/partials/navbar.html',
   '/manifest.json',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
