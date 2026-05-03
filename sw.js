@@ -13,6 +13,7 @@ const CACHE_FILES = [
   '/survey.html',
   '/privacy.html',
   '/contact.html',
+  '/assets/js/analytics.js',
   '/manifest.json',
   '/icons/icon-192.png',
   '/icons/icon-512.png',

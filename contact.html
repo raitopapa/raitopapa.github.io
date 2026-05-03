@@ -40,6 +40,10 @@ h1{font-family:'Shippori Mincho',serif;font-size:clamp(24px,4vw,32px);font-weigh
 .btn-submit{width:100%;padding:16px;background:var(--bark);color:var(--cream);border:none;border-radius:3px;font-family:'Shippori Mincho',serif;font-size:16px;font-weight:600;cursor:pointer;transition:all 0.2s;margin-top:4px;}
 .btn-submit:hover{background:var(--moss);transform:translateY(-1px);box-shadow:0 4px 16px rgba(44,26,14,0.2);}
 .btn-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+.form-status{display:none;margin-top:14px;padding:12px 14px;border-radius:3px;font-size:12px;line-height:1.7;}
+.form-status.error{display:block;background:#F8E8E4;border:1px solid #D89A88;color:#7A2E1E;}
+.form-status.info{display:block;background:var(--pale);border:1px solid var(--mist);color:var(--moss);}
+.hp-field{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
 #success{display:none;text-align:center;padding:48px 24px;animation:up 0.4s ease;}
 @keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .success-icon{font-size:52px;display:block;margin-bottom:16px;}
@@ -105,20 +109,24 @@ footer a{color:rgba(232,240,225,0.7);text-decoration:none;}
     </button>
   </div>
 
-  <div class="form-wrap" id="form-wrap">
+  <form class="form-wrap" id="contact-form" onsubmit="submitForm(event)" novalidate>
+    <input type="hidden" id="access-key" name="access_key" value="dedccc42-8671-4cd6-83b6-c9bd036dfad2">
+    <input type="hidden" id="category" name="category" value="">
+    <input type="hidden" name="from_name" value="樹木医ツール お問い合わせ">
+    <input type="checkbox" class="hp-field" name="botcheck" tabindex="-1" autocomplete="off">
     <div class="field-row">
       <div class="field">
         <label>お名前 <span class="required-star">*</span></label>
-        <input type="text" id="name" placeholder="山田 太郎" oninput="validate()">
+        <input type="text" id="name" name="name" placeholder="山田 太郎" oninput="validate()" autocomplete="name" required>
       </div>
       <div class="field">
         <label>メールアドレス <span class="required-star">*</span></label>
-        <input type="email" id="email" placeholder="example@mail.com" oninput="validate()">
+        <input type="email" id="email" name="email" placeholder="example@mail.com" oninput="validate()" autocomplete="email" required>
       </div>
     </div>
     <div class="field">
       <label>職種・立場（任意）</label>
-      <select id="role">
+      <select id="role" name="role">
         <option value="">— 選択してください —</option>
         <option>樹木医</option>
         <option>造園・緑化業者</option>
@@ -130,15 +138,16 @@ footer a{color:rgba(232,240,225,0.7);text-decoration:none;}
     </div>
     <div class="field">
       <label>件名 <span class="required-star">*</span></label>
-      <input type="text" id="subject" placeholder="例：サクラの剪定カレンダーについて" oninput="validate()">
+      <input type="text" id="subject" name="subject" placeholder="例：サクラの剪定カレンダーについて" oninput="validate()" required>
     </div>
     <div class="field">
       <label>お問い合わせ内容 <span class="required-star">*</span></label>
-      <textarea id="message" placeholder="詳しい内容をご記入ください。バグ報告の場合は、使用ブラウザ・操作手順・発生した症状をできるだけ詳しくお書きください。" oninput="countChars();validate()"></textarea>
+      <textarea id="message" name="message" placeholder="詳しい内容をご記入ください。バグ報告の場合は、使用ブラウザ・操作手順・発生した症状をできるだけ詳しくお書きください。" oninput="countChars();validate()" required minlength="10"></textarea>
       <div class="char-count" id="char-count">0 文字</div>
     </div>
-    <button class="btn-submit" id="submit-btn" onclick="submitForm()" disabled>送信する →</button>
-  </div>
+    <button class="btn-submit" id="submit-btn" type="submit" disabled>送信する →</button>
+    <div class="form-status" id="form-status" aria-live="polite"></div>
+  </form>
 
   <div id="success">
     <span class="success-icon">✅</span>
@@ -155,10 +164,12 @@ footer a{color:rgba(232,240,225,0.7);text-decoration:none;}
 
 <script>
 let selectedCat='';
+const WEB3FORMS_ACCESS_KEY='dedccc42-8671-4cd6-83b6-c9bd036dfad2';
 function selectCat(el,cat){
   document.querySelectorAll('.cat-card').forEach(c=>c.classList.remove('selected'));
   el.classList.add('selected');
   selectedCat=cat;
+  document.getElementById('category').value=cat;
   const hints={bug:'[バグ報告] ',feature:'[機能要望] ',data:'[データ修正] ',other:''};
   const sub=document.getElementById('subject');
   if(!sub.value||Object.values(hints).some(h=>sub.value.startsWith(h))){sub.value=hints[cat];}
@@ -176,13 +187,49 @@ function validate(){
   const emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   document.getElementById('submit-btn').disabled=!(name&&emailOk&&subject&&message.length>=10);
 }
-function submitForm(){
-  // 本番環境ではFormspree/Netlify Formsに差し替え
-  document.getElementById('form-wrap').style.display='none';
+function setStatus(type,message){
+  const status=document.getElementById('form-status');
+  status.className='form-status '+type;
+  status.textContent=message;
+}
+async function submitForm(event){
+  event.preventDefault();
+  validate();
+  const btn=document.getElementById('submit-btn');
+  if(btn.disabled) return;
+  if(WEB3FORMS_ACCESS_KEY==='REPLACE_WITH_WEB3FORMS_ACCESS_KEY'){
+    setStatus('error','送信先の設定が未完了です。Web3Forms の Access Key を設定後に送信できます。');
+    return;
+  }
+  const form=document.getElementById('contact-form');
+  const formData=new FormData(form);
+  formData.set('access_key',WEB3FORMS_ACCESS_KEY);
+  formData.append('replyto',document.getElementById('email').value.trim());
+  formData.append('page_url',location.href);
+  btn.disabled=true;
+  btn.textContent='送信中...';
+  setStatus('info','送信しています。しばらくお待ちください。');
+  try{
+    const res=await fetch('https://api.web3forms.com/submit',{method:'POST',body:formData});
+    const result=await res.json().catch(()=>({success:false,message:'送信結果を確認できませんでした。'}));
+    if(!res.ok||!result.success){
+      throw new Error(result.message||'送信に失敗しました。時間をおいて再度お試しください。');
+    }
+    form.reset();
+    selectedCat='';
+    document.querySelectorAll('.cat-card').forEach(c=>c.classList.remove('selected'));
+    document.getElementById('char-count').textContent='0 文字';
+    form.style.display='none';
   document.getElementById('cat-grid').style.display='none';
   document.getElementById('success').style.display='block';
   document.getElementById('success').scrollIntoView({behavior:'smooth'});
+  }catch(err){
+    btn.disabled=false;
+    btn.textContent='送信する →';
+    setStatus('error',err.message||'送信に失敗しました。通信状態を確認して再度お試しください。');
+  }
 }
 </script>
+<script src="assets/js/analytics.js" defer></script>
 </body>
 </html>
