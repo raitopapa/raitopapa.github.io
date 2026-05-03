@@ -22,25 +22,79 @@
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "CTLA樹木価値算定",
-    "url": "https://raitopapa.github.io/ctla.html",
-    "description": "CTLA「Guide for Plant Appraisal」第10版準拠の樹木価値算定ツール。CO₂固定量・雨水抑制・大気浄化等の生態系サービス価値（i-Tree方式）も同時算出。移植補償・保険査定対応。",
-    "inLanguage": ["ja", "en"],
-    "applicationCategory": "UtilityApplication",
-    "operatingSystem": "Any",
-    "isAccessibleForFree": true,
-    "author": {
-      "@type": "Person",
-      "jobTitle": "樹木医（Certified Japanese Arborist）"
-    },
-    "breadcrumb": {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "樹木医ツール", "item": "https://raitopapa.github.io/"},
-        {"@type": "ListItem", "position": 2, "name": "CTLA樹木価値算定", "item": "https://raitopapa.github.io/ctla.html"}
-      ]
-    }
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "CTLA樹木価値算定",
+        "url": "https://raitopapa.github.io/ctla.html",
+        "description": "CTLA「Guide for Plant Appraisal」第10版準拠の樹木価値算定ツール。CO₂固定量・雨水抑制・大気浄化等の生態系サービス価値（i-Tree方式）も同時算出。移植補償・保険査定対応。",
+        "inLanguage": ["ja", "en"],
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "isAccessibleForFree": true,
+        "author": {
+          "@type": "Person",
+          "jobTitle": "樹木医（Certified Japanese Arborist）"
+        },
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "樹木医ツール", "item": "https://raitopapa.github.io/"},
+            {"@type": "ListItem", "position": 2, "name": "CTLA樹木価値算定", "item": "https://raitopapa.github.io/ctla.html"}
+          ]
+        }
+      },
+      {
+        "@type": "HowTo",
+        "name": "CTLA方式による樹木価値算定の手順",
+        "description": "CTLA「Guide for Plant Appraisal」第10版に基づいて樹木の金銭的価値を算定する手順。移植補償・保険査定・訴訟支援に活用できます。",
+        "totalTime": "PT10M",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "算定情報を入力する",
+            "text": "樹木ID・算定日・算定者・算定目的（移植補償・保険査定・訴訟支援など）を入力します。"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "胸高直径（DBH）を測定・入力する",
+            "text": "地上1.3mの幹直径をメジャーで計測し、センチメートル単位で入力します。ツールが胸高断面積（cm²）を自動計算します。"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "基本単価と樹種評価率を設定する",
+            "text": "基本単価（標準4,500円/cm²）を確認し、その立地に対する樹種の適合性・希少性に応じて種評価率（50〜100%）を選択します。"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "健全度評価率を入力する",
+            "text": "樹木の総合健全度をスライダーで設定します（10〜100%）。枯れ枝・病害・空洞・傾斜など全体的な活力を評価してください。"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 5,
+            "name": "立地評価率を設定する",
+            "text": "樹木の環境貢献度（景観・日陰・プライバシー）・用途（住宅地・公道沿い・公園）・保全状況を選択し、立地評価率を算出します。"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 6,
+            "name": "CTLA式樹木価値と生態系サービス価値を確認する",
+            "text": "「断面積 × 基本単価 × 種評価率 × 健全度 × 立地評価率」で算定された樹木価値と、CO₂固定・雨水抑制・大気浄化・冷却効果の生態系サービス価値（i-Tree方式）を確認します。"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 7,
+            "name": "算定書をPDF出力する",
+            "text": "「PDF出力」ボタンで算定書を保存します。樹木医監修の正式フォーマットで印刷・提出に利用できます。"
+          }
+        ]
+      }
+    ]
   }
 </script>
 <meta name="description" content="CTLA（Council of Tree and Landscape Appraisers）方式による樹木の金銭的価値算定ツール。移植補償・保険査定・訴訟支援に活用できます。">
