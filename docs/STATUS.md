@@ -5,7 +5,7 @@
 ## 🚦 現在の進行ステージ: **Phase 0（緊急修正）**
 
 raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
-- D1-D10 最終確定（[SPEC §8](SPEC.md)）。D2/D3/D4/D6 は Gate 後に確定
+- D1-D10 最終確定（[SPEC §8](SPEC.md)）。D4 は「樹木ナビ」で確定、D2/D3/D6 は Gate 後に確定
 - **コスト上限 ¥500/月** 厳守（[SPEC §7.1](SPEC.md)）。超過する施策は claim 禁止
 - **Phase 3 は需要検証 Gate（G1-G7）通過まで全件 blocked**（[SPEC §4.5](SPEC.md)）
 - **本体 docs/ への統合は Codex 担当**（タスク T-DOCS-001）
@@ -48,6 +48,7 @@ raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 | T-P1-105 | SW の整理（push/sync） | done | 2026-05-03 | PR #6 |
 | T-P1-106 | デザイントークン化 | todo |  | — |
 | T-P1-107 | SEO 強化（構造化データ） | done | 2026-05-03 | task/T-P1-107-seo-structured-data |
+| T-P1-108 | ブランド名・コピー整合（樹木ナビ） | review | 2026-05-03 | task/T-P1-108-jumoku-navi-brand |
 
 ## Phase 2: コンテンツSEO + メール
 
@@ -93,7 +94,7 @@ raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 すべて raitopapa の手作業タスク（コーディング不要）:
 - T-DOMAIN-001: ドメイン候補から1つ選定・取得（年¥1,200-2,000）
 - T-MENTOR-001: 監修者プロフィール（匿名版）の本文ドラフト
-- D2/D3/D4/D6: Phase 3 Gate 通過 or D5 第2段階達成時に再検討
+- D2/D3/D6: Phase 3 Gate 通過 or D5 第2段階達成時に再検討
 
 ## 直近の Sonnet への指示（raitopapa 承認済 2026-05-03）
 

@@ -1,8 +1,8 @@
 {
   "index": {
-    "hero-badge": "🌿 Arborist Tools",
-    "hero-h1": "樹木医が監修した<br><span>無料診断ツール</span>集",
-    "hero-sub": "病害虫の早期発見から剪定適期の判断、現地調査まで。<br>樹木医の知識をウェブツールとして無料公開しています。",
+    "hero-badge": "🌿 樹木ナビ",
+    "hero-h1": "樹木の管理を、<br><span>迷わず判断</span>",
+    "hero-sub": "庭木・街路樹・公園樹の病害虫確認、剪定時期、健全度チェック、現地調査まで。<br>樹木医監修の知見をもとに、樹木管理を支援します。",
     "stat-tools": "専門ツール",
     "stat-species": "対応樹種",
     "stat-free": "すべて無償提供",
@@ -11,8 +11,8 @@
     "free-label": "Free Tools",
     "free-title": "3つの診断・管理ツール",
     "pro-label": "Pro Tools",
-    "pro-title": "樹木医・専門家向けプロツール",
-    "pro-desc": "ISA国際基準・CTLA方式に準拠した、樹木医・造園士・行政担当者向けの専門ツールです。",
+    "pro-title": "造園業者・自治体向けプロツール",
+    "pro-desc": "ISA国際基準・CTLA方式に準拠した、造園業者・自治体担当者・樹木管理者向けの専門ツールです。",
     "about-label": "About",
     "about-title": "このサイトについて",
     "pwa-msg": "📲 ホーム画面に追加してオフラインでも使えます",
@@ -41,11 +41,11 @@
     "pro3-title": "現地調査記録<br>複数樹木フィールドシート",
     "pro3-desc": "1現場で複数本を連続記録。リスク別集計・調査レポートを自動生成します。オフライン対応。",
     "pro3-btn": "調査を開始 →",
-    "footer-copy": "© 2025 樹木医ツール — ARBORIST TOOLS | All tools are free to use.",
-    "page-title": "樹木医ツール | 樹木医監修・無料診断・剪定カレンダー"
+    "footer-copy": "© 2025 樹木ナビ — TREE NAVI | All tools are free to use.",
+    "page-title": "樹木ナビ | 樹木管理・剪定カレンダー・健全度チェック"
   },
   "diagnosis": {
-    "title": "樹木病害虫リスク診断 | 樹木医監修",
+    "title": "樹木病害虫リスク診断 | 樹木ナビ",
     "badge": "🌿 樹木医監修ツール",
     "h1": "樹木病害虫<br>リスク診断",
     "sub": "樹木医が監修。症状を選択するだけで、考えられる病害虫と<br>初期対処法を即座に確認できます。",
@@ -91,7 +91,7 @@
     "loc_farm": "農地・果樹園"
   },
   "pruning": {
-    "title": "剪定適期カレンダー | 樹木医監修",
+    "title": "剪定適期カレンダー | 樹木ナビ",
     "badge": "🌿 樹木医監修ツール",
     "h1": "剪定適期<br>カレンダー計算機",
     "sub": "樹種と目的を選ぶだけで、月別の剪定適否と注意事項を即表示。<br>樹木医の知識をベースにした判断基準です。",
@@ -142,7 +142,7 @@
     "refTitle": "📚 剪定情報の根拠・出典"
   },
   "checklist": {
-    "title": "樹木健全度チェックリスト | 樹木医監修",
+    "title": "樹木健全度チェックリスト | 樹木ナビ",
     "badge": "🌿 樹木医監修ツール",
     "h1": "樹木健全度<br>チェックリスト",
     "sub": "現地調査で使える診断シート。根元・幹・枝・葉の状態を記録し、<br>総合スコアと対処優先度を自動算出します。",
@@ -325,8 +325,8 @@
     ]
   },
   "traq": {
-    "page-title": "樹木リスク評価（ISA TRAQ準拠）| 樹木医ツール",
-    "nav-home": "🌿 樹木医ツール",
+    "page-title": "樹木リスク評価（ISA TRAQ準拠）| 樹木ナビ",
+    "nav-home": "🌿 樹木ナビ",
     "nav-back": "← ホームへ",
     "page-label": "Professional Tool — ISA TRAQ Level II",
     "h1": "樹木リスク評価<br>Tree Risk Assessment",
@@ -435,8 +435,8 @@
     "footer1": "本ツールはISA TRAQ Level IIを参照した専門家向けツールです。法的診断書の代替ではありません。"
   },
   "ctla": {
-    "page-title": "樹木価値算定（CTLA式）| 樹木医ツール",
-    "nav-home": "🌿 樹木医ツール",
+    "page-title": "樹木価値算定（CTLA式）| 樹木ナビ",
+    "nav-home": "🌿 樹木ナビ",
     "nav-back": "← ホームへ",
     "page-label": "Professional Tool — CTLA Method",
     "h1": "樹木価値算定<br>Tree Appraisal（CTLA式）",
@@ -534,7 +534,7 @@
     "cta-title": "📄 樹木価値算定書を出力する",
     "cta-desc": "この結果を移植補償交渉・保険査定・行政届出の資料としてご活用ください。",
     "ref-title": "📚 算定方法の根拠・出典",
-    "footer1": "© 2025 樹木医ツール — ARBORIST TOOLS PRO | CTLA準拠樹木価値算定",
+    "footer1": "© 2025 樹木ナビ — TREE NAVI PRO | CTLA準拠樹木価値算定",
     "bd-dbh": "胸高直径（DBH）",
     "bd-area": "胸高断面積",
     "bd-unit": "基本単価",
@@ -547,8 +547,8 @@
     "bd-final": "算定樹木価値"
   },
   "survey": {
-    "page-title": "現地調査・複数樹木記録 | 樹木医ツール",
-    "nav-home": "🌿 樹木医ツール",
+    "page-title": "現地調査・複数樹木記録 | 樹木ナビ",
+    "nav-home": "🌿 樹木ナビ",
     "nav-back": "← ホームへ",
     "page-label": "Field Survey Tool — Multi-Tree Recording",
     "h1": "現地調査・複数樹木記録<br>フィールドワークシート",
@@ -575,7 +575,7 @@
     "btn-clear": "🗑 全削除",
     "empty-msg": "「＋ 樹木を追加」ボタンを押して<br>現地調査を開始してください。",
     "footer1": "データはこのブラウザのみに保存されます。サーバーには送信されません。",
-    "footer2": "© 2025 樹木医ツール — ARBORIST TOOLS PRO | Field Survey",
+    "footer2": "© 2025 樹木ナビ — TREE NAVI PRO | Field Survey",
     "card-lbl-tid": "樹木ID / 管理番号",
     "card-ph-tid": "例：A-{n}",
     "card-lbl-species": "樹種",
@@ -647,7 +647,7 @@
     ],
     "report-urgent": "要対応樹木の詳細",
     "report-disclaimer": "免責事項",
-    "report-disclaimer-txt": "本調査レポートは樹木医ツール（raitopapa.github.io）を使用して作成されました。本ツールは一般的な情報提供を目的としており、法的拘束力を持つ診断書・鑑定書の代替ではありません。",
+    "report-disclaimer-txt": "本調査レポートは樹木ナビ（raitopapa.github.io）を使用して作成されました。本ツールは一般的な情報提供を目的としており、法的拘束力を持つ診断書・鑑定書の代替ではありません。",
     "btn-print": "🖨 PDF・印刷で保存",
     "btn-close": "閉じる",
     "not-rated": "未評価"
