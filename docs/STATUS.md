@@ -42,13 +42,13 @@ raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 | ID | タイトル | Status | 着手日 | Branch / PR |
 |---|---|---|---|---|
 | T-P1-101 | 共通レイアウト抽出（partials） | done | 2026-05-03 | task/T-P1-101-partials |
-| T-P1-102 | i18n を JSON 外出し化 | review | 2026-05-03 | task/T-P1-102-i18n-json |
+| T-P1-102 | i18n を JSON 外出し化 | done | 2026-05-03 | PR #7 |
 | T-P1-103 | AdSense 配置の最適化 | done | 2026-05-03 | task/T-P1-103-adsense-placement |
 | T-P1-104 | アフィリエイト導線追加 | done | 2026-05-03 | PR #5 |
 | T-P1-105 | SW の整理（push/sync） | done | 2026-05-03 | PR #6 |
 | T-P1-106 | デザイントークン化 | todo |  | — |
 | T-P1-107 | SEO 強化（構造化データ） | done | 2026-05-03 | task/T-P1-107-seo-structured-data |
-| T-P1-108 | ブランド名・コピー整合（樹木ナビ） | review | 2026-05-03 | task/T-P1-108-jumoku-navi-brand |
+| T-P1-108 | ブランド名・コピー整合（樹木ナビ） | done | 2026-05-03 | PR #8 |
 
 ## Phase 2: コンテンツSEO + メール
 
@@ -57,7 +57,7 @@ raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 | T-P2-201 | ブログ基盤（Jekyll posts） | blocked(T-P1-101) |  | — |
 | T-P2-202 | 季節記事25本執筆 | blocked(T-P2-201) |  | — |
 | T-P2-203 | 樹木用語集ページ | blocked(T-P2-201) |  | — |
-| T-P2-204 | 埋め込みウィジェット配布 | blocked(T-P1-102) |  | — |
+| T-P2-204 | 埋め込みウィジェット配布 | todo |  | — |
 | T-P2-205 | メール購読 + 季節リマインダー | blocked(T-P2-201) |  | — |
 | T-P2-206 | 内部リンク網の整備 | blocked(T-P2-201, T-P2-203) |  | — |
 
