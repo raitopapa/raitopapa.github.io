@@ -142,11 +142,17 @@ body { background: var(--cream); color: var(--ink); font-family: 'Noto Serif JP'
 .tool-card { background: white; border-radius: 6px; overflow: hidden; box-shadow: var(--shadow-card); transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; color: inherit; display: flex; flex-direction: column; }
 .tool-card:hover  { transform: translateY(-4px); box-shadow: var(--shadow-card-hover); }
 .tool-card:active { transform: translateY(-2px); box-shadow: var(--shadow-card); }
-.card-thumb { height: 140px; display: flex; align-items: center; justify-content: center; font-size: 52px; position: relative; overflow: hidden; }
+.card-thumb { height: 140px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; color: rgba(245,240,232,0.9); }
 .card-thumb-1 { background: linear-gradient(135deg, #1a3d1e 0%, #3D5A3E 100%); }
 .card-thumb-2 { background: linear-gradient(135deg, #2C3A1A 0%, #5A7A2A 100%); }
 .card-thumb-3 { background: linear-gradient(135deg, #1a2e2c 0%, #2E5A55 100%); }
+.card-thumb-pro-risk { height: 120px; background: linear-gradient(135deg,#1A2F1A,#2E5E2E); }
+.card-thumb-pro-appraisal { height: 120px; background: linear-gradient(135deg,#5A3A0A,#B87820); }
+.card-thumb-pro-survey { height: 120px; background: linear-gradient(135deg,#0D2A4A,#2A5A8A); }
 .card-thumb::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 40%, rgba(255,255,255,0.08) 0%, transparent 60%); }
+.icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.tool-line-icon { width: 54px; height: 54px; position: relative; z-index: 1; stroke: currentColor; stroke-width: 1.65; fill: none; stroke-linecap: round; stroke-linejoin: round; opacity: 0.92; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.14)); transition: transform var(--transition-base), opacity var(--transition-base); }
+.tool-card:hover .tool-line-icon { transform: translateY(-2px); opacity: 1; }
 .card-body { padding: 20px 22px; flex: 1; display: flex; flex-direction: column; }
 .card-tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--moss); margin-bottom: 8px; }
 .card-title { font-family: 'Shippori Mincho', serif; font-size: 17px; font-weight: 700; color: var(--bark); margin-bottom: 8px; line-height: 1.35; }
@@ -212,6 +218,67 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
   <link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
+<svg class="icon-sprite" aria-hidden="true" focusable="false">
+  <symbol id="icon-pest-scan" viewBox="0 0 64 64">
+    <circle cx="32" cy="35" r="11"></circle>
+    <path d="M32 24v-6"></path>
+    <path d="M24 22l-4-5"></path>
+    <path d="M40 22l4-5"></path>
+    <path d="M22 34h-8"></path>
+    <path d="M42 34h8"></path>
+    <path d="M24 43l-6 5"></path>
+    <path d="M40 43l6 5"></path>
+    <path d="M28 31h.01"></path>
+    <path d="M36 31h.01"></path>
+    <path d="M18 12h-6v6"></path>
+    <path d="M46 12h6v6"></path>
+    <path d="M18 52h-6v-6"></path>
+    <path d="M46 52h6v-6"></path>
+  </symbol>
+  <symbol id="icon-pruning-calendar" viewBox="0 0 64 64">
+    <rect x="14" y="16" width="36" height="34" rx="4"></rect>
+    <path d="M22 12v8"></path>
+    <path d="M42 12v8"></path>
+    <path d="M14 26h36"></path>
+    <path d="M24 34h.01"></path>
+    <path d="M32 34h.01"></path>
+    <path d="M40 34h.01"></path>
+    <path d="M24 42h.01"></path>
+    <path d="M32 42h.01"></path>
+    <path d="M42 44l8 8"></path>
+    <path d="M50 44l-8 8"></path>
+  </symbol>
+  <symbol id="icon-health-check" viewBox="0 0 64 64">
+    <rect x="18" y="14" width="28" height="40" rx="4"></rect>
+    <path d="M26 14c0-3 2-5 6-5s6 2 6 5"></path>
+    <path d="M25 28h14"></path>
+    <path d="M25 36h8"></path>
+    <path d="M25 45l4 4 10-12"></path>
+  </symbol>
+  <symbol id="icon-risk-shield" viewBox="0 0 64 64">
+    <path d="M32 10l18 7v13c0 12-7 20-18 25-11-5-18-13-18-25V17l18-7z"></path>
+    <path d="M32 22v14"></path>
+    <path d="M32 44h.01"></path>
+  </symbol>
+  <symbol id="icon-appraisal-calculator" viewBox="0 0 64 64">
+    <rect x="18" y="10" width="28" height="44" rx="4"></rect>
+    <path d="M24 18h16"></path>
+    <path d="M25 29h.01"></path>
+    <path d="M32 29h.01"></path>
+    <path d="M39 29h.01"></path>
+    <path d="M25 38h.01"></path>
+    <path d="M32 38h.01"></path>
+    <path d="M39 38h.01"></path>
+    <path d="M25 47h14"></path>
+  </symbol>
+  <symbol id="icon-field-map" viewBox="0 0 64 64">
+    <path d="M16 18l12-5 12 5 8-4v32l-8 4-12-5-12 5V18z"></path>
+    <path d="M28 13v32"></path>
+    <path d="M40 18v32"></path>
+    <path d="M36 29c0 5-4 9-4 9s-4-4-4-9a4 4 0 0 1 8 0z"></path>
+    <path d="M32 29h.01"></path>
+  </symbol>
+</svg>
 
 <!-- Language Bar -->
 <div class="lang-bar">
@@ -249,7 +316,7 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
 
   <div class="tool-grid">
     <a class="tool-card" href="diagnosis.html">
-      <div class="card-thumb card-thumb-1">🦠</div>
+      <div class="card-thumb card-thumb-1"><svg class="tool-line-icon" aria-hidden="true"><use href="#icon-pest-scan"></use></svg></div>
       <div class="card-body">
         <div class="card-tag" data-i18n="tool1-tag">Tool 01 — Diagnosis</div>
         <div class="card-title" data-i18n="tool1-title">病害虫<br>リスク診断</div>
@@ -263,7 +330,7 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
       </div>
     </a>
     <a class="tool-card" href="pruning.html">
-      <div class="card-thumb card-thumb-2">📅</div>
+      <div class="card-thumb card-thumb-2"><svg class="tool-line-icon" aria-hidden="true"><use href="#icon-pruning-calendar"></use></svg></div>
       <div class="card-body">
         <div class="card-tag" data-i18n="tool2-tag">Tool 02 — Calendar</div>
         <div class="card-title" data-i18n="tool2-title">剪定適期<br>カレンダー</div>
@@ -277,7 +344,7 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
       </div>
     </a>
     <a class="tool-card" href="checklist.html">
-      <div class="card-thumb card-thumb-3">📋</div>
+      <div class="card-thumb card-thumb-3"><svg class="tool-line-icon" aria-hidden="true"><use href="#icon-health-check"></use></svg></div>
       <div class="card-body">
         <div class="card-tag" data-i18n="tool3-tag">Tool 03 — Checklist</div>
         <div class="card-title" data-i18n="tool3-title">樹木健全度<br>チェックリスト</div>
@@ -303,7 +370,7 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
 
   <div class="tool-grid">
     <a class="tool-card" href="traq.html" style="border-top:3px solid #8B2A1A;">
-      <div class="card-thumb" style="background:linear-gradient(135deg,#1A2F1A,#2E5E2E);font-size:32px;display:flex;align-items:center;justify-content:center;height:120px;">⚠️</div>
+      <div class="card-thumb card-thumb-pro-risk"><svg class="tool-line-icon" aria-hidden="true"><use href="#icon-risk-shield"></use></svg></div>
       <div class="card-body">
         <div class="card-tag" style="color:#8B2A1A;border-color:#8B2A1A;" data-i18n="pro1-tag">Pro 01 — ISA TRAQ Level II</div>
         <div class="card-title" data-i18n="pro1-title">樹木リスク評価<br>Tree Risk Assessment</div>
@@ -317,7 +384,7 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
       </div>
     </a>
     <a class="tool-card" href="ctla.html" style="border-top:3px solid #B87820;">
-      <div class="card-thumb" style="background:linear-gradient(135deg,#5A3A0A,#B87820);font-size:32px;display:flex;align-items:center;justify-content:center;height:120px;">💰</div>
+      <div class="card-thumb card-thumb-pro-appraisal"><svg class="tool-line-icon" aria-hidden="true"><use href="#icon-appraisal-calculator"></use></svg></div>
       <div class="card-body">
         <div class="card-tag" style="color:#B87820;border-color:#B87820;" data-i18n="pro2-tag">Pro 02 — CTLA Method</div>
         <div class="card-title" data-i18n="pro2-title">樹木価値算定<br>Tree Appraisal</div>
@@ -331,7 +398,7 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
       </div>
     </a>
     <a class="tool-card" href="survey.html" style="border-top:3px solid #2A5A8A;">
-      <div class="card-thumb" style="background:linear-gradient(135deg,#0D2A4A,#2A5A8A);font-size:32px;display:flex;align-items:center;justify-content:center;height:120px;">📋</div>
+      <div class="card-thumb card-thumb-pro-survey"><svg class="tool-line-icon" aria-hidden="true"><use href="#icon-field-map"></use></svg></div>
       <div class="card-body">
         <div class="card-tag" style="color:#2A5A8A;border-color:#2A5A8A;" data-i18n="pro3-tag">Pro 03 — Field Survey</div>
         <div class="card-title" data-i18n="pro3-title">現地調査記録<br>複数樹木フィールドシート</div>
