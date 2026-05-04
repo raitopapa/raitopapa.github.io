@@ -286,6 +286,10 @@ footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--mist);
 .ref-item a:hover { border-bottom-color: var(--moss); }
 .ref-note { font-size: 11px; color: #8fa085; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--mist); line-height: 1.7; }
 @media print { .ref-section { display: none; } }
+@media(max-width:600px){
+  .info-field input, .info-field select { font-size: 16px; padding: 10px; } /* iOS zoom prevention */
+  .cta-box .btn-p, .cta-box .btn-o { display: block; width: 100%; margin: 6px 0; box-sizing: border-box; }
+}
 @media(max-width:480px){
   .score-display { flex-direction: column; text-align: center; }
   .section-scores { grid-template-columns: repeat(2,1fr); }
