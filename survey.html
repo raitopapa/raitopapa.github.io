@@ -106,10 +106,14 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(18px, 3.5vw, 26px);
 /* Action buttons */
 .action-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
 .btn-add { padding: 12px 22px; background: var(--moss); color: white; border: none; border-radius: 3px; font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-.btn-add:hover { background: var(--forest); transform: translateY(-1px); }
+.btn-add:hover  { background: var(--forest); transform: translateY(-1px); }
+.btn-add:active { opacity: 0.82; transform: translateY(1px); }
 .btn-report { padding: 12px 22px; background: var(--amber); color: white; border: none; border-radius: 3px; font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-.btn-report:hover { filter: brightness(1.1); }
-.btn-clear { padding: 12px 18px; background: transparent; color: var(--rust); border: 1px solid var(--rust); border-radius: 3px; font-family: 'DM Mono', monospace; font-size: 12px; cursor: pointer; }
+.btn-report:hover  { filter: brightness(1.1); }
+.btn-report:active { opacity: 0.82; transform: translateY(1px); }
+.btn-clear { padding: 12px 18px; background: transparent; color: var(--rust); border: 1px solid var(--rust); border-radius: 3px; font-family: 'DM Mono', monospace; font-size: 12px; cursor: pointer; transition: all 0.15s; }
+.btn-clear:hover  { background: rgba(139,42,26,0.08); }
+.btn-clear:active { background: rgba(139,42,26,0.04); transform: scale(0.97); }
 
 /* Tree cards grid */
 #tree-list { display: grid; gap: 14px; }
@@ -184,8 +188,12 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(18px, 3.5vw, 26px);
 .risk-btn.sel-high     { background: var(--rust); border-color: var(--rust); color: white; }
 
 .card-actions { display: flex; gap: 8px; padding-top: 12px; border-top: 1px solid var(--mist); flex-wrap: wrap; }
-.btn-save-card { padding: 8px 16px; background: var(--moss); color: white; border: none; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; }
-.btn-delete-card { padding: 8px 14px; background: transparent; color: var(--rust); border: 1px solid var(--rust); border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; }
+.btn-save-card { padding: 8px 16px; background: var(--moss); color: white; border: none; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; transition: all 0.15s; }
+.btn-save-card:hover  { background: var(--forest); }
+.btn-save-card:active { opacity: 0.82; transform: scale(0.96); }
+.btn-delete-card { padding: 8px 14px; background: transparent; color: var(--rust); border: 1px solid var(--rust); border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; transition: all 0.15s; }
+.btn-delete-card:hover  { background: rgba(139,42,26,0.08); }
+.btn-delete-card:active { background: rgba(139,42,26,0.04); transform: scale(0.96); }
 .save-status { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--moss-l); display: flex; align-items: center; gap: 4px; }
 
 /* Empty state */
@@ -220,8 +228,12 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(18px, 3.5vw, 26px);
 .rsg-item .rsg-val { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--forest); margin-top: 4px; }
 
 .report-btn-row { display: flex; gap: 10px; padding: 16px 24px; background: var(--pale); border-top: 1px solid var(--mist); }
-.btn-print-report { padding: 12px 24px; background: var(--amber); color: white; border: none; border-radius: 3px; font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 600; cursor: pointer; }
-.btn-close-report { padding: 12px 20px; background: transparent; color: var(--forest); border: 1px solid var(--mist); border-radius: 3px; font-family: 'DM Mono', monospace; font-size: 12px; cursor: pointer; }
+.btn-print-report { padding: 12px 24px; background: var(--amber); color: white; border: none; border-radius: 3px; font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.btn-print-report:hover  { filter: brightness(1.08); }
+.btn-print-report:active { opacity: 0.82; transform: translateY(1px); }
+.btn-close-report { padding: 12px 20px; background: transparent; color: var(--forest); border: 1px solid var(--mist); border-radius: 3px; font-family: 'DM Mono', monospace; font-size: 12px; cursor: pointer; transition: all 0.15s; }
+.btn-close-report:hover  { background: var(--pale); }
+.btn-close-report:active { background: var(--mist); transform: scale(0.97); }
 
 .ad-slot { background: var(--mist); border: 1px dashed #a0b8a0; border-radius: 3px; padding: 16px; text-align: center; font-family: 'DM Mono', monospace; font-size: 10px; color: #8fa085; margin: 20px 0; }
 footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--mist); font-family: 'DM Mono', monospace; font-size: 10px; color: #8fa085; text-align: center; line-height: 2; }
@@ -318,13 +330,16 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--mist);
 
 /* Export buttons */
 .btn-export-csv { padding: 12px 18px; background: var(--sky); color: white; border: none; border-radius: 3px; font-family: 'Shippori Mincho', serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-.btn-export-csv:hover { filter: brightness(1.1); }
+.btn-export-csv:hover  { filter: brightness(1.1); }
+.btn-export-csv:active { opacity: 0.82; transform: translateY(1px); }
 .btn-export-geojson { padding: 12px 18px; background: #2A6A4A; color: white; border: none; border-radius: 3px; font-family: 'Shippori Mincho', serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-.btn-export-geojson:hover { filter: brightness(1.1); }
+.btn-export-geojson:hover  { filter: brightness(1.1); }
+.btn-export-geojson:active { opacity: 0.82; transform: translateY(1px); }
 
 /* GPS button in card */
 .btn-gps { padding: 7px 12px; background: var(--sky); color: white; border: none; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 5px; }
-.btn-gps:hover { filter: brightness(1.1); }
+.btn-gps:hover  { filter: brightness(1.1); }
+.btn-gps:active { opacity: 0.82; transform: scale(0.96); }
 .gps-coords { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--moss-l); margin-top: 4px; }
 .coords-display { display: none; }
 
@@ -390,6 +405,8 @@ body.dark-mode .card-header { background: #0F1F0F; }
 
 /* ===== 音声入力ボタン ===== */
 .btn-voice { padding: 6px 10px; background: transparent; border: 1px solid var(--mist); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--moss-l); transition: all 0.15s; }
+.btn-voice:hover  { border-color: var(--moss-l); }
+.btn-voice:active { opacity: 0.75; transform: scale(0.95); }
 .btn-voice.recording { background: var(--rust); border-color: var(--rust); color: white; animation: pulse 1s infinite; }
 
 /* ===== 写真記録 ===== */
@@ -397,8 +414,11 @@ body.dark-mode .card-header { background: #0F1F0F; }
 .photo-section label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: var(--moss); text-transform: uppercase; display: block; margin-bottom: 6px; }
 .photo-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
 .btn-camera { padding: 8px 14px; background: var(--sky); color: white; border: none; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 5px; }
-.btn-camera:hover { filter: brightness(1.1); }
-.btn-camera-upload { padding: 8px 14px; background: var(--moss); color: white; border: none; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; }
+.btn-camera:hover  { filter: brightness(1.1); }
+.btn-camera:active { opacity: 0.82; transform: scale(0.96); }
+.btn-camera-upload { padding: 8px 14px; background: var(--moss); color: white; border: none; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; transition: all 0.15s; }
+.btn-camera-upload:hover  { background: var(--forest); }
+.btn-camera-upload:active { opacity: 0.82; transform: scale(0.96); }
 .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px,1fr)); gap: 6px; margin-top: 6px; }
 .photo-thumb { position: relative; }
 .photo-thumb img { width: 100%; height: 80px; object-fit: cover; border-radius: 3px; border: 2px solid var(--mist); cursor: pointer; }
@@ -424,7 +444,9 @@ body.dark-mode .card-header { background: #0F1F0F; }
 .trend-up   { color: var(--rust); font-weight: 600; }
 .trend-down { color: var(--moss); font-weight: 600; }
 .trend-same { color: var(--amber); }
-.btn-load-history { padding: 6px 12px; background: var(--forest); color: var(--cream); border: none; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 10px; cursor: pointer; }
+.btn-load-history { padding: 6px 12px; background: var(--forest); color: var(--cream); border: none; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 10px; cursor: pointer; transition: all 0.15s; }
+.btn-load-history:hover  { filter: brightness(1.2); }
+.btn-load-history:active { opacity: 0.80; transform: scale(0.96); }
 .history-empty { padding: 20px; text-align: center; font-size: 12px; color: #8fa085; }
 
 /* ===== メンテナンスアラート ===== */
@@ -433,7 +455,9 @@ body.dark-mode .card-header { background: #0F1F0F; }
 .alert-banner h4 { font-family: 'Shippori Mincho', serif; font-size: 14px; margin-bottom: 6px; }
 .alert-list { font-size: 12px; opacity: 0.9; line-height: 1.8; }
 .alert-dismiss { float: right; background: rgba(255,255,255,0.2); border: none; color: white; padding: 4px 10px; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 10px; cursor: pointer; }
-.btn-notify { padding: 5px 10px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 10px; cursor: pointer; margin-top: 6px; }
+.btn-notify { padding: 5px 10px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 10px; cursor: pointer; margin-top: 6px; transition: all 0.15s; }
+.btn-notify:hover  { background: rgba(255,255,255,0.25); }
+.btn-notify:active { background: rgba(255,255,255,0.10); transform: scale(0.96); }
 
 /* ライトボックス */
 #photo-lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 300; align-items: center; justify-content: center; flex-direction: column; gap: 12px; }

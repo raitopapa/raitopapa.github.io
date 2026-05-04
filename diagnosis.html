@@ -291,6 +291,7 @@
   }
 
   .btn-diagnose:active {
+    opacity: 0.82;
     transform: translateY(0);
   }
 
@@ -489,7 +490,8 @@
     transition: opacity 0.2s;
   }
 
-  .btn-cta:hover { opacity: 0.9; }
+  .btn-cta:hover  { opacity: 0.9; }
+  .btn-cta:active { opacity: 0.75; transform: scale(0.97); }
 
   .btn-reset {
     display: block;
@@ -505,7 +507,8 @@
     transition: background 0.2s;
   }
 
-  .btn-reset:hover { background: rgba(255,255,255,0.1); }
+  .btn-reset:hover  { background: rgba(255,255,255,0.1); }
+  .btn-reset:active { background: rgba(255,255,255,0.05); transform: scale(0.97); }
 
   /* Footer */
   footer {

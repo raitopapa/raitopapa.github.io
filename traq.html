@@ -133,7 +133,8 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(20px, 4vw, 30px); f
   transition: all 0.15s; background: white; color: #6b8a6b;
   user-select: none;
 }
-.rating-btn:hover { border-color: var(--moss-l); color: var(--forest); }
+.rating-btn:hover  { border-color: var(--moss-l); color: var(--forest); }
+.rating-btn:active { opacity: 0.80; transform: scale(0.95); }
 .rating-btn.sel-1 { background: var(--risk-low); border-color: var(--risk-low); color: white; }
 .rating-btn.sel-2 { background: var(--risk-moderate); border-color: var(--risk-moderate); color: white; }
 .rating-btn.sel-3 { background: var(--risk-high); border-color: var(--risk-high); color: white; }
@@ -191,7 +192,8 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(20px, 4vw, 30px); f
   font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px;
   letter-spacing: 0.05em;
 }
-.btn-calc:hover { background: var(--moss); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(26,47,26,0.25); }
+.btn-calc:hover  { background: var(--moss); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(26,47,26,0.25); }
+.btn-calc:active { opacity: 0.82; transform: translateY(1px); box-shadow: none; }
 
 /* Result */
 #result { display: none; animation: up 0.45s ease; margin-top: 28px; }
@@ -246,8 +248,11 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(20px, 4vw, 30px); f
 .cta-box h3 { font-family: 'Shippori Mincho', serif; font-size: 17px; margin-bottom: 6px; }
 .cta-box p { font-size: 12px; opacity: 0.82; margin-bottom: 14px; line-height: 1.7; }
 .btn-pdf { display: inline-block; padding: 11px 24px; background: var(--cream); color: var(--forest); font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 700; border-radius: 2px; border: none; cursor: pointer; transition: opacity 0.2s; margin: 4px; }
-.btn-pdf:hover { opacity: 0.9; }
-.btn-reset { display: inline-block; padding: 11px 20px; background: transparent; color: var(--cream); font-family: 'Noto Serif JP', serif; font-size: 13px; border: 1px solid rgba(255,255,255,0.35); border-radius: 2px; cursor: pointer; margin: 4px; }
+.btn-pdf:hover  { opacity: 0.9; }
+.btn-pdf:active { opacity: 0.75; transform: scale(0.97); }
+.btn-reset { display: inline-block; padding: 11px 20px; background: transparent; color: var(--cream); font-family: 'Noto Serif JP', serif; font-size: 13px; border: 1px solid rgba(255,255,255,0.35); border-radius: 2px; cursor: pointer; margin: 4px; transition: background 0.15s; }
+.btn-reset:hover  { background: rgba(255,255,255,0.1); }
+.btn-reset:active { background: rgba(255,255,255,0.05); transform: scale(0.97); }
 
 /* Ref */
 .ref-section { margin-top: 36px; padding: 20px; background: rgba(255,255,255,0.5); border: 1px solid var(--mist); border-radius: 4px; }
