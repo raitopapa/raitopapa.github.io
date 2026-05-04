@@ -120,13 +120,13 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(18px, 3.5vw, 26px);
 
 .tree-card {
   background: rgba(255,255,255,0.7);
-  border: 1px solid var(--mist);
   border-radius: 4px;
+  box-shadow: var(--shadow-card);
   overflow: hidden;
   backdrop-filter: blur(4px);
-  transition: border-color 0.2s;
+  transition: box-shadow 0.2s;
 }
-.tree-card:hover { border-color: var(--moss-l); }
+.tree-card:hover { box-shadow: var(--shadow-card-hover); }
 .tree-card.risk-high { border-left: 4px solid var(--rust); }
 .tree-card.risk-moderate { border-left: 4px solid var(--amber); }
 .tree-card.risk-low { border-left: 4px solid var(--leaf); }
@@ -203,7 +203,7 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(18px, 3.5vw, 26px);
 
 /* Report modal */
 .report-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; overflow-y: auto; padding: 20px; }
-.report-modal { background: var(--cream); border-radius: 6px; max-width: 800px; margin: 0 auto; overflow: hidden; }
+.report-modal { background: var(--cream); border-radius: 6px; box-shadow: var(--shadow-card); max-width: 800px; margin: 0 auto; overflow: hidden; }
 .report-modal-header { background: var(--forest); color: var(--cream); padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; }
 .report-modal-header h2 { font-family: 'Shippori Mincho', serif; font-size: 18px; }
 .btn-close { background: transparent; border: 1px solid rgba(200,216,192,0.4); color: var(--cream); padding: 6px 12px; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; }

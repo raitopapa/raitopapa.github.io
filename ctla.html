@@ -132,7 +132,7 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(20px, 4vw, 30px); f
 .sub { font-size: 12px; color: var(--moss-l); line-height: 1.8; }
 .ctla-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--amber); color: white; padding: 4px 12px; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; margin-top: 10px; }
 
-.section { background: rgba(255,255,255,0.65); border: 1px solid var(--mist); border-radius: 4px; margin-bottom: 16px; overflow: hidden; }
+.section { background: rgba(255,255,255,0.65); box-shadow: var(--shadow-card); border-radius: 4px; margin-bottom: 16px; overflow: hidden; }
 .sec-header { padding: 14px 18px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--mist); cursor: pointer; user-select: none; }
 .sec-header:hover { background: var(--pale); }
 .sec-num { font-family: 'DM Mono', monospace; font-size: 11px; color: white; background: var(--amber); padding: 3px 8px; border-radius: 2px; flex-shrink: 0; }
@@ -177,7 +177,7 @@ input[type="range"] { flex: 1; accent-color: var(--amber); }
 
 .result-header-gold { background: linear-gradient(135deg, var(--amber) 0%, #8A5A10 100%); color: white; padding: 24px 28px; border-radius: 4px 4px 0 0; }
 .result-value-large { font-family: 'Shippori Mincho', serif; font-size: 42px; font-weight: 800; }
-.result-body { border: 1px solid var(--mist); border-top: none; border-radius: 0 0 4px 4px; }
+.result-body { box-shadow: var(--shadow-card); border-top: none; border-radius: 0 0 4px 4px; }
 .result-card { padding: 20px 24px; border-bottom: 1px solid var(--mist); background: white; }
 .result-card:last-child { border-bottom: none; }
 .result-card h3 { font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 700; color: var(--forest); margin-bottom: 12px; }
