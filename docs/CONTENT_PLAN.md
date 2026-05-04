@@ -2,29 +2,41 @@
 
 樹木ナビのコンテンツSEO初期計画。T-P2-201 では記事基盤とサンプル3本までを実装し、T-P2-202 で25本へ拡張する。
 
-## 初期公開済みサンプル
+## 公開済み記事（T-P2-202 完了 2026-05-04）
 
-| URL | 目的 | 関連ツール |
+### 基盤3本（T-P2-201）
+| URL | カテゴリ | 関連ツール |
 |---|---|---|
-| `/blog/2026/05/04/pruning-season-basic/` | 剪定時期系キーワードの入口 | pruning, checklist |
-| `/blog/2026/05/04/leaf-yellowing-check/` | 症状別診断系キーワードの入口 | diagnosis, checklist |
-| `/blog/2026/05/04/tree-inspection-record/` | 自治体・造園業者向け現地記録の入口 | survey, traq, checklist |
+| `/blog/2026/05/04/pruning-season-basic/` | Pruning | pruning, checklist |
+| `/blog/2026/05/04/leaf-yellowing-check/` | Pest & Disease | diagnosis, checklist |
+| `/blog/2026/05/04/tree-inspection-record/` | Field Survey | survey, traq, checklist |
 | `/glossary.html` | 診断・剪定・安全点検系キーワードの内部リンクハブ | diagnosis, pruning, checklist, survey, traq, ctla |
 
-## 次に増やす記事候補
-
-| 優先 | 仮タイトル | 検索意図 | 関連ツール |
-|---|---|---|---|
-| P1 | サクラの剪定時期と切ってはいけない時期 | 樹種別剪定 | pruning |
-| P1 | カエデ・モミジの剪定で樹液が出る理由 | 樹種別剪定 | pruning |
-| P1 | 庭木の葉に白い粉が出たときの確認ポイント | 症状別病害 | diagnosis |
-| P1 | チャドクガが出やすい樹木と初期対応 | 害虫対策 | diagnosis |
-| P1 | 街路樹点検で写真を撮るべき場所 | 自治体・造園 | survey |
-| P2 | 台風前に確認したい庭木の危険サイン | 季節リスク | checklist, traq |
-| P2 | キノコが根元に出た樹木は危険か | 症状別リスク | checklist, traq |
-| P2 | 生垣の刈り込み時期と高さ管理 | 生垣管理 | pruning |
-| P2 | 果樹の剪定時期を目的別に整理 | 果樹管理 | pruning |
-| P2 | 公園樹の経過観察記録の作り方 | 自治体・造園 | survey |
+### 追加22本（T-P2-202）
+| URL | カテゴリ | 関連ツール |
+|---|---|---|
+| `/blog/2026/05/05/cherry-pruning-timing/` | Pruning | pruning, checklist |
+| `/blog/2026/05/05/maple-sap-flow-pruning/` | Pruning | pruning, checklist |
+| `/blog/2026/05/06/powdery-mildew-leaf-check/` | Pest & Disease | diagnosis, checklist |
+| `/blog/2026/05/06/chadokuga-pest-alert/` | Pest & Disease | diagnosis, checklist |
+| `/blog/2026/05/07/street-tree-inspection-photo-guide/` | Field Survey | survey, checklist |
+| `/blog/2026/05/07/typhoon-season-tree-danger-check/` | Risk Assessment | checklist, traq |
+| `/blog/2026/05/08/mushroom-at-tree-base-risk/` | Risk Assessment | checklist, traq |
+| `/blog/2026/05/08/hedge-trimming-timing/` | Pruning | pruning, checklist |
+| `/blog/2026/05/09/fruit-tree-pruning-purpose/` | Pruning | pruning, checklist |
+| `/blog/2026/05/09/park-tree-monitoring-record/` | Field Survey | survey, checklist |
+| `/blog/2026/05/10/ume-plum-pruning-guide/` | Pruning | pruning, checklist |
+| `/blog/2026/05/10/pine-pruning-midori-tsumi/` | Pruning | pruning, checklist |
+| `/blog/2026/05/11/wood-decay-early-signs/` | Risk Assessment | checklist, traq |
+| `/blog/2026/05/11/rainy-season-disease-prevention/` | Pest & Disease | diagnosis, checklist |
+| `/blog/2026/05/12/pest-early-detection-observation/` | Pest & Disease | diagnosis, checklist |
+| `/blog/2026/05/12/root-heaving-pavement-damage/` | Field Survey | traq, survey |
+| `/blog/2026/05/13/tree-transplant-aftercare/` | Tree Care | checklist, survey |
+| `/blog/2026/05/13/pruning-cut-position-wound-care/` | Pruning | pruning, checklist |
+| `/blog/2026/05/14/ctla-hazard-tree-assessment-basics/` | Risk Assessment | ctla, traq |
+| `/blog/2026/05/14/deadwood-hazard-tall-trees/` | Risk Assessment | traq, checklist |
+| `/blog/2026/05/15/how-to-request-arborist-service/` | Tree Care | survey, checklist |
+| `/blog/2026/05/15/winter-tree-care-cold-protection/` | Tree Care | pruning, checklist |
 
 ## 編集ルール
 
