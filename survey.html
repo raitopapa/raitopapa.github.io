@@ -413,10 +413,10 @@ body.dark-mode .card-header { background: #0F1F0F; }
 .photo-section { margin-bottom: 12px; }
 .photo-section label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: var(--moss); text-transform: uppercase; display: block; margin-bottom: 6px; }
 .photo-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
-.btn-camera { padding: 8px 14px; background: var(--sky); color: white; border: none; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+.btn-camera { padding: 8px 14px; background: var(--sky); color: white; border: none; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 5px; user-select: none; }
 .btn-camera:hover  { filter: brightness(1.1); }
 .btn-camera:active { opacity: 0.82; transform: scale(0.96); }
-.btn-camera-upload { padding: 8px 14px; background: var(--moss); color: white; border: none; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; transition: all 0.15s; }
+.btn-camera-upload { padding: 8px 14px; background: var(--moss); color: white; border: none; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 5px; user-select: none; }
 .btn-camera-upload:hover  { background: var(--forest); }
 .btn-camera-upload:active { opacity: 0.82; transform: scale(0.96); }
 .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px,1fr)); gap: 6px; margin-top: 6px; }
@@ -428,7 +428,14 @@ body.dark-mode .card-header { background: #0F1F0F; }
 .photo-lightbox.open { display: flex; }
 .photo-lightbox img { max-width: 95vw; max-height: 90vh; border-radius: 4px; }
 .photo-lightbox-close { position: absolute; top: 16px; right: 20px; background: transparent; border: none; color: white; font-size: 28px; cursor: pointer; }
-.hidden-input { display: none; }
+.hidden-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
 
 /* ===== 点検履歴 ===== */
 .history-section { background: rgba(255,255,255,0.5); border: 1px solid var(--mist); border-radius: 4px; margin-bottom: 16px; overflow: hidden; }
@@ -767,8 +774,8 @@ function renderTree(tree) {
       <div class="photo-section">
         <label>📸 写真記録（複数枚可）</label>
         <div class="photo-btns">
-          <button class="btn-camera" onclick="openCamera(${tree.id})">📷 カメラで撮影</button>
-          <button class="btn-camera-upload" onclick="document.getElementById('photo-input-${tree.id}').click()">🖼 ファイルを選択</button>
+          <label class="btn-camera" for="camera-input-${tree.id}">📷 カメラで撮影</label>
+          <label class="btn-camera-upload" for="photo-input-${tree.id}">🖼 ファイルを選択</label>
           <span class="photo-count" id="photo-count-${tree.id}">0枚</span>
         </div>
         <input type="file" accept="image/*" capture="environment" class="hidden-input" id="camera-input-${tree.id}" onchange="handlePhoto(${tree.id}, this, 'camera')">
