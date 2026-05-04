@@ -52,4 +52,8 @@
   /* === Transition Timing === */
   --transition-fast: 0.12s ease;
   --transition-base: 0.20s ease;
+
+  /* === Letter Spacing === */
+  --tracking-display: -0.02em;  /* h1 大見出し 28px+ */
+  --tracking-heading: -0.01em;  /* セクション見出し 20-28px */
 }
