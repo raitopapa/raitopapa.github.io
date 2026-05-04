@@ -1,4 +1,4 @@
-# Typography System — 樹木ナビ
+﻿# Typography System — 樹木管理ナビ
 
 > Design token reference for Shippori Mincho, DM Mono, and Noto Serif JP.
 > Follows ElevenLabs-style Do/Don't conventions. Single source of truth: `assets/css/tokens.css`.

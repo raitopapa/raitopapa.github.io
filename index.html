@@ -1,22 +1,22 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>樹木ナビ | 樹木管理・剪定カレンダー・健全度チェック</title>
+<title>樹木管理ナビ | 樹木管理・剪定カレンダー・健全度チェック</title>
 <meta name="description" content="庭木・街路樹・公園樹の管理を支援する無料ツール集。病害虫リスク診断・剪定適期カレンダー・樹木健全度チェックリストを無料でご利用いただけます。">
-<meta property="og:title" content="樹木ナビ | 樹木管理・剪定カレンダー・健全度チェック">
+<meta property="og:title" content="樹木管理ナビ | 樹木管理・剪定カレンダー・健全度チェック">
 <meta property="og:description" content="庭木・街路樹・公園樹の管理を支援する無料ツール集。病害虫リスク診断・剪定適期カレンダー・樹木健全度チェックリスト・ISA TRAQ準拠リスク評価・CTLA式価値算定を無料提供。40+樹種対応・PWA対応。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://raitopapa.github.io/">
 <meta property="og:image" content="https://raitopapa.github.io/icons/icon-512.png">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
-<meta property="og:site_name" content="樹木ナビ — Tree Navi Japan">
+<meta property="og:site_name" content="樹木管理ナビ — Tree Navi Japan">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="樹木ナビ | 樹木管理・剪定カレンダー・健全度チェック">
+<meta name="twitter:title" content="樹木管理ナビ | 樹木管理・剪定カレンダー・健全度チェック">
 <meta name="twitter:description" content="Tree management tools for gardens, street trees, parks, and field work. Pest diagnosis, pruning calendar, health checklist, ISA TRAQ risk assessment, CTLA appraisal. 40+ species, PWA offline-capable.">
 <meta name="twitter:image" content="https://raitopapa.github.io/icons/icon-512.png">
 <link rel="canonical" href="https://raitopapa.github.io/">
@@ -26,7 +26,7 @@
     "@graph": [
       {
         "@type": "WebSite",
-        "name": "樹木ナビ — Tree Navi Japan",
+        "name": "樹木管理ナビ — Tree Navi Japan",
         "url": "https://raitopapa.github.io/",
         "description": "庭木・街路樹・公園樹の管理を支援する無料ツール集。病害虫リスク診断・剪定適期カレンダー・樹木健全度チェックリスト・ISA TRAQ準拠リスク評価・CTLA式価値算定を無料提供。40+樹種対応・PWA対応。",
         "inLanguage": ["ja", "en"],
@@ -43,7 +43,7 @@
       },
       {
         "@type": "ItemList",
-        "name": "樹木ナビ一覧",
+        "name": "樹木管理ナビ一覧",
         "description": "樹木医監修の樹木管理ツール集。診断・カレンダー・チェックリスト・リスク評価・価値算定・現地調査の6ツール。",
         "itemListElement": [
           {"@type": "ListItem", "position": 1, "name": "病害虫リスク診断", "url": "https://raitopapa.github.io/diagnosis.html"},
@@ -118,9 +118,10 @@ body { background: var(--cream); color: var(--ink); font-family: 'Noto Serif JP'
 .hero { background: var(--bark); color: var(--cream); padding: 72px 24px 64px; text-align: center; position: relative; overflow: hidden; }
 .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(90,122,91,0.25) 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, rgba(122,174,110,0.12) 0%, transparent 45%); pointer-events: none; }
 .hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
-.hero-badge { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--leaf); border: 1px solid rgba(122,174,110,0.4); padding: 4px 14px; border-radius: 2px; display: inline-block; margin-bottom: 24px; }
-.hero h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(28px, 6vw, 52px); font-weight: 800; line-height: 1.25; margin-bottom: 16px; letter-spacing: var(--tracking-display); }
-.hero h1 span { color: var(--leaf); }
+.hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--leaf); border: 1px solid rgba(122,174,110,0.4); padding: 4px 14px; border-radius: 2px; display: inline-block; margin-bottom: 20px; }
+.hero-brand { font-family: 'Shippori Mincho', serif; font-size: clamp(38px, 7vw, 60px); font-weight: 800; color: var(--cream); letter-spacing: 0.04em; line-height: 1.1; margin-bottom: 18px; }
+.hero h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(16px, 2.5vw, 22px); font-weight: 600; line-height: 1.5; margin-bottom: 20px; letter-spacing: var(--tracking-heading); color: rgba(232,240,225,0.72); }
+.hero h1 span { color: var(--leaf); font-weight: 700; }
 .hero-sub { font-size: 14px; line-height: 1.9; opacity: 0.8; margin-bottom: 36px; max-width: 480px; margin-left: auto; margin-right: auto; }
 .hero-stats { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 40px; }
 .stat { text-align: center; }
@@ -214,7 +215,7 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="樹木ナビ">
+  <meta name="apple-mobile-web-app-title" content="樹木管理ナビ">
   <link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
@@ -295,9 +296,10 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
 
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-badge" data-i18n="hero-badge">🌿 Tree Navi</div>
-    <h1 data-i18n="hero-h1">樹木の管理を、<br><span>迷わず判断</span></h1>
-    <p class="hero-sub" data-i18n="hero-sub">庭木・街路樹・公園樹の病害虫確認、剪定時期、健全度チェック、現地調査まで。<br>樹木医監修の知見をもとに、樹木管理を支援します。</p>
+    <div class="hero-eyebrow" data-i18n="hero-badge">🌿 TREE NAVI</div>
+    <div class="hero-brand">樹木管理ナビ</div>
+    <h1 data-i18n="hero-h1">樹木の管理を、<span>迷わず判断</span></h1>
+    <p class="hero-sub" data-i18n="hero-sub">庭木・街路樹・公園樹の病害虫確認、剪定時期、健全度チェック、現地調査まで。樹木医監修の知見をもとに、樹木管理を支援します。</p>
     <div class="hero-stats">
       <div class="stat"><span class="stat-num">3</span><span class="stat-label" data-i18n="stat-tools">専門ツール</span></div>
       <div class="stat"><span class="stat-num">40+</span><span class="stat-label" data-i18n="stat-species">対応樹種</span></div>
@@ -478,7 +480,7 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <div class="f-title">🌿 樹木ナビ</div>
+      <div class="f-title">🌿 樹木管理ナビ</div>
       <p>庭木・街路樹・公園樹の管理を支援する樹木管理ツール集。<br>病害虫診断・剪定カレンダー・健全度チェックを<br>ブラウザから無料でご利用いただけます。</p>
     </div>
     <div class="footer-links">
@@ -497,7 +499,7 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
       </ul>
     </div>
   </div>
-  <div class="footer-bottom">© 2025 樹木ナビ — TREE NAVI | All tools are free to use.</div>
+  <div class="footer-bottom">© 2025 樹木管理ナビ — TREE NAVI | All tools are free to use.</div>
 </footer>
 
 <script src="assets/js/i18n.js"></script>

@@ -1,4 +1,4 @@
-# UX/UI ブラッシュアップ計画
+﻿# UX/UI ブラッシュアップ計画
 
 > 参照デザイン: [ElevenLabs — Refero Styles](https://styles.refero.design/style/031056ff-7af1-46db-8daa-115f731c5d26)
 > 更新: 2026-05-04
@@ -7,8 +7,8 @@
 
 ## 背景
 
-styles.refero.design の ElevenLabs スタイル参照を軸に、樹木ナビのデザインを照合した。
-ElevenLabs は「軽量セリフ + モノスペース + 温かみのある白地」という構成が樹木ナビと最も近く、
+styles.refero.design の ElevenLabs スタイル参照を軸に、樹木管理ナビのデザインを照合した。
+ElevenLabs は「軽量セリフ + モノスペース + 温かみのある白地」という構成が樹木管理ナビと最も近く、
 Do/Don't 規則が明文化されているため、段階的ブラッシュアップの参照として採用する。
 
 ---
@@ -24,9 +24,9 @@ Do/Don't 規則が明文化されているため、段階的ブラッシュア�
 
 ---
 
-## 参照: 樹木ナビ × ElevenLabs 比較
+## 参照: 樹木管理ナビ × ElevenLabs 比較
 
-| 設計軸 | ElevenLabs | 樹木ナビ（現状） | ギャップ |
+| 設計軸 | ElevenLabs | 樹木管理ナビ（現状） | ギャップ |
 |---|---|---|---|
 | セリフ見出し | Waldenburg 300, `-0.02em` tracking | Shippori Mincho, tracking 未設定 | 見出し tracking トークン不足 |
 | モノスペース | Geist Mono 400, 技術注釈専用 | DM Mono, ラベル・バッジ全般 | ほぼ同等 |
@@ -150,7 +150,7 @@ negative tracking を付ける。組版の引き締まりが生まれ「活字�
 
 ### T-UX-505 タイポグラフィ Do/Don't 文書化 — **Sonnet（ドキュメントのみ）**
 
-樹木ナビのフォントシステムを ElevenLabs 形式で明文化する。
+樹木管理ナビのフォントシステムを ElevenLabs 形式で明文化する。
 コード変更なし、`docs/TYPOGRAPHY.md` として新規作成。
 
 内容:
