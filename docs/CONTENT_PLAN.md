@@ -10,6 +10,7 @@
 | `/blog/2026/05/04/pruning-season-basic/` | Pruning | pruning, checklist |
 | `/blog/2026/05/04/leaf-yellowing-check/` | Pest & Disease | diagnosis, checklist |
 | `/blog/2026/05/04/tree-inspection-record/` | Field Survey | survey, traq, checklist |
+| `/glossary.html` | 診断・剪定・安全点検系キーワードの内部リンクハブ | diagnosis, pruning, checklist, survey, traq, ctla |
 
 ### 追加22本（T-P2-202）
 | URL | カテゴリ | 関連ツール |
