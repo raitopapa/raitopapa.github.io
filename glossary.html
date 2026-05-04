@@ -1,0 +1,251 @@
+---
+layout: blog
+title: 樹木用語集
+description: 庭木、街路樹、公園樹の管理や診断で使う樹木用語を五十音・ABC・カテゴリから探せる用語集。
+---
+<style>
+.glossary-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin: 28px 0 24px;
+  padding: 16px;
+  border: 1px solid var(--mist);
+  border-radius: 6px;
+  background: rgba(255, 253, 248, .96);
+  box-shadow: 0 8px 24px rgba(26, 18, 8, .08);
+}
+.glossary-search {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid var(--mist);
+  border-radius: 4px;
+  padding: 10px 12px;
+  color: var(--ink);
+  background: #fff;
+  font: inherit;
+}
+.glossary-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.filter-btn {
+  min-height: 34px;
+  border: 1px solid var(--mist);
+  border-radius: 4px;
+  background: var(--cream);
+  color: var(--moss);
+  padding: 7px 10px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.filter-btn.is-active {
+  border-color: var(--moss);
+  background: var(--moss);
+  color: #fff;
+}
+.glossary-meta {
+  margin-top: 10px;
+  color: #607060;
+  font-size: 12px;
+}
+.glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.glossary-card {
+  border: 1px solid var(--mist);
+  border-radius: 6px;
+  background: #fffdf8;
+  padding: 16px;
+}
+.glossary-card h2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-size: 20px;
+  line-height: 1.35;
+}
+.glossary-reading {
+  color: #6b786b;
+  font-size: 12px;
+  font-weight: 700;
+}
+.glossary-category {
+  display: inline-flex;
+  margin-bottom: 10px;
+  border-radius: 999px;
+  background: var(--pale);
+  color: var(--moss);
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 900;
+}
+.glossary-card p {
+  margin: 0 0 12px;
+  color: #3f4f3f;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.glossary-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.glossary-tools a {
+  border: 1px solid var(--mist);
+  border-radius: 4px;
+  color: var(--moss);
+  padding: 5px 8px;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 800;
+}
+.glossary-empty {
+  display: none;
+  margin: 24px 0;
+  padding: 18px;
+  border: 1px solid var(--mist);
+  border-radius: 6px;
+  background: var(--pale);
+}
+@media (max-width: 780px) {
+  .glossary-toolbar { position: static; }
+  .glossary-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<main class="wrap">
+  <div class="eyebrow">Tree Care Glossary</div>
+  <h1>樹木用語集</h1>
+  <p class="lead">庭木、街路樹、公園樹の診断・剪定・安全点検で使う用語を、短い定義と関連ツールへの導線つきで整理しています。</p>
+
+  <section class="glossary-toolbar" aria-label="用語集の検索と絞り込み">
+    <label for="glossary-search" class="eyebrow">Search</label>
+    <input id="glossary-search" class="glossary-search" type="search" placeholder="用語、読み、説明文で検索">
+
+    <div class="glossary-filter-row" aria-label="五十音フィルタ">
+      <button class="filter-btn is-active" type="button" data-filter-group="index" data-filter-value="all">すべて</button>
+      {% assign kana_filters = "あ,か,さ,た,な,は,ま,や,ら,わ,ABC" | split: "," %}
+      {% for kana in kana_filters %}
+      <button class="filter-btn" type="button" data-filter-group="index" data-filter-value="{{ kana }}">{{ kana }}</button>
+      {% endfor %}
+    </div>
+
+    <div class="glossary-filter-row" aria-label="カテゴリフィルタ">
+      <button class="filter-btn is-active" type="button" data-filter-group="category" data-filter-value="all">全カテゴリ</button>
+      {% assign categories = "構造,分類,計測,剪定,生理,診断,病害,害虫,土壌,街路樹,管理,安全,評価,林業" | split: "," %}
+      {% for category in categories %}
+      <button class="filter-btn" type="button" data-filter-group="category" data-filter-value="{{ category }}">{{ category }}</button>
+      {% endfor %}
+    </div>
+
+    <div class="glossary-meta"><span id="glossary-count">{{ site.data.glossary.size }}</span> / {{ site.data.glossary.size }} 語を表示</div>
+  </section>
+
+  <section class="glossary-grid" aria-label="樹木用語一覧">
+    {% assign entries = site.data.glossary | sort: "reading" %}
+    {% for item in entries %}
+    {% assign normalized_index = item.index %}
+    {% if item.index == "C" or item.index == "P" or item.index == "Q" or item.index == "T" %}
+      {% assign normalized_index = "ABC" %}
+    {% endif %}
+    <article class="glossary-card" id="term-{{ forloop.index }}" data-index="{{ normalized_index }}" data-category="{{ item.category }}" data-search="{{ item.term }} {{ item.reading }} {{ item.category }} {{ item.definition }}">
+      <h2>{{ item.term }} <span class="glossary-reading">{{ item.reading }}</span></h2>
+      <span class="glossary-category">{{ item.category }}</span>
+      <p>{{ item.definition }}</p>
+      {% assign tools = item.tools | split: " " %}
+      <div class="glossary-tools" aria-label="関連ツール">
+        {% for tool in tools %}
+          {% case tool %}
+          {% when "diagnosis" %}
+            <a href="/diagnosis.html">病害虫診断</a>
+          {% when "pruning" %}
+            <a href="/pruning.html">剪定カレンダー</a>
+          {% when "checklist" %}
+            <a href="/checklist.html">健全度チェック</a>
+          {% when "survey" %}
+            <a href="/survey.html">現地調査記録</a>
+          {% when "traq" %}
+            <a href="/traq.html">リスク評価</a>
+          {% when "ctla" %}
+            <a href="/ctla.html">価値算定</a>
+          {% endcase %}
+        {% endfor %}
+      </div>
+    </article>
+    {% endfor %}
+  </section>
+
+  <p id="glossary-empty" class="glossary-empty">該当する用語がありません。検索語を短くするか、フィルタを変更してください。</p>
+</main>
+
+<script>
+(() => {
+  const cards = Array.from(document.querySelectorAll('.glossary-card'));
+  const search = document.getElementById('glossary-search');
+  const count = document.getElementById('glossary-count');
+  const empty = document.getElementById('glossary-empty');
+  const state = { index: 'all', category: 'all', query: '' };
+
+  function normalize(value) {
+    return (value || '').toString().toLowerCase().trim();
+  }
+
+  function applyFilters() {
+    let shown = 0;
+    const query = normalize(state.query);
+    cards.forEach(card => {
+      const matchesIndex = state.index === 'all' || card.dataset.index === state.index;
+      const matchesCategory = state.category === 'all' || card.dataset.category === state.category;
+      const matchesQuery = !query || normalize(card.dataset.search).includes(query);
+      const visible = matchesIndex && matchesCategory && matchesQuery;
+      card.hidden = !visible;
+      if (visible) shown += 1;
+    });
+    count.textContent = shown;
+    empty.style.display = shown ? 'none' : 'block';
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const group = button.dataset.filterGroup;
+      state[group] = button.dataset.filterValue;
+      document.querySelectorAll(`[data-filter-group="${group}"]`).forEach(item => {
+        item.classList.toggle('is-active', item === button);
+      });
+      applyFilters();
+    });
+  });
+
+  search.addEventListener('input', event => {
+    state.query = event.target.value;
+    applyFilters();
+  });
+
+  const params = new URLSearchParams(window.location.search);
+  ['index', 'category'].forEach(group => {
+    const value = params.get(group);
+    if (!value) return;
+    const button = Array.from(document.querySelectorAll(`[data-filter-group="${group}"]`))
+      .find(item => item.dataset.filterValue === value);
+    if (!button) return;
+    state[group] = value;
+    document.querySelectorAll(`[data-filter-group="${group}"]`).forEach(item => {
+      item.classList.toggle('is-active', item === button);
+    });
+  });
+  if (params.get('q')) {
+    state.query = params.get('q');
+    search.value = state.query;
+  }
+  applyFilters();
+})();
+</script>

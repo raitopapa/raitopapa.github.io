@@ -9,6 +9,7 @@
 | `/blog/2026/05/04/pruning-season-basic/` | 剪定時期系キーワードの入口 | pruning, checklist |
 | `/blog/2026/05/04/leaf-yellowing-check/` | 症状別診断系キーワードの入口 | diagnosis, checklist |
 | `/blog/2026/05/04/tree-inspection-record/` | 自治体・造園業者向け現地記録の入口 | survey, traq, checklist |
+| `/glossary.html` | 診断・剪定・安全点検系キーワードの内部リンクハブ | diagnosis, pruning, checklist, survey, traq, ctla |
 
 ## 次に増やす記事候補
 
