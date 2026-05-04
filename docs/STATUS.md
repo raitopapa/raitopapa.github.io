@@ -90,7 +90,7 @@ raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 | T-UX-502 | 見出し letter-spacing トークン（--tracking-display/heading） | claude-sonnet | review | `task/ux-502-tracking-tokens` |
 | T-UX-503 | サーフェス階層トークン（--surface-page/raised/card） | claude-sonnet | todo | — |
 | T-UX-504 | セクション gap 標準化（--gap-section トークン） | openai-codex | review | `task/ux-504-section-gap` |
-| T-UX-505 | タイポグラフィ Do/Don't 文書化（docs/TYPOGRAPHY.md） | claude-sonnet | todo | — |
+| T-UX-505 | タイポグラフィ Do/Don't 文書化（docs/TYPOGRAPHY.md） | claude-sonnet | review | `task/ux-505-typography-docs` |
 
 ## Phase 4: 探索
 
