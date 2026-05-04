@@ -87,7 +87,7 @@ raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 | T-UX-S3 | 全ページボタン `:active` プレス状態統一（6ファイル） | claude-sonnet | done | `task/ux-stage3-button-states` |
 | T-UX-S4 | モバイル対応（iOS zoom・rating-btn 44px・CTA 縦積み） | claude-sonnet | done | `task/ux-stage4-mobile` |
 | T-UX-501 | カードエレベーション統一（border → shadow-card） | openai-codex | todo | — |
-| T-UX-502 | 見出し letter-spacing トークン（--tracking-display/heading） | claude-sonnet | todo | — |
+| T-UX-502 | 見出し letter-spacing トークン（--tracking-display/heading） | claude-sonnet | review | `task/ux-502-tracking-tokens` |
 | T-UX-503 | サーフェス階層トークン（--surface-page/raised/card） | claude-sonnet | todo | — |
 | T-UX-504 | セクション gap 標準化（--gap-section トークン） | openai-codex | todo | — |
 | T-UX-505 | タイポグラフィ Do/Don't 文書化（docs/TYPOGRAPHY.md） | claude-sonnet | todo | — |
