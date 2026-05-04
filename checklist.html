@@ -52,7 +52,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: var(--cream);
+  background: var(--surface-page);
   color: var(--ink);
   font-family: 'Noto Serif JP', serif;
   min-height: 100vh;
@@ -127,7 +127,7 @@ h1 {
   border-bottom: 1px solid var(--mist); cursor: pointer;
   user-select: none; transition: background 0.15s;
 }
-.section-header:hover { background: var(--pale); }
+.section-header:hover { background: var(--surface-raised); }
 
 .section-icon {
   width: 32px; height: 32px; border-radius: 50%;
@@ -167,7 +167,7 @@ h1 {
   width: 20px; height: 20px; border: 1.5px solid var(--mist);
   border-radius: 3px; flex-shrink: 0; margin-top: 1px;
   display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s; background: white;
+  transition: all 0.15s; background: var(--surface-card);
 }
 .check-item.checked .custom-cb {
   background: var(--moss); border-color: var(--moss);
@@ -225,7 +225,7 @@ h1 {
 
 .result-body { border: 1px solid var(--mist); border-top: none; border-radius: 0 0 4px 4px; }
 
-.result-card { padding: 20px 24px; border-bottom: 1px solid var(--mist); background: white; }
+.result-card { padding: 20px 24px; border-bottom: 1px solid var(--mist); background: var(--surface-card); }
 .result-card:last-child { border-bottom: none; }
 .result-card h3 { font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 600; color: var(--bark); margin-bottom: 12px; }
 
@@ -236,7 +236,7 @@ h1 {
 }
 .priority-item.p-high { background: #FFF0ED; border-left: 3px solid var(--rust); }
 .priority-item.p-mid  { background: #FFF8EE; border-left: 3px solid var(--amber); }
-.priority-item.p-low  { background: var(--pale); border-left: 3px solid var(--leaf); }
+.priority-item.p-low  { background: var(--surface-raised); border-left: 3px solid var(--leaf); }
 
 .p-tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; padding: 2px 6px; border-radius: 1px; flex-shrink: 0; margin-top: 2px; color: white; }
 .p-high .p-tag { background: var(--rust); }

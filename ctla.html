@@ -122,7 +122,7 @@
   --amber:  #B87820;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--cream); color: var(--ink); font-family: 'Noto Serif JP', serif; min-height: 100vh; }
+body { background: var(--surface-page); color: var(--ink); font-family: 'Noto Serif JP', serif; min-height: 100vh; }
 
 .wrap { max-width: 820px; margin: 0 auto; padding: 40px 20px 80px; }
 
@@ -134,7 +134,7 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(20px, 4vw, 30px); f
 
 .section { background: rgba(255,255,255,0.65); box-shadow: var(--shadow-card); border-radius: 4px; margin-bottom: 16px; overflow: hidden; }
 .sec-header { padding: 14px 18px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--mist); cursor: pointer; user-select: none; }
-.sec-header:hover { background: var(--pale); }
+.sec-header:hover { background: var(--surface-raised); }
 .sec-num { font-family: 'DM Mono', monospace; font-size: 11px; color: white; background: var(--amber); padding: 3px 8px; border-radius: 2px; flex-shrink: 0; }
 .sec-title { font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 600; color: var(--forest); flex: 1; }
 .sec-chevron { font-size: 11px; color: var(--moss-l); transition: transform 0.2s; }
@@ -178,19 +178,19 @@ input[type="range"] { flex: 1; accent-color: var(--amber); }
 .result-header-gold { background: linear-gradient(135deg, var(--amber) 0%, #8A5A10 100%); color: white; padding: 24px 28px; border-radius: 4px 4px 0 0; }
 .result-value-large { font-family: 'Shippori Mincho', serif; font-size: 42px; font-weight: 800; }
 .result-body { box-shadow: var(--shadow-card); border-top: none; border-radius: 0 0 4px 4px; }
-.result-card { padding: 20px 24px; border-bottom: 1px solid var(--mist); background: white; }
+.result-card { padding: 20px 24px; border-bottom: 1px solid var(--mist); background: var(--surface-card); }
 .result-card:last-child { border-bottom: none; }
 .result-card h3 { font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 700; color: var(--forest); margin-bottom: 12px; }
 
 .breakdown-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-.breakdown-table th { padding: 8px 12px; background: var(--pale); text-align: left; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--moss); border-bottom: 1px solid var(--mist); }
+.breakdown-table th { padding: 8px 12px; background: var(--surface-raised); text-align: left; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--moss); border-bottom: 1px solid var(--mist); }
 .breakdown-table td { padding: 10px 12px; border-bottom: 1px solid rgba(200,216,192,0.4); }
-.breakdown-table tr:last-child td { border-bottom: none; font-weight: 600; background: var(--pale); }
+.breakdown-table tr:last-child td { border-bottom: none; font-weight: 600; background: var(--surface-raised); }
 
 .cta-box { background: linear-gradient(135deg, var(--amber) 0%, var(--forest) 100%); color: white; padding: 24px 28px; border-radius: 4px; text-align: center; margin-top: 20px; }
 .cta-box h3 { font-family: 'Shippori Mincho', serif; font-size: 17px; margin-bottom: 6px; }
 .cta-box p { font-size: 12px; opacity: 0.85; margin-bottom: 14px; line-height: 1.7; }
-.btn-pdf { display: inline-block; padding: 11px 24px; background: white; color: var(--forest); font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 700; border-radius: 2px; border: none; cursor: pointer; margin: 4px; transition: opacity 0.15s; }
+.btn-pdf { display: inline-block; padding: 11px 24px; background: var(--surface-card); color: var(--forest); font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 700; border-radius: 2px; border: none; cursor: pointer; margin: 4px; transition: opacity 0.15s; }
 .btn-pdf:hover  { opacity: 0.9; }
 .btn-pdf:active { opacity: 0.75; transform: scale(0.97); }
 .btn-reset { display: inline-block; padding: 11px 20px; background: transparent; color: white; font-family: 'Noto Serif JP', serif; font-size: 13px; border: 1px solid rgba(255,255,255,0.35); border-radius: 2px; cursor: pointer; margin: 4px; transition: background 0.15s; }
@@ -440,7 +440,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--mist);
 /* 生態系サービス */
 .eco-section { background: rgba(255,255,255,0.65); border: 1px solid var(--mist); border-radius: 4px; margin-bottom: 16px; overflow: hidden; }
 .eco-header { padding: 14px 18px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--mist); cursor: pointer; user-select: none; }
-.eco-header:hover { background: var(--pale); }
+.eco-header:hover { background: var(--surface-raised); }
 .eco-num { font-family: 'DM Mono', monospace; font-size: 11px; color: white; background: #2A6A4A; padding: 3px 8px; border-radius: 2px; }
 .eco-title { font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 600; color: var(--forest); flex: 1; }
 .eco-body { display: none; padding: 20px 18px; }
@@ -449,7 +449,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--mist);
 .eco-section.open .eco-chevron { transform: rotate(180deg); }
 .eco-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
 @media(max-width:540px){ .eco-grid { grid-template-columns: 1fr; } }
-.eco-card { background: var(--pale); border: 1px solid var(--mist); border-radius: 3px; padding: 14px; }
+.eco-card { background: var(--surface-raised); border: 1px solid var(--mist); border-radius: 3px; padding: 14px; }
 .eco-card-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--moss); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
 .eco-card-val { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; color: var(--forest); }
 .eco-card-unit { font-size: 11px; color: #8fa085; }
@@ -459,7 +459,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--mist);
 .eco-total-val { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; }
 .eco-ref { font-size: 10px; color: #8fa085; margin-top: 10px; line-height: 1.7; }
 /* QRコード */
-.qr-section { padding: 20px 24px; border-top: 1px solid var(--mist); background: white; }
+.qr-section { padding: 20px 24px; border-top: 1px solid var(--mist); background: var(--surface-card); }
 .qr-section h3 { font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 700; color: var(--forest); margin-bottom: 12px; }
 .qr-grid { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: start; }
 @media(max-width:480px){ .qr-grid { grid-template-columns: 1fr; } }

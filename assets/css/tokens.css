@@ -1,4 +1,4 @@
-/* 樹木ナビ Design Tokens v1.1
+/* 樹木ナビ Design Tokens v1.2
    Base palette: garden (index, diagnosis, checklist, pruning)
    Forest pages (traq, ctla, survey) override 8 vars in their own <style> */
 
@@ -60,4 +60,9 @@
   /* === Letter Spacing === */
   --tracking-display: -0.02em;  /* h1 大見出し 28px+ */
   --tracking-heading: -0.01em;  /* セクション見出し 20-28px */
+
+  /* === Surface Hierarchy === */
+  --surface-page:   var(--cream);  /* Level 0: ページ背景 */
+  --surface-raised: var(--pale);   /* Level 1: セクション・ホバー */
+  --surface-card:   #ffffff;       /* Level 2: カード・フォーム */
 }

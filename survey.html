@@ -73,7 +73,7 @@
   --rust:   #8B2A1A;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--cream); color: var(--ink); font-family: 'Noto Serif JP', serif; min-height: 100vh; }
+body { background: var(--surface-page); color: var(--ink); font-family: 'Noto Serif JP', serif; min-height: 100vh; }
 
 nav { background: var(--forest); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
 nav a { color: #C8D8C0; text-decoration: none; font-family: 'Shippori Mincho', serif; font-size: 15px; font-weight: 700; }
@@ -171,7 +171,7 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(18px, 3.5vw, 26px);
 /* Check items quick */
 .quick-checks { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 14px; }
 @media(max-width:480px){ .quick-checks { grid-template-columns: 1fr; } }
-.qc-item { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border: 1px solid var(--mist); border-radius: 3px; cursor: pointer; font-size: 12px; transition: all 0.12s; user-select: none; background: white; }
+.qc-item { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border: 1px solid var(--mist); border-radius: 3px; cursor: pointer; font-size: 12px; transition: all 0.12s; user-select: none; background: var(--surface-card); }
 .qc-item:hover { border-color: var(--moss-l); }
 .qc-item.checked { background: rgba(46,94,46,0.08); border-color: var(--moss); }
 .qc-item input[type="checkbox"] { accent-color: var(--moss); width: 14px; height: 14px; flex-shrink: 0; }
@@ -182,7 +182,7 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(18px, 3.5vw, 26px);
 
 /* Risk selector */
 .risk-selector { display: flex; gap: 8px; flex-wrap: wrap; }
-.risk-btn { padding: 7px 14px; border: 1.5px solid var(--mist); border-radius: 3px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; transition: all 0.15s; background: white; color: #6b8a6b; }
+.risk-btn { padding: 7px 14px; border: 1.5px solid var(--mist); border-radius: 3px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; transition: all 0.15s; background: var(--surface-card); color: #6b8a6b; }
 .risk-btn.sel-low      { background: var(--moss); border-color: var(--moss); color: white; }
 .risk-btn.sel-moderate { background: var(--amber); border-color: var(--amber); color: white; }
 .risk-btn.sel-high     { background: var(--rust); border-color: var(--rust); color: white; }
@@ -211,7 +211,7 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(18px, 3.5vw, 26px);
 .report-section { margin-bottom: 24px; }
 .report-section h3 { font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 700; color: var(--forest); margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--mist); }
 .report-table { width: 100%; border-collapse: collapse; font-size: 11px; }
-.report-table th { padding: 7px 10px; background: var(--pale); text-align: left; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: var(--moss); border-bottom: 2px solid var(--mist); }
+.report-table th { padding: 7px 10px; background: var(--surface-raised); text-align: left; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: var(--moss); border-bottom: 2px solid var(--mist); }
 .report-table td { padding: 8px 10px; border-bottom: 1px solid rgba(200,216,192,0.4); vertical-align: top; line-height: 1.6; }
 .report-table tr.risk-row-high td { background: rgba(139,42,26,0.04); }
 .report-table tr.risk-row-moderate td { background: rgba(184,120,32,0.04); }
@@ -223,16 +223,16 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(18px, 3.5vw, 26px);
 
 .report-summary-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
 @media(max-width:480px){ .report-summary-grid { grid-template-columns: 1fr 1fr; } }
-.rsg-item { background: var(--pale); border: 1px solid var(--mist); border-radius: 3px; padding: 12px; text-align: center; }
+.rsg-item { background: var(--surface-raised); border: 1px solid var(--mist); border-radius: 3px; padding: 12px; text-align: center; }
 .rsg-item .rsg-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--moss); letter-spacing: 0.1em; }
 .rsg-item .rsg-val { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--forest); margin-top: 4px; }
 
-.report-btn-row { display: flex; gap: 10px; padding: 16px 24px; background: var(--pale); border-top: 1px solid var(--mist); }
+.report-btn-row { display: flex; gap: 10px; padding: 16px 24px; background: var(--surface-raised); border-top: 1px solid var(--mist); }
 .btn-print-report { padding: 12px 24px; background: var(--amber); color: white; border: none; border-radius: 3px; font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
 .btn-print-report:hover  { filter: brightness(1.08); }
 .btn-print-report:active { opacity: 0.82; transform: translateY(1px); }
 .btn-close-report { padding: 12px 20px; background: transparent; color: var(--forest); border: 1px solid var(--mist); border-radius: 3px; font-family: 'DM Mono', monospace; font-size: 12px; cursor: pointer; transition: all 0.15s; }
-.btn-close-report:hover  { background: var(--pale); }
+.btn-close-report:hover  { background: var(--surface-raised); }
 .btn-close-report:active { background: var(--mist); transform: scale(0.97); }
 
 .ad-slot { background: var(--mist); border: 1px dashed #a0b8a0; border-radius: 3px; padding: 16px; text-align: center; font-family: 'DM Mono', monospace; font-size: 10px; color: #8fa085; margin: 20px 0; }
@@ -468,9 +468,9 @@ body.dark-mode .card-header { background: #0F1F0F; }
 
 /* ===== 樹種サジェスト ===== */
 .species-suggest { position: relative; }
-.suggest-list { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--mist); border-radius: 0 0 3px 3px; z-index: 50; max-height: 160px; overflow-y: auto; display: none; }
+.suggest-list { position: absolute; top: 100%; left: 0; right: 0; background: var(--surface-card); border: 1px solid var(--mist); border-radius: 0 0 3px 3px; z-index: 50; max-height: 160px; overflow-y: auto; display: none; }
 .suggest-item { padding: 8px 12px; font-size: 13px; cursor: pointer; border-bottom: 1px solid var(--pale); }
-.suggest-item:hover { background: var(--pale); }
+.suggest-item:hover { background: var(--surface-raised); }
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8180543096745567" crossorigin="anonymous"></script>
 </head>
