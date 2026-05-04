@@ -1,5 +1,5 @@
-// 樹木ナビ Service Worker v3.8
-const CACHE_NAME = 'arborist-tools-v3.8';
+// 樹木ナビ Service Worker v3.9
+const CACHE_NAME = 'arborist-tools-v3.9';
 
 // オフラインでキャッシュするファイル
 const CACHE_FILES = [
@@ -25,8 +25,10 @@ const CACHE_FILES = [
   '/assets/css/layout.css',
   '/assets/js/analytics.js',
   '/assets/js/affiliate.js',
+  '/assets/js/internal-links.js',
   '/assets/js/i18n.js',
   '/assets/js/layout.js',
+  '/assets/data/internal-links.json',
   '/assets/i18n/ja.json',
   '/assets/i18n/en.json',
   '/assets/partials/langbar.html',
@@ -38,7 +40,7 @@ const CACHE_FILES = [
 
 // インストール：キャッシュを構築
 self.addEventListener('install', event => {
-  console.log('[SW] Installing v3.8...');
+  console.log('[SW] Installing v3.9...');
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       // Google Fontsなど外部リソースは失敗してもOK
@@ -55,7 +57,7 @@ self.addEventListener('install', event => {
 
 // アクティベート：古いキャッシュを削除
 self.addEventListener('activate', event => {
-  console.log('[SW] Activating v3.8...');
+  console.log('[SW] Activating v3.9...');
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
