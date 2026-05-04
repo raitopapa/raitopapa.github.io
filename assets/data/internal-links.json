@@ -1,0 +1,112 @@
+{
+  "tools": {
+    "diagnosis": { "title": "病害虫リスク診断", "url": "/diagnosis.html" },
+    "pruning": { "title": "剪定適期カレンダー", "url": "/pruning.html" },
+    "checklist": { "title": "健全度チェックリスト", "url": "/checklist.html" },
+    "survey": { "title": "現地調査記録", "url": "/survey.html" },
+    "traq": { "title": "リスク評価", "url": "/traq.html" },
+    "ctla": { "title": "樹木価値算定", "url": "/ctla.html" },
+    "embed": { "title": "埋め込みウィジェット", "url": "/embed.html" },
+    "contact": { "title": "お問い合わせ", "url": "/contact.html" }
+  },
+  "articles": {
+    "pruning-basic": { "title": "剪定時期の基本", "url": "/blog/2026/05/04/pruning-season-basic/" },
+    "leaf-yellowing": { "title": "葉が黄色い・茶色いときの確認", "url": "/blog/2026/05/04/leaf-yellowing-check/" },
+    "inspection-record": { "title": "公園樹・街路樹の点検記録", "url": "/blog/2026/05/04/tree-inspection-record/" },
+    "cherry-pruning": { "title": "サクラの剪定時期", "url": "/blog/2026/05/05/cherry-pruning-timing/" },
+    "maple-pruning": { "title": "カエデ・モミジの剪定", "url": "/blog/2026/05/05/maple-sap-flow-pruning/" },
+    "chadokuga": { "title": "チャドクガの初期対応", "url": "/blog/2026/05/06/chadokuga-pest-alert/" },
+    "powdery-mildew": { "title": "葉の白い粉の確認", "url": "/blog/2026/05/06/powdery-mildew-leaf-check/" },
+    "street-photo": { "title": "街路樹点検の写真記録", "url": "/blog/2026/05/07/street-tree-inspection-photo-guide/" },
+    "typhoon-risk": { "title": "台風前の危険サイン", "url": "/blog/2026/05/07/typhoon-season-tree-danger-check/" },
+    "mushroom-risk": { "title": "根元のキノコと腐朽リスク", "url": "/blog/2026/05/08/mushroom-at-tree-base-risk/" },
+    "decay-signs": { "title": "腐朽を初期に見分けるサイン", "url": "/blog/2026/05/11/wood-decay-early-signs/" },
+    "pest-observation": { "title": "害虫被害の早期発見", "url": "/blog/2026/05/12/pest-early-detection-observation/" },
+    "wound-care": { "title": "剪定位置と切り口処理", "url": "/blog/2026/05/13/pruning-cut-position-wound-care/" },
+    "ctla-risk": { "title": "CTLAで危険木を評価する基本", "url": "/blog/2026/05/14/ctla-hazard-tree-assessment-basics/" },
+    "arborist-request": { "title": "樹木医・造園業者への依頼準備", "url": "/blog/2026/05/15/how-to-request-arborist-service/" }
+  },
+  "glossary": {
+    "pruning": { "title": "剪定用語", "url": "/glossary.html?category=剪定" },
+    "disease": { "title": "病害", "url": "/glossary.html?category=病害" },
+    "pest": { "title": "害虫", "url": "/glossary.html?category=害虫" },
+    "diagnosis": { "title": "診断症状", "url": "/glossary.html?category=診断" },
+    "safety": { "title": "安全・リスク", "url": "/glossary.html?category=安全" },
+    "survey": { "title": "管理・点検", "url": "/glossary.html?category=管理" },
+    "soil": { "title": "土壌", "url": "/glossary.html?category=土壌" },
+    "structure": { "title": "樹木構造", "url": "/glossary.html?category=構造" },
+    "valuation": { "title": "評価", "url": "/glossary.html?category=評価" }
+  },
+  "pages": {
+    "/": {
+      "articles": ["pruning-basic", "leaf-yellowing", "inspection-record"],
+      "glossary": ["pruning", "diagnosis", "safety"],
+      "tools": ["diagnosis", "pruning", "checklist"]
+    },
+    "/index.html": {
+      "articles": ["pruning-basic", "leaf-yellowing", "inspection-record"],
+      "glossary": ["pruning", "diagnosis", "safety"],
+      "tools": ["diagnosis", "pruning", "checklist"]
+    },
+    "/diagnosis.html": {
+      "articles": ["leaf-yellowing", "chadokuga", "powdery-mildew", "pest-observation"],
+      "glossary": ["disease", "pest", "diagnosis"],
+      "tools": ["checklist", "survey", "contact"]
+    },
+    "/pruning.html": {
+      "articles": ["pruning-basic", "cherry-pruning", "maple-pruning", "wound-care"],
+      "glossary": ["pruning", "structure", "diagnosis"],
+      "tools": ["checklist", "survey", "contact"]
+    },
+    "/checklist.html": {
+      "articles": ["inspection-record", "typhoon-risk", "decay-signs", "mushroom-risk"],
+      "glossary": ["diagnosis", "safety", "structure"],
+      "tools": ["diagnosis", "traq", "survey"]
+    },
+    "/traq.html": {
+      "articles": ["typhoon-risk", "mushroom-risk", "decay-signs", "ctla-risk"],
+      "glossary": ["safety", "diagnosis", "valuation"],
+      "tools": ["checklist", "survey", "ctla"]
+    },
+    "/ctla.html": {
+      "articles": ["ctla-risk", "inspection-record", "arborist-request"],
+      "glossary": ["valuation", "safety", "survey"],
+      "tools": ["traq", "survey", "contact"]
+    },
+    "/survey.html": {
+      "articles": ["inspection-record", "street-photo", "arborist-request"],
+      "glossary": ["survey", "safety", "soil"],
+      "tools": ["checklist", "traq", "ctla"]
+    },
+    "/embed.html": {
+      "articles": ["pruning-basic", "cherry-pruning", "wound-care"],
+      "glossary": ["pruning", "structure"],
+      "tools": ["pruning", "contact"]
+    },
+    "/contact.html": {
+      "articles": ["arborist-request", "inspection-record", "street-photo"],
+      "glossary": ["survey", "safety", "pruning"],
+      "tools": ["diagnosis", "checklist", "survey"]
+    },
+    "/privacy.html": {
+      "articles": ["inspection-record", "arborist-request", "pruning-basic"],
+      "glossary": ["survey", "diagnosis", "safety"],
+      "tools": ["diagnosis", "pruning", "contact"]
+    },
+    "/blog/": {
+      "articles": ["pruning-basic", "leaf-yellowing", "inspection-record"],
+      "glossary": ["pruning", "disease", "safety"],
+      "tools": ["diagnosis", "pruning", "checklist"]
+    },
+    "/glossary.html": {
+      "articles": ["pruning-basic", "leaf-yellowing", "inspection-record", "decay-signs"],
+      "glossary": ["pruning", "disease", "safety", "survey"],
+      "tools": ["diagnosis", "pruning", "checklist", "survey"]
+    },
+    "blog-post": {
+      "articles": ["pruning-basic", "leaf-yellowing", "inspection-record"],
+      "glossary": ["pruning", "disease", "safety"],
+      "tools": ["diagnosis", "pruning", "checklist", "survey"]
+    }
+  }
+}
