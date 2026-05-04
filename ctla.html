@@ -169,7 +169,8 @@ input[type="range"] { flex: 1; accent-color: var(--amber); }
 .lc-item .li-val { font-family: 'DM Mono', monospace; font-size: 14px; margin-top: 3px; }
 
 .btn-calc { width: 100%; padding: 17px; background: var(--amber); color: white; border: none; border-radius: 3px; font-family: 'Shippori Mincho', serif; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
-.btn-calc:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(184,120,32,0.3); }
+.btn-calc:hover  { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(184,120,32,0.3); }
+.btn-calc:active { opacity: 0.82; transform: translateY(1px); box-shadow: none; }
 
 #result { display: none; animation: up 0.45s ease; margin-top: 24px; }
 @keyframes up { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
@@ -189,8 +190,12 @@ input[type="range"] { flex: 1; accent-color: var(--amber); }
 .cta-box { background: linear-gradient(135deg, var(--amber) 0%, var(--forest) 100%); color: white; padding: 24px 28px; border-radius: 4px; text-align: center; margin-top: 20px; }
 .cta-box h3 { font-family: 'Shippori Mincho', serif; font-size: 17px; margin-bottom: 6px; }
 .cta-box p { font-size: 12px; opacity: 0.85; margin-bottom: 14px; line-height: 1.7; }
-.btn-pdf { display: inline-block; padding: 11px 24px; background: white; color: var(--forest); font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 700; border-radius: 2px; border: none; cursor: pointer; margin: 4px; }
-.btn-reset { display: inline-block; padding: 11px 20px; background: transparent; color: white; font-family: 'Noto Serif JP', serif; font-size: 13px; border: 1px solid rgba(255,255,255,0.35); border-radius: 2px; cursor: pointer; margin: 4px; }
+.btn-pdf { display: inline-block; padding: 11px 24px; background: white; color: var(--forest); font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 700; border-radius: 2px; border: none; cursor: pointer; margin: 4px; transition: opacity 0.15s; }
+.btn-pdf:hover  { opacity: 0.9; }
+.btn-pdf:active { opacity: 0.75; transform: scale(0.97); }
+.btn-reset { display: inline-block; padding: 11px 20px; background: transparent; color: white; font-family: 'Noto Serif JP', serif; font-size: 13px; border: 1px solid rgba(255,255,255,0.35); border-radius: 2px; cursor: pointer; margin: 4px; transition: background 0.15s; }
+.btn-reset:hover  { background: rgba(255,255,255,0.1); }
+.btn-reset:active { background: rgba(255,255,255,0.05); transform: scale(0.97); }
 
 .ref-section { margin-top: 36px; padding: 20px; background: rgba(255,255,255,0.5); border: 1px solid var(--mist); border-radius: 4px; }
 .ref-section h2 { font-family: 'Shippori Mincho', serif; font-size: 13px; font-weight: 700; color: var(--forest); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--mist); }
