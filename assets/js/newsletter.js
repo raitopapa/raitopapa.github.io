@@ -1,4 +1,4 @@
-(() => {
+﻿(() => {
   const FORM_URL = 'https://preview.mailerlite.io/forms/2314734/186533995281908738/share';
   const EXCLUDED = new Set(['/contact.html', '/privacy.html']);
 
@@ -104,7 +104,7 @@
     panel.innerHTML = `
       <div>
         <p class="newsletter-kicker">Seasonal Reminder</p>
-        <h2>樹木ナビ 季節リマインダー</h2>
+        <h2>樹木管理ナビ 季節リマインダー</h2>
         <p>剪定時期、病害虫の注意、台風前点検など、季節ごとの樹木管理ポイントをメールで受け取れます。</p>
       </div>
       <a class="newsletter-button" href="${FORM_URL}" target="_blank" rel="noopener">無料で登録する</a>

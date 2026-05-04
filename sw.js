@@ -1,4 +1,4 @@
-// 樹木ナビ Service Worker v3.11
+// 樹木管理ナビ Service Worker v3.11
 const CACHE_NAME = 'arborist-tools-v3.11';
 
 // オフラインでキャッシュするファイル

@@ -1,19 +1,19 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{% if page.title %}{{ page.title }} | {% endif %}樹木ナビ</title>
+<title>{% if page.title %}{{ page.title }} | {% endif %}樹木管理ナビ</title>
 <meta name="description" content="{{ page.description | default: site.description | strip_html | strip_newlines }}">
 <link rel="canonical" href="{{ page.url | absolute_url }}">
 <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
-<meta property="og:title" content="{% if page.title %}{{ page.title }} | {% endif %}樹木ナビ">
+<meta property="og:title" content="{% if page.title %}{{ page.title }} | {% endif %}樹木管理ナビ">
 <meta property="og:description" content="{{ page.description | default: site.description | strip_html | strip_newlines }}">
 <meta property="og:url" content="{{ page.url | absolute_url }}">
 <meta property="og:image" content="{{ page.image | default: '/icons/icon-512.png' | absolute_url }}">
-<meta property="og:site_name" content="樹木ナビ — Tree Navi Japan">
+<meta property="og:site_name" content="樹木管理ナビ — Tree Navi Japan">
 <meta name="twitter:card" content="summary">
-<link rel="alternate" type="application/rss+xml" title="樹木ナビ 記事フィード" href="{{ '/feed.xml' | absolute_url }}">
+<link rel="alternate" type="application/rss+xml" title="樹木管理ナビ 記事フィード" href="{{ '/feed.xml' | absolute_url }}">
 <style>
 :root {
   --ink: #1A1208;
@@ -198,7 +198,7 @@ h1 {
 <body>
 {% include blog-header.html %}
 {{ content }}
-<footer class="site-footer">© 2025 樹木ナビ — Tree Navi Japan</footer>
+<footer class="site-footer">© 2025 樹木管理ナビ — Tree Navi Japan</footer>
 <script src="/assets/js/analytics.js" defer></script>
 <script src="/assets/js/newsletter.js" defer></script>
 <script src="/assets/js/internal-links.js" defer></script>
