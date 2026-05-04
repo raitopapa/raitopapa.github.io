@@ -2,7 +2,7 @@
 
 > [SPEC.md §6](SPEC.md) のタスクを実装する際、着手前にこのファイルを編集してclaim、完了時にdoneへ。詳細は [HANDOFF.md](HANDOFF.md) §1。
 
-## 🚦 現在の進行ステージ: **Phase 0（緊急修正）**
+## 🚦 現在の進行ステージ: **Phase 2（コンテンツSEO + メール）完了後のUX/実機検証**
 
 raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 - D1-D10 最終確定（[SPEC §8](SPEC.md)）。D4 は「樹木管理ナビ」で確定、D2/D3/D6 は Gate 後に確定
@@ -58,8 +58,8 @@ raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 | T-P2-202 | 季節記事25本執筆 | done | 2026-05-04 | task/T-P2-202-seasonal-articles |
 | T-P2-203 | 樹木用語集ページ | done | 2026-05-04 | PR #12 |
 | T-P2-204 | 埋め込みウィジェット配布 | done | 2026-05-03 | PR #9 |
-| T-P2-205 | メール購読 + 季節リマインダー | review | 2026-05-04 | task/T-P2-205-mailerlite-reminders |
-| T-P2-206 | 内部リンク網の整備 | review | 2026-05-04 | task/T-P2-206-internal-links |
+| T-P2-205 | メール購読 + 季節リマインダー | done | 2026-05-04 | PR #21 |
+| T-P2-206 | 内部リンク網の整備 | done | 2026-05-04 | PR #15 |
 
 ## Phase 3: Freemium + B2B SaaS（全件 Gate 通過まで凍結）
 
@@ -87,10 +87,10 @@ raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 | T-UX-S3 | 全ページボタン `:active` プレス状態統一（6ファイル） | claude-sonnet | done | `task/ux-stage3-button-states` |
 | T-UX-S4 | モバイル対応（iOS zoom・rating-btn 44px・CTA 縦積み） | claude-sonnet | done | `task/ux-stage4-mobile` |
 | T-UX-501 | カードエレベーション統一（border → shadow-card） | openai-codex | done | PR #22 |
-| T-UX-502 | 見出し letter-spacing トークン（--tracking-display/heading） | claude-sonnet | review | `task/ux-502-tracking-tokens` |
+| T-UX-502 | 見出し letter-spacing トークン（--tracking-display/heading） | claude-sonnet | done | PR #20 |
 | T-UX-503 | サーフェス階層トークン（--surface-page/raised/card） | claude-sonnet | todo | — |
-| T-UX-504 | セクション gap 標準化（--gap-section トークン） | openai-codex | review | `task/ux-504-section-gap` |
-| T-UX-505 | タイポグラフィ Do/Don't 文書化（docs/TYPOGRAPHY.md） | claude-sonnet | review | `task/ux-505-typography-docs` |
+| T-UX-504 | セクション gap 標準化（--gap-section トークン） | openai-codex | done | PR #23 |
+| T-UX-505 | タイポグラフィ Do/Don't 文書化（docs/TYPOGRAPHY.md） | claude-sonnet | done | PR #25 |
 
 ## Phase 4: 探索
 

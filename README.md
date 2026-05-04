@@ -1,198 +1,175 @@
-﻿# 🌿 樹木管理ナビ — Tree Navi Japan
+# 樹木管理ナビ — Tree Management Navi
 
-> **庭木・街路樹・公園樹の管理を支援する、樹木医監修のWebツール集。**
-> 病害虫の早期発見から剪定適期・現地調査・ISA準拠リスク評価・CTLA式価値算定まで。
-> **Supervised by a Certified Japanese Arborist Supervisor. Free to use.**
+庭木・街路樹・公園樹の管理を支援する、樹木医監修の無料Webツール集です。病害虫の初期確認、剪定適期、健全度チェック、現地調査記録、樹木リスク評価、樹木価値算定をブラウザだけで利用できます。
+
+[サイトを見る](https://raitopapa.github.io/)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Tools](https://img.shields.io/badge/Tools-6-brightgreen)]()
 [![Species](https://img.shields.io/badge/Tree%20Species-40%2B-forestgreen)]()
 [![PWA](https://img.shields.io/badge/PWA-Offline%20Ready-blueviolet)]()
 [![Languages](https://img.shields.io/badge/Lang-JA%20%2F%20EN-blue)]()
-[![ISA TRAQ](https://img.shields.io/badge/ISA-TRAQ%20Level%20II-darkgreen)]()
-[![CTLA](https://img.shields.io/badge/CTLA-10th%20ed.-gold)]()
-[![i-Tree](https://img.shields.io/badge/i--Tree-Ecosystem%20Services-teal)]()
 
-🌐 **[サイトを見る / View Site →](https://raitopapa.github.io/)**
+## 現在の状態
 
----
+- Phase 0: 緊急修正完了
+- Phase 1: 広告・計測・SEO・共通化まわり完了
+- Phase 2: ブログ基盤、25記事、用語集、内部リンク、メール購読導線まで完了
+- Phase 3: 需要検証ゲート通過まで凍結
+- 写真素材: 受け入れフォルダとガイドを準備済み。実画像のデザイン反映は素材到着後
 
-## 📋 ツール一覧 / Tool List
+詳細な仕様と進捗は [docs/SPEC.md](docs/SPEC.md) と [docs/STATUS.md](docs/STATUS.md) を参照してください。
 
-### 🆓 無料ツール / Free Tools
+## ツール一覧
 
-| ツール | ファイル | 概要 |
-|---|---|---|
-| 🦠 病害虫リスク診断 | `diagnosis.html` | 40+樹種・症状からリスクと対処法を即表示 |
-| 📅 剪定適期カレンダー | `pruning.html` | 40+樹種×6目的・地域補正・年間管理カレンダー |
-| 📋 樹木健全度チェックリスト | `checklist.html` | 32項目・A〜Dランク自動算出・PDF出力 |
+| 区分 | ツール | ファイル | 概要 |
+|---|---|---|---|
+| 無料 | 病害虫リスク診断 | [diagnosis.html](diagnosis.html) | 樹種・季節・症状から疑われる病害虫と初期対応を表示 |
+| 無料 | 剪定適期カレンダー | [pruning.html](pruning.html) | 樹種と目的に応じた剪定時期を月別に確認 |
+| 無料 | 樹木健全度チェックリスト | [checklist.html](checklist.html) | 32項目の現地チェックとA-Dランク評価 |
+| Pro向け | 樹木リスク評価 | [traq.html](traq.html) | ISA TRAQ / ANSI A300 Part 9 を参考にした補助評価 |
+| Pro向け | 樹木価値算定 | [ctla.html](ctla.html) | CTLA 10th ed. を参考にした価値算定補助 |
+| Pro向け | 現地調査記録 | [survey.html](survey.html) | GPS、地図、写真、CSV/GeoJSON、QR、履歴管理 |
 
-### 🔬 プロ向けツール / Professional Tools
+## 主な機能
 
-| Tool | File | Description |
-|---|---|---|
-| ⚠️ 樹木リスク評価 | `traq.html` | ISA TRAQ Level II準拠・ANSI A300 Part 9 |
-| 💰 樹木価値算定 | `ctla.html` | CTLA 10th ed. + i-Tree生態系サービス計算 + QRコード |
-| 🗺 現地調査記録 | `survey.html` | GPS・地図・写真記録・CSV/GeoJSON・QR・音声・履歴管理 |
+- 40+樹種対応
+- 日本語/英語の切り替え
+- PWA対応とオフライン利用
+- Google Analytics 4 / Search Console
+- Google AdSense 導線
+- Amazonアフィリエイト導線
+- MailerLite 季節リマインダー購読導線
+- Web3Forms 問い合わせフォーム
+- ブログ記事25本と樹木用語集
+- 内部リンク自動表示
+- OGP / Twitter Card / JSON-LD / sitemap.xml
+- IndexedDBによるローカル保存
 
----
+## 現地調査機能
 
-## 🚀 主な機能 / Key Features
+[survey.html](survey.html) は、現場で複数樹木を連続記録するためのツールです。
 
-### ツール・診断機能
-- **40+樹種対応** — 針葉樹・落葉広葉樹・常緑広葉樹・竹類・果樹
-- **地域補正** — 気象庁生物季節観測（1991〜2020年平年値）に基づく北海道〜沖縄対応
-- **ISA TRAQ Level II準拠** — 破損可能性×衝突可能性×結果重大性のリスクマトリクス評価
-- **CTLA式樹木価値算定** — 断面積×単価×種評価率×健全度×立地評価率
-- **i-Tree生態系サービス計算** — CO₂固定量・雨水抑制・大気浄化・冷却効果・生物多様性価値
+- GPS位置記録
+- OpenStreetMap / 国土地理院地形図 / Esri衛星画像 / 白地図
+- GPS不良時の地図タップによる手動ピン配置
+- 写真撮影・ファイル選択・IndexedDB保存
+- 点検履歴管理
+- CSV台帳出力
+- GeoJSON出力
+- QRコード生成
+- 音声入力
+- ダークモード
 
-### フィールドワーク（survey.html）
-- **📸 写真記録** — カメラ撮影・ファイル選択→IndexedDBに永続保存・ライトボックス表示
-- **🔔 メンテナンスアラート** — 次回点検期限を自動計算・バナー通知・PWAプッシュ通知対応
-- **📊 点検履歴管理** — 複数回の調査を時系列で蓄積・リスク推移を一覧表示
-- **GPS位置記録** — Geolocation API（精度表示付き）
-- **地図レイヤー切替** — 標準・国土地理院地形図（等高線）・Esri衛星画像・白地図（全て無料）
-- **ピン手動配置** — GPS不良時に地図タップで位置を手動指定
-- **CSV台帳出力** — Excel対応・BOM付き（GPS座標列込み）
-- **GeoJSON出力** — QGIS・ArcGIS・Google Earth対応（WGS84 EPSG:4326）
-- **QRコード生成** — 樹木ごとにQRを生成・PNG保存・現地貼付用
-- **IndexedDB永続保存** — ページを閉じてもデータを保持・次回調査へ引き継ぎ
-- **音声入力** — Web Speech API（所見欄・Chrome対応）
-- **ダークモード** — 屋外の強い日差し対応・高コントラスト・設定を記憶
-- **樹種サジェスト** — 入力時に候補を自動表示（50+種）
-- **オフライン対応** — 電波のない現場でも完全動作
+写真・入力内容はサーバーへ送信せず、ブラウザ内に保存します。
 
-### UX・技術
-- **PWA対応** — オフライン動作・ホーム画面インストール
-- **JA/EN 言語切替** — 全7ページ完全対応・ブラウザ言語自動検出
-- **PDF出力** — 全ツールの結果を印刷・PDF保存
-- **SEO対応** — OGP / Twitter Card / JSON-LD構造化データ / sitemap.xml
-- **出典明示** — 農林水産省・国交省・ISA・CTLA等の一次資料を全ツールに明示
+## 技術構成
 
----
-
-## 🏗 技術スタック / Tech Stack
-
-| 項目 | 詳細 |
+| 項目 | 内容 |
 |---|---|
-| フロントエンド | HTML / CSS / Vanilla JavaScript のみ |
-| 地図 | Leaflet.js + OpenStreetMap / 国土地理院 / Esri（全て無料） |
-| QRコード | QRCode.js（クライアントサイド生成） |
-| ストレージ | IndexedDB（surveys・photos・historyの3ストア） |
-| 写真保存 | Base64 → IndexedDB（サーバー不要・完全ローカル） |
+| フロントエンド | HTML / CSS / Vanilla JavaScript |
+| ホスティング | GitHub Pages |
+| 地図 | Leaflet.js + OpenStreetMap / 国土地理院 / Esri |
+| 保存 | IndexedDB |
 | PWA | Service Worker + Web App Manifest |
-| ホスティング | GitHub Pages（静的配信） |
-| SEO | OGP / Twitter Card / JSON-LD / sitemap.xml / robots.txt |
+| 問い合わせ | Web3Forms |
+| メール | MailerLite hosted form |
+| 計測 | GA4 / Search Console |
+| 広告 | Google AdSense |
+| アフィリエイト | Amazon Associates |
 
----
+## ディレクトリ構成
 
-## 📁 ファイル構成 / File Structure
-
-```
+```text
 raitopapa.github.io/
-├── index.html          # トップページ
-├── diagnosis.html      # 病害虫リスク診断
-├── pruning.html        # 剪定適期カレンダー
-├── checklist.html      # 樹木健全度チェックリスト
-├── traq.html           # ISA TRAQ リスク評価（Pro）
-├── ctla.html           # CTLA + i-Tree 価値算定（Pro）
-├── survey.html         # 現地調査・GPS・地図・写真・履歴（Pro）
-├── privacy.html        # プライバシーポリシー
-├── contact.html        # お問い合わせ
-├── sitemap.xml         # サイトマップ（SEO）
-├── robots.txt          # クローラー設定
-├── _config.yml         # GitHub Pages設定
-├── manifest.json       # PWA マニフェスト
-├── sw.js               # Service Worker
+├── index.html
+├── diagnosis.html
+├── pruning.html
+├── checklist.html
+├── traq.html
+├── ctla.html
+├── survey.html
+├── glossary.html
+├── contact.html
+├── privacy.html
+├── blog/
+├── _posts/
+├── _layouts/
+├── _includes/
+├── assets/
+│   ├── css/
+│   ├── js/
+│   ├── i18n/
+│   ├── data/
+│   ├── images/
+│   └── partials/
+├── docs/
 ├── icons/
-│   ├── icon-192.png
-│   └── icon-512.png
-└── README.md
+├── manifest.json
+├── sw.js
+├── sitemap.xml
+└── robots.txt
 ```
 
----
+## ローカル確認
 
-## 📚 情報ソース・根拠 / References
-
-| 機関 | 資料 |
-|---|---|
-| 農林水産省 | 病害虫防除所情報・マツ材線虫病防除指針 |
-| 森林総合研究所 | ナラ枯れ被害の現状と防除技術 |
-| 国土交通省 | 街路樹の点検・診断指針（2019年） |
-| 気象庁 | 生物季節観測 さくら開花平年日（1991〜2020年） |
-| ISA（国際樹木学会） | TRAQ Program Guide（2025年改訂）・ANSI A300 Part 9 |
-| CTLA | Guide for Plant Appraisal 10th edition |
-| USDA Forest Service | i-Tree Eco — Ecosystem services calculation |
-| Nowak & Crane (2002) | Carbon storage and sequestration by urban trees |
-| Nowak et al. (2006) | Air pollution removal by urban trees |
-| TEEB | The Economics of Ecosystems and Biodiversity — Urban |
-| 日本樹木医会 | 樹木医学テキスト |
-| 日本植物病理学会 | 日本植物病名目録 |
-| 環境省 | 特定外来生物（クビアカツヤカミキリ等）防除情報 |
-
----
-
-## 🌱 ローカルで動かす / Running Locally
+Service Worker、IndexedDB、GPS、カメラ入力の確認にはローカルHTTPサーバーを使ってください。
 
 ```bash
 git clone https://github.com/raitopapa/raitopapa.github.io.git
 cd raitopapa.github.io
-# Service Worker・IndexedDB・GPS のテストには localhost が必要
-python3 -m http.server 8080
-# → http://localhost:8080 で開く
+python -m http.server 8080
 ```
 
----
+ブラウザで `http://localhost:8080` を開きます。
 
-## 🤝 コントリビュート / Contributing
+## 運用ルール
 
-```bash
-git checkout -b feature/add-new-species
-git commit -m "feat: ○○の病害虫データを追加"
-git push origin feature/add-new-species
-# → Pull Request を作成
-```
+- 1タスク = 1ブランチ = 1PR
+- 進捗管理は [docs/STATUS.md](docs/STATUS.md)
+- 仕様は [docs/SPEC.md](docs/SPEC.md)
+- 共同開発手順は [docs/HANDOFF.md](docs/HANDOFF.md)
+- UX方針は [docs/UX_PLAN.md](docs/UX_PLAN.md)
+- 写真素材方針は [docs/IMAGE_ASSETS.md](docs/IMAGE_ASSETS.md)
 
-### 優先コントリビュート
-- [ ] 対応樹種のさらなる拡充（現在40+種）
-- [ ] 多言語対応（韓国語・繁体字中国語・ドイツ語）
-- [ ] i-Tree係数の日本地域別精度向上
-- [ ] 写真のGPSジオタグ読み取り（EXIF対応）
+## 残課題
 
----
+### 人間側の作業
 
-## 📜 License
+- 独自ドメインの取得
+- 監修者プロフィール匿名版の本文作成
+- 写真素材の用意
+- MailerLite フォーム名の確認・必要に応じた修正
+
+### 実装候補
+
+- T-UX-503: サーフェス階層トークンの整理
+- 写真素材をトップヒーロー・カード・活用対象セクションへ反映
+- use-case / footer などに残る絵文字表現の整理
+- README / STATUS の進捗同期自動化
+- カメラ・GPS・PWAの実機確認結果を docs に記録
+
+### 凍結中
+
+Phase 3 の Supabase、Stripe、認証、クラウド同期、AI診断、法人プランは、需要検証ゲート通過まで着手しません。
+
+## 参考資料
+
+- 農林水産省 病害虫防除所情報
+- 森林総合研究所 ナラ枯れ被害の現状と防除技術
+- 国土交通省 街路樹の点検・診断指針
+- 気象庁 生物季節観測
+- ISA TRAQ Program Guide / ANSI A300 Part 9
+- CTLA Guide for Plant Appraisal 10th edition
+- USDA Forest Service i-Tree
+- 日本樹木医会 樹木医学関連資料
+- 日本植物病理学会 日本植物病名目録
+
+## License
 
 [MIT License](LICENSE)
 
----
+## Credits
 
-## 👤 Credits
-
-- **樹木医監修:** 樹木医資格保有者
-- **開発:** [@raitopapa](https://github.com/raitopapa)
-
----
-
-## 📊 Roadmap
-
-```
-v1.0  ✅ 3ツール公開（診断・カレンダー・チェックリスト）
-v1.2  ✅ 40+樹種対応
-v1.3  ✅ PDF出力
-v2.0  ✅ PWA化（オフライン対応）
-v2.1  ✅ 出典・根拠セクション（E-E-A-T対応）
-v2.2  ✅ 地域補正（気象庁データ基準）
-v2.3  ✅ プロ向けツール3本（TRAQ・CTLA・複数樹木調査）
-v2.4  ✅ JA/EN 言語切替（全7ページ完全対応）
-v2.5  ✅ GPS・地図（Leaflet）・CSV/GeoJSON出力
-v2.6  ✅ 地図レイヤー切替（地形図・衛星・白地図）
-v2.7  ✅ IndexedDB永続保存・ピン手動配置・ダークモード・音声入力
-v2.8  ✅ i-Tree生態系サービス計算・QRコード生成
-v2.9  ✅ OGP/Twitter Card/JSON-LD/sitemap.xml（SEO強化）
-v3.0  ✅ 写真記録（IndexedDB）・メンテナンスアラート・点検履歴管理
-v3.1  🔲 多言語対応（韓国語・繁体字中国語・ドイツ語）
-v3.2  🔲 Google Analytics設置（アクセス解析）
-v3.3  🔲 写真のGPSジオタグ読み取り（EXIF対応）
-v3.4  🔲 写真添付AI診断（Claude API）
-```
+- 監修: 樹木医資格保有者
+- 開発: [@raitopapa](https://github.com/raitopapa)
