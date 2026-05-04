@@ -69,7 +69,7 @@ body {
 
 /* Header */
 header {
-  margin-bottom: 44px;
+  margin-bottom: var(--gap-section);
   padding-bottom: 28px;
   border-bottom: 1px solid var(--mist);
 }
@@ -107,8 +107,8 @@ h1 {
 .selector-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 20px;
+  gap: var(--gap-element);
+  margin-bottom: var(--gap-element);
 }
 
 @media (max-width: 540px) {
@@ -201,7 +201,7 @@ select:focus {
 .purpose-sub {
   font-size: 13px;
   color: var(--moss);
-  margin-bottom: 24px;
+  margin-bottom: var(--gap-element);
 }
 
 /* Month grid calendar */
@@ -253,8 +253,8 @@ select:focus {
 .legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 28px;
+  gap: var(--gap-element);
+  margin-bottom: var(--gap-element);
 }
 
 .legend-item {
@@ -276,8 +276,8 @@ select:focus {
 .detail-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 20px;
+  gap: var(--gap-element);
+  margin-bottom: var(--gap-element);
 }
 
 @media (max-width: 540px) {
@@ -432,7 +432,7 @@ select:focus {
 .btn-outline:active { background: rgba(255,255,255,0.05); transform: scale(0.97); }
 
 footer {
-  margin-top: 56px;
+  margin-top: var(--gap-section);
   padding-top: 20px;
   border-top: 1px solid var(--mist);
   font-family: 'DM Mono', monospace;
@@ -444,7 +444,7 @@ footer {
 }
 
 /* 出典・根拠スタイル */
-.ref-section { margin-top: 40px; padding: 24px; background: rgba(255,255,255,0.5); border: 1px solid var(--mist); border-radius: 4px; backdrop-filter: blur(4px); }
+.ref-section { margin-top: var(--gap-section); padding: 24px; background: rgba(255,255,255,0.5); border: 1px solid var(--mist); border-radius: 4px; backdrop-filter: blur(4px); }
 .ref-section h2 { font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 700; color: var(--bark); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--mist); display: flex; align-items: center; gap: 6px; }
 .ref-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
 .ref-item { font-size: 11px; line-height: 1.7; color: #5a6e5a; padding-left: 20px; position: relative; }
