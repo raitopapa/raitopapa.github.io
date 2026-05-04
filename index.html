@@ -140,7 +140,8 @@ body { background: var(--cream); color: var(--ink); font-family: 'Noto Serif JP'
 /* TOOL CARDS */
 .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 16px; }
 .tool-card { background: white; border: 1px solid var(--mist); border-radius: 6px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; text-decoration: none; color: inherit; display: flex; flex-direction: column; }
-.tool-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(44,26,14,0.12); border-color: var(--moss-l); }
+.tool-card:hover  { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(44,26,14,0.12); border-color: var(--moss-l); }
+.tool-card:active { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(44,26,14,0.10); }
 .card-thumb { height: 140px; display: flex; align-items: center; justify-content: center; font-size: 52px; position: relative; overflow: hidden; }
 .card-thumb-1 { background: linear-gradient(135deg, #1a3d1e 0%, #3D5A3E 100%); }
 .card-thumb-2 { background: linear-gradient(135deg, #2C3A1A 0%, #5A7A2A 100%); }
@@ -153,8 +154,9 @@ body { background: var(--cream); color: var(--ink); font-family: 'Noto Serif JP'
 .card-features { list-style: none; display: flex; flex-direction: column; gap: 4px; margin-bottom: 18px; }
 .card-features li { font-size: 11px; color: #4a5e4a; display: flex; align-items: center; gap: 6px; }
 .card-features li::before { content: '✓'; color: var(--moss); font-family: 'DM Mono', monospace; font-size: 10px; flex-shrink: 0; }
-.card-btn { display: block; text-align: center; padding: 11px; background: var(--bark); color: var(--cream); font-family: 'Shippori Mincho', serif; font-size: 13px; font-weight: 600; border-radius: 3px; text-decoration: none; transition: background 0.2s; }
-.card-btn:hover { background: var(--moss); }
+.card-btn { display: block; text-align: center; padding: 11px; background: var(--bark); color: var(--cream); font-family: 'Shippori Mincho', serif; font-size: 13px; font-weight: 600; border-radius: 3px; text-decoration: none; transition: background var(--transition-base), transform var(--transition-fast), opacity var(--transition-fast); }
+.card-btn:hover  { background: var(--moss); }
+.card-btn:active { opacity: 0.80; transform: translateY(1px); }
 
 /* AD */
 .ad-slot { background: var(--mist); border: 1px dashed #b0bfaa; border-radius: 3px; padding: 20px; text-align: center; font-family: 'DM Mono', monospace; font-size: 10px; color: #8fa085; letter-spacing: 0.1em; margin: 36px 0; }
