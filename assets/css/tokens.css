@@ -65,4 +65,16 @@
   --gap-section: 64px;
   --gap-section-lg: 80px;
   --gap-element: 20px;
+
+  /* === Image Asset Hooks ===
+     Keep these as `none` until approved photos are added under assets/images/.
+     Example: --image-hero-home: url('../images/hero/tree-canopy.webp'); */
+  --image-hero-home: none;
+  --image-tool-diagnosis: none;
+  --image-tool-pruning: none;
+  --image-tool-checklist: none;
+  --image-use-civic: none;
+  --image-use-homeowner: none;
+  --image-use-pro: none;
+  --photo-overlay-hero: linear-gradient(180deg, rgba(44,26,14,0.82), rgba(44,26,14,0.92));
 }
