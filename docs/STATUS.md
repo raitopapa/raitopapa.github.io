@@ -58,7 +58,7 @@ raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 | T-P2-202 | 季節記事25本執筆 | done | 2026-05-04 | task/T-P2-202-seasonal-articles |
 | T-P2-203 | 樹木用語集ページ | done | 2026-05-04 | PR #12 |
 | T-P2-204 | 埋め込みウィジェット配布 | done | 2026-05-03 | PR #9 |
-| T-P2-205 | メール購読 + 季節リマインダー | todo |  | — |
+| T-P2-205 | メール購読 + 季節リマインダー | review | 2026-05-04 | task/T-P2-205-mailerlite-reminders |
 | T-P2-206 | 内部リンク網の整備 | review | 2026-05-04 | task/T-P2-206-internal-links |
 
 ## Phase 3: Freemium + B2B SaaS（全件 Gate 通過まで凍結）
