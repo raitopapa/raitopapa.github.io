@@ -540,6 +540,10 @@
     .section { padding: 20px 16px; }
     .result-card { padding: 20px 16px; }
     .result-header { padding: 20px 16px; }
+    select { font-size: 16px; } /* iOS auto-zoom prevention */
+  }
+  @media (max-width: 480px) {
+    .symptom-grid { grid-template-columns: 1fr; }
   }
 </style>
   <link rel="manifest" href="/manifest.json">

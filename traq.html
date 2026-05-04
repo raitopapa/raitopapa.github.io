@@ -92,7 +92,11 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(20px, 4vw, 30px); f
 
 /* Tree info grid */
 .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 28px; }
-@media(max-width:600px){ .info-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:600px){
+  .info-grid { grid-template-columns: 1fr 1fr; }
+  .info-field input, .info-field select, .info-field textarea,
+  .traq-body input, .traq-body select, .traq-body textarea { font-size: 16px; } /* iOS zoom prevention */
+}
 .info-field { background: rgba(255,255,255,0.7); border: 1px solid var(--mist); border-radius: 3px; padding: 12px 14px; }
 .info-field label { display: block; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; color: var(--moss); text-transform: uppercase; margin-bottom: 6px; }
 .info-field input, .info-field select, .info-field textarea {
@@ -267,6 +271,11 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(20px, 4vw, 30px); f
 .ad-slot { background: var(--mist); border: 1px dashed #a0b8a0; border-radius: 3px; padding: 18px; text-align: center; font-family: 'DM Mono', monospace; font-size: 10px; color: #8fa085; margin: 24px 0; }
 
 footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--mist); font-family: 'DM Mono', monospace; font-size: 10px; color: #8fa085; text-align: center; line-height: 2; }
+
+@media(max-width:480px){
+  .rating-btn { min-height: 44px; flex: 1; display: flex; align-items: center; justify-content: center; }
+  .cta-box .btn-pdf, .cta-box .btn-reset { display: block; width: 100%; margin: 6px 0; box-sizing: border-box; }
+}
 
 @media print {
   nav, .ad-slot, .cta-box { display: none !important; }
