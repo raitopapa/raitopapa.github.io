@@ -117,9 +117,58 @@ permalink: /glossary/
   border-radius: 6px;
   background: var(--pale);
 }
+.glossary-sources {
+  margin-top: 42px;
+  padding: 22px;
+  border: 1px solid var(--mist);
+  border-radius: 6px;
+  background: #fffdf8;
+}
+.glossary-sources h2 {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-size: 22px;
+}
+.glossary-sources-note {
+  margin: 0 0 18px;
+  color: #4d5d4d;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.glossary-source-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.glossary-source-card {
+  border: 1px solid var(--mist);
+  border-radius: 4px;
+  background: var(--cream);
+  padding: 14px;
+}
+.glossary-source-card h3 {
+  margin: 0 0 8px;
+  color: var(--moss);
+  font-size: 14px;
+}
+.glossary-source-card ul {
+  margin: 0;
+  padding-left: 1.1em;
+}
+.glossary-source-card li {
+  margin: 0 0 7px;
+  color: #3f4f3f;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.glossary-source-card a {
+  color: var(--moss);
+  font-weight: 800;
+}
 @media (max-width: 780px) {
   .glossary-toolbar { position: static; }
   .glossary-grid { grid-template-columns: 1fr; }
+  .glossary-source-grid { grid-template-columns: 1fr; }
 }
 </style>
 
@@ -186,6 +235,23 @@ permalink: /glossary/
   </section>
 
   <p id="glossary-empty" class="glossary-empty">該当する用語がありません。検索語を短くするか、フィルタを変更してください。</p>
+
+  <section class="glossary-sources" aria-label="用語集の主な参考資料">
+    <h2>主な参考資料</h2>
+    <p class="glossary-sources-note">用語ごとの個別出典ではなく、カテゴリ単位で主な参考資料を示しています。本用語集は現場での初期確認を助けるための短い説明であり、専門的な診断・鑑定・安全保証の代替ではありません。</p>
+    <div class="glossary-source-grid">
+      {% for source_group in site.data.glossary_sources %}
+      <section class="glossary-source-card">
+        <h3>{{ source_group[0] }}</h3>
+        <ul>
+          {% for source in source_group[1] %}
+          <li><a href="{{ source.url }}" target="_blank" rel="noopener">{{ source.title }}</a>（{{ source.publisher }}）</li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endfor %}
+    </div>
+  </section>
 </main>
 
 <script>

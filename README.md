@@ -42,6 +42,7 @@
 - MailerLite 季節リマインダー購読導線
 - Web3Forms 問い合わせフォーム
 - ブログ記事25本と樹木用語集
+- 用語集のカテゴリ別参考資料表示
 - 内部リンク自動表示
 - OGP / Twitter Card / JSON-LD / sitemap.xml
 - IndexedDBによるローカル保存
