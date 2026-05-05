@@ -205,8 +205,9 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
 .footer-brand p { font-size: 12px; opacity: 0.65; line-height: 1.8; }
 .footer-links h4 { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.5; margin-bottom: 10px; }
 .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-.footer-links ul li a { font-size: 13px; color: var(--cream); opacity: 0.75; text-decoration: none; transition: opacity 0.15s; }
+.footer-links ul li a { font-size: 13px; color: var(--cream); opacity: 0.75; text-decoration: none; transition: opacity 0.15s; display: flex; align-items: center; gap: 8px; }
 .footer-links ul li a:hover { opacity: 1; }
+.footer-line-icon { width: 16px; height: 16px; flex-shrink: 0; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 .footer-bottom { max-width: 840px; margin: 24px auto 0; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-family: 'DM Mono', monospace; font-size: 10px; opacity: 0.4; letter-spacing: 0.05em; text-align: center; }
 </style>
   <meta name="google-site-verification" content="eeKRftJm8C8a0wByAzx0n-H-2JWgW6OsC60jAUY8d_E" />
@@ -278,6 +279,29 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
     <path d="M40 18v32"></path>
     <path d="M36 29c0 5-4 9-4 9s-4-4-4-9a4 4 0 0 1 8 0z"></path>
     <path d="M32 29h.01"></path>
+  </symbol>
+  <symbol id="icon-embed" viewBox="0 0 64 64">
+    <path d="M24 26l-10 10 10 10"></path>
+    <path d="M40 26l10 10-10 10"></path>
+    <path d="M37 18l-10 32"></path>
+  </symbol>
+  <symbol id="icon-glossary" viewBox="0 0 64 64">
+    <path d="M18 12h14v40H18a4 4 0 0 1-4-4V16a4 4 0 0 1 4-4z"></path>
+    <path d="M32 12h14a4 4 0 0 1 4 4v32a4 4 0 0 1-4 4H32V12z"></path>
+    <path d="M32 12v40"></path>
+    <path d="M22 24h6"></path>
+    <path d="M22 32h6"></path>
+    <path d="M22 40h4"></path>
+  </symbol>
+  <symbol id="icon-privacy" viewBox="0 0 64 64">
+    <rect x="20" y="30" width="24" height="22" rx="3"></rect>
+    <path d="M26 30v-7a6 6 0 0 1 12 0v7"></path>
+    <path d="M32 40v4"></path>
+    <circle cx="32" cy="39" r="2"></circle>
+  </symbol>
+  <symbol id="icon-contact" viewBox="0 0 64 64">
+    <rect x="10" y="18" width="44" height="32" rx="4"></rect>
+    <path d="M10 24l22 16 22-16"></path>
   </symbol>
 </svg>
 
@@ -486,16 +510,16 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
     <div class="footer-links">
       <h4>Tools</h4>
       <ul>
-        <li><a href="diagnosis.html">🦠 病害虫リスク診断</a></li>
-        <li><a href="pruning.html">📅 剪定適期カレンダー</a></li>
-        <li><a href="checklist.html">📋 樹木健全度チェックリスト</a></li>
-        <li><a href="traq.html">⚠️ 樹木リスク評価（TRAQ）</a></li>
-        <li><a href="ctla.html">💰 樹木価値算定（CTLA）</a></li>
-        <li><a href="survey.html">🗺 現地調査・複数樹木記録</a></li>
-        <li><a href="embed.html">🔗 埋め込みウィジェット</a></li>
-        <li><a href="glossary/">📚 樹木用語集</a></li>
-        <li><a href="privacy.html">📄 プライバシーポリシー</a></li>
-        <li><a href="contact.html">✉️ お問い合わせ</a></li>
+        <li><a href="diagnosis.html"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-pest-scan"></use></svg>病害虫リスク診断</a></li>
+        <li><a href="pruning.html"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-pruning-calendar"></use></svg>剪定適期カレンダー</a></li>
+        <li><a href="checklist.html"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-health-check"></use></svg>樹木健全度チェックリスト</a></li>
+        <li><a href="traq.html"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-risk-shield"></use></svg>樹木リスク評価（TRAQ）</a></li>
+        <li><a href="ctla.html"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-appraisal-calculator"></use></svg>樹木価値算定（CTLA）</a></li>
+        <li><a href="survey.html"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-field-map"></use></svg>現地調査・複数樹木記録</a></li>
+        <li><a href="embed.html"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-embed"></use></svg>埋め込みウィジェット</a></li>
+        <li><a href="glossary/"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-glossary"></use></svg>樹木用語集</a></li>
+        <li><a href="privacy.html"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-privacy"></use></svg>プライバシーポリシー</a></li>
+        <li><a href="contact.html"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-contact"></use></svg>お問い合わせ</a></li>
       </ul>
     </div>
   </div>
