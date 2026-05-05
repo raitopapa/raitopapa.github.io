@@ -27,15 +27,15 @@
     "arborist-request": { "title": "樹木医・造園業者への依頼準備", "url": "/blog/2026/05/15/how-to-request-arborist-service/" }
   },
   "glossary": {
-    "pruning": { "title": "剪定用語", "url": "/glossary.html?category=剪定" },
-    "disease": { "title": "病害", "url": "/glossary.html?category=病害" },
-    "pest": { "title": "害虫", "url": "/glossary.html?category=害虫" },
-    "diagnosis": { "title": "診断症状", "url": "/glossary.html?category=診断" },
-    "safety": { "title": "安全・リスク", "url": "/glossary.html?category=安全" },
-    "survey": { "title": "管理・点検", "url": "/glossary.html?category=管理" },
-    "soil": { "title": "土壌", "url": "/glossary.html?category=土壌" },
-    "structure": { "title": "樹木構造", "url": "/glossary.html?category=構造" },
-    "valuation": { "title": "評価", "url": "/glossary.html?category=評価" }
+    "pruning": { "title": "剪定用語", "url": "/glossary/?category=剪定" },
+    "disease": { "title": "病害", "url": "/glossary/?category=病害" },
+    "pest": { "title": "害虫", "url": "/glossary/?category=害虫" },
+    "diagnosis": { "title": "診断症状", "url": "/glossary/?category=診断" },
+    "safety": { "title": "安全・リスク", "url": "/glossary/?category=安全" },
+    "survey": { "title": "管理・点検", "url": "/glossary/?category=管理" },
+    "soil": { "title": "土壌", "url": "/glossary/?category=土壌" },
+    "structure": { "title": "樹木構造", "url": "/glossary/?category=構造" },
+    "valuation": { "title": "評価", "url": "/glossary/?category=評価" }
   },
   "pages": {
     "/": {
@@ -98,7 +98,7 @@
       "glossary": ["pruning", "disease", "safety"],
       "tools": ["diagnosis", "pruning", "checklist"]
     },
-    "/glossary.html": {
+    "/glossary/": {
       "articles": ["pruning-basic", "leaf-yellowing", "inspection-record", "decay-signs"],
       "glossary": ["pruning", "disease", "safety", "survey"],
       "tools": ["diagnosis", "pruning", "checklist", "survey"]

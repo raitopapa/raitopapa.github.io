@@ -89,7 +89,8 @@ raitopapa.github.io/
 ├── traq.html
 ├── ctla.html
 ├── survey.html
-├── glossary.html
+├── glossary/
+│   └── index.html
 ├── contact.html
 ├── privacy.html
 ├── blog/
