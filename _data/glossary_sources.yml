@@ -1,0 +1,86 @@
+構造:
+  - title: 樹木医学関連資料
+    publisher: 日本樹木医会
+    url: https://www.jpgreen.or.jp/
+  - title: 街路樹の点検・診断に関する指針
+    publisher: 国土交通省
+    url: https://www.mlit.go.jp/
+分類:
+  - title: 樹木医学関連資料
+    publisher: 日本樹木医会
+    url: https://www.jpgreen.or.jp/
+計測:
+  - title: 街路樹の点検・診断に関する指針
+    publisher: 国土交通省
+    url: https://www.mlit.go.jp/
+  - title: ANSI A300 Standards
+    publisher: Tree Care Industry Association
+    url: https://www.tcia.org/
+剪定:
+  - title: ANSI A300 Standards
+    publisher: Tree Care Industry Association
+    url: https://www.tcia.org/
+  - title: 樹木医学関連資料
+    publisher: 日本樹木医会
+    url: https://www.jpgreen.or.jp/
+生理:
+  - title: 樹木医学関連資料
+    publisher: 日本樹木医会
+    url: https://www.jpgreen.or.jp/
+診断:
+  - title: 街路樹の点検・診断に関する指針
+    publisher: 国土交通省
+    url: https://www.mlit.go.jp/
+  - title: 樹木医学関連資料
+    publisher: 日本樹木医会
+    url: https://www.jpgreen.or.jp/
+病害:
+  - title: 日本植物病名目録
+    publisher: 日本植物病理学会
+    url: https://www.ppsj.org/
+  - title: 病害虫防除所関連情報
+    publisher: 農林水産省
+    url: https://www.maff.go.jp/
+害虫:
+  - title: 病害虫防除所関連情報
+    publisher: 農林水産省
+    url: https://www.maff.go.jp/
+  - title: 特定外来生物等一覧
+    publisher: 環境省
+    url: https://www.env.go.jp/
+土壌:
+  - title: 樹木医学関連資料
+    publisher: 日本樹木医会
+    url: https://www.jpgreen.or.jp/
+街路樹:
+  - title: 街路樹の点検・診断に関する指針
+    publisher: 国土交通省
+    url: https://www.mlit.go.jp/
+管理:
+  - title: 街路樹の点検・診断に関する指針
+    publisher: 国土交通省
+    url: https://www.mlit.go.jp/
+  - title: 樹木医学関連資料
+    publisher: 日本樹木医会
+    url: https://www.jpgreen.or.jp/
+安全:
+  - title: Tree Risk Assessment Qualification
+    publisher: International Society of Arboriculture
+    url: https://www.isa-arbor.com/
+  - title: ANSI A300 Part 9
+    publisher: Tree Care Industry Association
+    url: https://www.tcia.org/
+  - title: 街路樹の点検・診断に関する指針
+    publisher: 国土交通省
+    url: https://www.mlit.go.jp/
+評価:
+  - title: Guide for Plant Appraisal, 10th Edition
+    publisher: Council of Tree and Landscape Appraisers
+    url: https://www.ctla.org/
+  - title: i-Tree
+    publisher: USDA Forest Service
+    url: https://www.itreetools.org/
+林業:
+  - title: 森林・林業関連情報
+    publisher: 林野庁
+    url: https://www.rinya.maff.go.jp/
