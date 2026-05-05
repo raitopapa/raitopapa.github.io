@@ -1,5 +1,5 @@
-// 樹木管理ナビ Service Worker v3.13
-const CACHE_NAME = 'arborist-tools-v3.13';
+// 樹木管理ナビ Service Worker v3.14
+const CACHE_NAME = 'arborist-tools-v3.14';
 
 // オフラインでキャッシュするファイル
 const CACHE_FILES = [
@@ -42,7 +42,7 @@ const CACHE_FILES = [
 
 // インストール：キャッシュを構築
 self.addEventListener('install', event => {
-  console.log('[SW] Installing v3.13...');
+  console.log('[SW] Installing v3.14...');
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       // Google Fontsなど外部リソースは失敗してもOK
@@ -59,7 +59,7 @@ self.addEventListener('install', event => {
 
 // アクティベート：古いキャッシュを削除
 self.addEventListener('activate', event => {
-  console.log('[SW] Activating v3.13...');
+  console.log('[SW] Activating v3.14...');
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
