@@ -34,10 +34,15 @@
   }
 
   function resolveItems(keys, source) {
-    const current = normalizePath(window.location.pathname);
+    const curPath = normalizePath(window.location.pathname);
+    const curSearch = window.location.search;
     return (keys || [])
       .map(key => source[key])
-      .filter(item => item && normalizePath(new URL(item.url, window.location.origin).pathname) !== current);
+      .filter(item => {
+        if (!item) return false;
+        const u = new URL(item.url, window.location.origin);
+        return normalizePath(u.pathname) !== curPath || u.search !== curSearch;
+      });
   }
 
   function ensureMount() {
