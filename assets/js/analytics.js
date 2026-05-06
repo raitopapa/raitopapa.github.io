@@ -107,13 +107,42 @@
     containerEl.appendChild(panel);
   };
 
+  // G3: scroll-depth and dwell-time engagement tracking
+  function initEngagementTracking() {
+    var scrollFired = {};
+    var thresholds = [25, 50, 75, 90];
+
+    function checkScroll() {
+      var el = document.documentElement;
+      var scrolled = el.scrollTop || document.body.scrollTop;
+      var max = el.scrollHeight - el.clientHeight;
+      if (max <= 0) return;
+      var pct = Math.round(scrolled / max * 100);
+      for (var i = 0; i < thresholds.length; i++) {
+        if (!scrollFired[thresholds[i]] && pct >= thresholds[i]) {
+          scrollFired[thresholds[i]] = true;
+          window.trackToolEvent('scroll_depth', { percent: thresholds[i] });
+        }
+      }
+    }
+    window.addEventListener('scroll', checkScroll, { passive: true });
+
+    [30, 60, 120, 300].forEach(function (sec) {
+      setTimeout(function () {
+        window.trackToolEvent('page_engagement', { seconds: sec });
+      }, sec * 1000);
+    });
+  }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       if (localStorage.getItem(CONSENT_KEY) === 'granted') loadGA();
       injectBanner();
+      initEngagementTracking();
     });
   } else {
     if (localStorage.getItem(CONSENT_KEY) === 'granted') loadGA();
     injectBanner();
+    initEngagementTracking();
   }
 })();
