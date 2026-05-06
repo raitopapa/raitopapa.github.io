@@ -180,7 +180,7 @@ body { background: var(--surface-page); color: var(--ink); font-family: 'Noto Se
 .use-row { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--gap-element); margin-top: var(--gap-element); }
 @media(max-width:540px){ .use-row{ grid-template-columns: 1fr; } }
 .use-item { text-align: center; padding: 20px 16px; border: 1px solid var(--mist); border-radius: 4px; background: var(--surface-card); }
-.use-icon { font-size: 28px; display: block; margin-bottom: 8px; }
+.use-icon { width: 36px; height: 36px; display: block; margin: 0 auto 12px; color: var(--moss); }
 .use-title { font-family: 'Shippori Mincho', serif; font-size: 13px; font-weight: 600; color: var(--bark); margin-bottom: 4px; }
 .use-desc { font-size: 11px; color: #6b7e6b; line-height: 1.65; }
 
@@ -313,14 +313,14 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
 
 <!-- PWAインストールバナー -->
 <div id="pwa-banner" style="display:none; background:#3D5A3E; color:#F5F0E8; padding:12px 20px; text-align:center; font-family:'Noto Serif JP',serif; font-size:13px; position:sticky; top:0; z-index:100; align-items:center; justify-content:center; gap:12px;">
-  <span>📲 ホーム画面に追加してオフラインでも使えます</span>
+  <span>ホーム画面に追加してオフラインでも使えます</span>
   <button id="pwa-install-btn" style="background:#F5F0E8; color:#2C1A0E; border:none; padding:6px 14px; border-radius:2px; font-family:'Shippori Mincho',serif; font-size:13px; font-weight:600; cursor:pointer;">インストール</button>
   <button onclick="document.getElementById('pwa-banner').style.display='none'" style="background:transparent; border:1px solid rgba(255,255,255,0.4); color:#F5F0E8; padding:6px 10px; border-radius:2px; font-size:12px; cursor:pointer;">✕</button>
 </div>
 
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-eyebrow" data-i18n="hero-badge">🌿 TREE NAVI</div>
+    <div class="hero-eyebrow" data-i18n="hero-badge">TREE NAVI</div>
     <div class="hero-brand">樹木管理ナビ</div>
     <h1 data-i18n="hero-h1">樹木の管理を、<span>迷わず判断</span></h1>
     <p class="hero-sub" data-i18n="hero-sub">庭木・街路樹・公園樹の病害虫確認、剪定時期、健全度チェック、現地調査まで。樹木医監修の知見をもとに、樹木管理を支援します。</p>
@@ -445,10 +445,10 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
   <div class="about-section">
     <p style="font-size:13px;line-height:1.9;color:#4a5e4a;">本サイトは、樹木医資格保有者の監修知見をもとに、庭木・街路樹・公園樹の管理を支援する無料ツールを提供しています。個人の庭木管理から造園業者・自治体担当者の現地確認まで、樹木の異常把握と次の対応判断を助ける設計です。</p>
     <div class="about-grid">
-      <div class="about-item"><h3>🎓 専門性・監修根拠</h3><p>樹木医資格保有者が監修。農林水産省・国土交通省・ISA（国際樹木学会）の指針、および日本植物病理学会・日本樹木医会の文献に基づいています。</p></div>
-      <div class="about-item"><h3>🆓 完全無料</h3><p>登録不要・ダウンロード不要。すべてのツールをブラウザから無料でご利用いただけます。</p></div>
-      <div class="about-item"><h3>📱 現地対応・オフライン</h3><p>スマートフォンに最適化。PWA対応によりホーム画面追加後はオフラインでも使用できます。</p></div>
-      <div class="about-item"><h3>⚠️ 利用上の注意</h3><p>本ツールは初期スクリーニングを目的としており、専門的な現地診断の代替ではありません。倒木・落枝リスクの判定には必ず専門家にご相談ください。</p></div>
+      <div class="about-item"><h3>専門性・監修根拠</h3><p>樹木医資格保有者が監修。農林水産省・国土交通省・ISA（国際樹木学会）の指針、および日本植物病理学会・日本樹木医会の文献に基づいています。</p></div>
+      <div class="about-item"><h3>完全無料</h3><p>登録不要・ダウンロード不要。すべてのツールをブラウザから無料でご利用いただけます。</p></div>
+      <div class="about-item"><h3>現地対応・オフライン</h3><p>スマートフォンに最適化。PWA対応によりホーム画面追加後はオフラインでも使用できます。</p></div>
+      <div class="about-item"><h3>利用上の注意</h3><p>本ツールは初期スクリーニングを目的としており、専門的な現地診断の代替ではありません。倒木・落枝リスクの判定には必ず専門家にご相談ください。</p></div>
     </div>
   </div>
 
@@ -458,9 +458,37 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
   </div>
 
   <div class="use-row">
-    <div class="use-item"><span class="use-icon">🏢</span><div class="use-title">自治体・公園管理</div><p class="use-desc">街路樹・公園樹の定期点検に。チェックリストを印刷して現地記録に使えます。</p></div>
-    <div class="use-item"><span class="use-icon">🏡</span><div class="use-title">ホームオーナー</div><p class="use-desc">庭木の異常に気づいたとき、まず何をすべきか。受診前の初期判断に。</p></div>
-    <div class="use-item"><span class="use-icon">✂️</span><div class="use-title">造園・緑化業者</div><p class="use-desc">お客様への説明資料として。剪定提案時の根拠として活用できます。</p></div>
+    <div class="use-item">
+      <svg class="use-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 16L18 5l15 11"/>
+        <rect x="4" y="16" width="28" height="16"/>
+        <rect x="9" y="21" width="5" height="4"/>
+        <rect x="22" y="21" width="5" height="4"/>
+        <rect x="14" y="25" width="8" height="7"/>
+      </svg>
+      <div class="use-title">自治体・公園管理</div>
+      <p class="use-desc">街路樹・公園樹の定期点検に。チェックリストを印刷して現地記録に使えます。</p>
+    </div>
+    <div class="use-item">
+      <svg class="use-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 16L18 5l15 11"/>
+        <path d="M7 14v18h22V14"/>
+        <path d="M14 32v-9h8v9"/>
+        <rect x="21" y="16" width="5" height="5" rx="0.5"/>
+      </svg>
+      <div class="use-title">ホームオーナー</div>
+      <p class="use-desc">庭木の異常に気づいたとき、まず何をすべきか。受診前の初期判断に。</p>
+    </div>
+    <div class="use-item">
+      <svg class="use-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="10" cy="9" r="5"/>
+        <circle cx="10" cy="27" r="5"/>
+        <path d="M15 11L33 27"/>
+        <path d="M15 25L33 9"/>
+      </svg>
+      <div class="use-title">造園・緑化業者</div>
+      <p class="use-desc">お客様への説明資料として。剪定提案時の根拠として活用できます。</p>
+    </div>
   </div>
 
   <div class="sec-head">
@@ -492,7 +520,7 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
   </div>
 
   <div class="disclaimer">
-    ⚠️ 免責事項：本サイトで提供する情報は一般的な樹木管理の参考情報であり、専門的な診断の代替となるものではありません。倒木・落枝による事故・損害について、本サイトは一切の責任を負いかねます。危険が疑われる場合は速やかに専門家にご相談ください。
+    免責事項：本サイトで提供する情報は一般的な樹木管理の参考情報であり、専門的な診断の代替となるものではありません。倒木・落枝による事故・損害について、本サイトは一切の責任を負いかねます。危険が疑われる場合は速やかに専門家にご相談ください。
   </div>
 
 </div>
@@ -500,7 +528,7 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <div class="f-title">🌿 樹木管理ナビ</div>
+      <div class="f-title">樹木管理ナビ</div>
       <p>庭木・街路樹・公園樹の管理を支援する樹木管理ツール集。<br>病害虫診断・剪定カレンダー・健全度チェックを<br>ブラウザから無料でご利用いただけます。</p>
     </div>
     <div class="footer-links">

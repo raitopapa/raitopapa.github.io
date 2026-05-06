@@ -1,6 +1,6 @@
 {
   "index": {
-    "hero-badge": "🌿 樹木管理ナビ",
+    "hero-badge": "樹木管理ナビ",
     "hero-h1": "樹木の管理を、<span>迷わず判断</span>",
     "hero-sub": "庭木・街路樹・公園樹の病害虫確認、剪定時期、健全度チェック、現地調査まで。樹木医監修の知見をもとに、樹木管理を支援します。",
     "stat-tools": "専門ツール",
@@ -15,7 +15,7 @@
     "pro-desc": "ISA国際基準・CTLA方式を参考にした、造園業者・自治体担当者・樹木管理者向けの補助ツールです。",
     "about-label": "About",
     "about-title": "このサイトについて",
-    "pwa-msg": "📲 ホーム画面に追加してオフラインでも使えます",
+    "pwa-msg": "ホーム画面に追加してオフラインでも使えます",
     "pwa-install": "インストール",
     "tool1-tag": "Tool 01 — Diagnosis",
     "tool1-title": "病害虫<br>リスク診断",
@@ -46,7 +46,7 @@
   },
   "diagnosis": {
     "title": "樹木病害虫リスク診断 | 樹木管理ナビ",
-    "badge": "🌿 樹木医監修ツール",
+    "badge": "樹木医監修ツール",
     "h1": "樹木病害虫<br>リスク診断",
     "sub": "樹木医が監修。症状を選択するだけで、考えられる病害虫と<br>初期対処法を即座に確認できます。",
     "q1": "対象の樹木を選択してください",
@@ -92,7 +92,7 @@
   },
   "pruning": {
     "title": "剪定適期カレンダー | 樹木管理ナビ",
-    "badge": "🌿 樹木医監修ツール",
+    "badge": "樹木医監修ツール",
     "h1": "剪定適期<br>カレンダー計算機",
     "sub": "樹種と目的を選ぶだけで、月別の剪定適否と注意事項を即表示。<br>樹木医の知識をベースにした判断基準です。",
     "treeLabel": "樹種",
@@ -127,7 +127,7 @@
     "avoid": "避ける",
     "neutral": "不適",
     "bestPeriod": "🗓 最適な剪定時期：",
-    "detailCaution": "⚠️ 注意事項",
+    "detailCaution": "注意事項",
     "detailTools": "🔧 使用ツール・準備",
     "detailQuality": "✨ 品質向上のポイント",
     "annualCal": "📅 年間管理カレンダー",
@@ -143,7 +143,7 @@
   },
   "checklist": {
     "title": "樹木健全度チェックリスト | 樹木管理ナビ",
-    "badge": "🌿 樹木医監修ツール",
+    "badge": "樹木医監修ツール",
     "h1": "樹木健全度<br>チェックリスト",
     "sub": "現地調査で使える診断シート。根元・幹・枝・葉の状態を記録し、<br>総合スコアと対処優先度を自動算出します。",
     "fieldTree": "樹木名・管理番号",
@@ -326,7 +326,7 @@
   },
   "traq": {
     "page-title": "樹木リスク評価（ISA TRAQ参考）| 樹木管理ナビ",
-    "nav-home": "🌿 樹木管理ナビ",
+    "nav-home": "樹木管理ナビ",
     "nav-back": "← ホームへ",
     "page-label": "Professional Tool — ISA TRAQ Level II",
     "h1": "樹木リスク評価<br>Tree Risk Assessment",
@@ -436,7 +436,7 @@
   },
   "ctla": {
     "page-title": "樹木価値算定（CTLA式）| 樹木管理ナビ",
-    "nav-home": "🌿 樹木管理ナビ",
+    "nav-home": "樹木管理ナビ",
     "nav-back": "← ホームへ",
     "page-label": "Professional Tool — CTLA Method",
     "h1": "樹木価値算定<br>Tree Appraisal（CTLA式）",
@@ -548,7 +548,7 @@
   },
   "survey": {
     "page-title": "現地調査・複数樹木記録 | 樹木管理ナビ",
-    "nav-home": "🌿 樹木管理ナビ",
+    "nav-home": "樹木管理ナビ",
     "nav-back": "← ホームへ",
     "page-label": "Field Survey Tool — Multi-Tree Recording",
     "h1": "現地調査・複数樹木記録<br>フィールドワークシート",
