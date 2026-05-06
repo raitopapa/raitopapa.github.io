@@ -924,6 +924,9 @@ function calcScore() {
   const res = document.getElementById('result');
   res.style.display = 'block';
   res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  window.trackToolEvent && window.trackToolEvent('tool_complete', { tool: 'checklist' });
+  window.showProSurvey && window.showProSurvey(res);
 }
 
 function resetAll() {

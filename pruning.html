@@ -1314,6 +1314,9 @@ function generate() {
   const sec = document.getElementById('calendar-section');
   sec.style.display = 'block';
   sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  window.trackToolEvent && window.trackToolEvent('tool_complete', { tool: 'pruning' });
+  window.showProSurvey && window.showProSurvey(sec);
 }
 
 function generateAnnualCalendar(treeVal, cal, note) {

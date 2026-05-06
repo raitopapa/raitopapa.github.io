@@ -1104,6 +1104,7 @@ function generateReport() {
   `;
 
   document.getElementById('report-overlay').style.display = 'block';
+  window.trackToolEvent && window.trackToolEvent('tool_complete', { tool: 'survey' });
 }
 
 function closeReport() {

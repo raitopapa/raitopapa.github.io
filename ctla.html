@@ -676,6 +676,9 @@ function calcAppraisal() {
 
   document.getElementById('result').style.display = 'block';
   document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  window.trackToolEvent && window.trackToolEvent('tool_complete', { tool: 'ctla' });
+  window.showProSurvey && window.showProSurvey(document.getElementById('result'));
 }
 
 // ===== 生態系サービス計算（i-Tree BenefitsによるDBHベース推定） =====

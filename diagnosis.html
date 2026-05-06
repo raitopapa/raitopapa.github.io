@@ -1333,6 +1333,9 @@ function diagnose() {
   document.getElementById('result').style.display = 'block';
   document.getElementById('progress').style.width = '100%';
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  window.trackToolEvent && window.trackToolEvent('tool_complete', { tool: 'diagnosis' });
+  window.showProSurvey && window.showProSurvey(document.getElementById('result'));
 }
 
 function renderResult(result, treeType) {

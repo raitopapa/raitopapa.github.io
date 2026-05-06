@@ -59,6 +59,54 @@
     }, params || {}));
   };
 
+  // G5: Pro feature interest survey
+  // Shows once per browser session after a tool produces results.
+  window.showProSurvey = function (containerEl) {
+    if (!containerEl) return;
+    const SURVEY_KEY = 'arborist-pro-survey';
+    if (sessionStorage.getItem(SURVEY_KEY)) return;
+    if (containerEl.querySelector('.pro-survey')) return; // already injected
+
+    if (!document.getElementById('pro-survey-style')) {
+      var s = document.createElement('style');
+      s.id = 'pro-survey-style';
+      s.textContent = [
+        '.pro-survey{margin-top:28px;padding:18px 22px;background:var(--surface-raised,#E8F0E1);border:1px solid var(--mist,#D4DFD0);border-left:4px solid var(--moss,#3D5A3E);border-radius:4px;}',
+        '.pro-survey p{margin:0 0 12px;font-family:"Shippori Mincho",serif;font-size:14px;font-weight:600;color:var(--bark,#2C1A0E);line-height:1.6;}',
+        '.pro-survey-sub{font-size:11px;font-weight:400;font-family:"Noto Serif JP",serif;color:#5a6e5a;display:block;margin-top:4px;}',
+        '.pro-survey-opts{display:flex;gap:8px;flex-wrap:wrap;}',
+        '.pro-survey-btn{padding:8px 16px;border:1.5px solid var(--mist,#D4DFD0);border-radius:3px;background:var(--surface-card,#fff);font-family:"Noto Serif JP",serif;font-size:12px;cursor:pointer;color:var(--ink,#1A1208);transition:all 0.15s;}',
+        '.pro-survey-btn:hover{border-color:var(--moss,#3D5A3E);background:var(--surface-page,#F5F0E8);}',
+        '.pro-survey-btn:active{opacity:0.75;transform:scale(0.97);}',
+        '.pro-survey-done{margin:0;font-family:"DM Mono",monospace;font-size:11px;color:var(--moss,#3D5A3E);letter-spacing:0.05em;font-weight:400;}'
+      ].join('');
+      document.head.appendChild(s);
+    }
+
+    var panel = document.createElement('div');
+    panel.className = 'pro-survey';
+    panel.innerHTML =
+      '<p>有料のPro機能があれば使いますか？' +
+      '<span class="pro-survey-sub">PDF・CSV出力強化、クラウド保存、チームでの記録共有などを想定しています。</span></p>' +
+      '<div class="pro-survey-opts">' +
+      '<button class="pro-survey-btn" data-ans="yes">ぜひ使いたい</button>' +
+      '<button class="pro-survey-btn" data-ans="maybe">内容次第で</button>' +
+      '<button class="pro-survey-btn" data-ans="no">今は不要</button>' +
+      '</div>';
+
+    panel.querySelectorAll('.pro-survey-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var answer = btn.getAttribute('data-ans');
+        sessionStorage.setItem(SURVEY_KEY, answer);
+        window.trackToolEvent('pro_feature_interest', { answer: answer });
+        panel.innerHTML = '<p class="pro-survey-done">回答ありがとうございます。</p>';
+        setTimeout(function () { if (panel.parentNode) panel.parentNode.removeChild(panel); }, 2500);
+      });
+    });
+
+    containerEl.appendChild(panel);
+  };
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       if (localStorage.getItem(CONSENT_KEY) === 'granted') loadGA();

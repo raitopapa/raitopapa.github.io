@@ -863,6 +863,9 @@ function calcRisk() {
   // Show
   document.getElementById('result').style.display = 'block';
   document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  window.trackToolEvent && window.trackToolEvent('tool_complete', { tool: 'traq' });
+  window.showProSurvey && window.showProSurvey(document.getElementById('result'));
 }
 
 function exportReport() {
