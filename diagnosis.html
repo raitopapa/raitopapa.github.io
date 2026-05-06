@@ -53,7 +53,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background-color: var(--cream);
+    background-color: var(--surface-page);
     color: var(--ink);
     font-family: 'Noto Serif JP', serif;
     min-height: 100vh;
@@ -183,7 +183,7 @@
     font-family: 'DM Mono', monospace;
     font-size: 11px;
     color: var(--moss);
-    background: var(--pale);
+    background: var(--surface-raised);
     padding: 2px 7px;
     border-radius: 2px;
   }
@@ -202,7 +202,7 @@
     font-family: 'Noto Serif JP', serif;
     font-size: 14px;
     color: var(--ink);
-    background: var(--cream);
+    background: var(--surface-card);
     border: 1px solid var(--mist);
     border-radius: 3px;
     appearance: none;
@@ -236,18 +236,18 @@
     cursor: pointer;
     transition: all 0.15s;
     font-size: 13px;
-    background: white;
+    background: var(--surface-card);
     user-select: none;
   }
 
   .symptom-item:hover {
     border-color: var(--moss-l);
-    background: var(--pale);
+    background: var(--surface-raised);
   }
 
   .symptom-item.selected {
     border-color: var(--moss);
-    background: var(--pale);
+    background: var(--surface-raised);
     color: var(--bark);
     font-weight: 500;
   }
@@ -357,7 +357,7 @@
   .result-card {
     padding: 24px 28px;
     border-bottom: 1px solid var(--mist);
-    background: white;
+    background: var(--surface-card);
   }
 
   .result-card:last-child { border-bottom: none; }
@@ -376,7 +376,7 @@
   .result-card h3 .icon {
     width: 18px;
     height: 18px;
-    background: var(--pale);
+    background: var(--surface-raised);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -394,7 +394,7 @@
 
   .pest-item {
     padding: 12px 16px;
-    background: var(--cream);
+    background: var(--surface-page);
     border-radius: 3px;
     border-left: 3px solid var(--moss-l);
   }
