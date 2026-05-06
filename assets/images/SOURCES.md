@@ -14,7 +14,7 @@
 
 | file | use | source | author | source_url | license | license_url | checked_at | notes |
 |---|---|---|---|---|---|---|---|---|
-| example.webp | example | self-shot | raitopapa | self-shot | owned | — | 2026-05-06 | 記入例。実素材追加時に削除可 |
+| assets/images/hero/hero-tree-canopy.jpg | Top hero background | self-shot | raitopapa | self-shot | owned | — | 2026-05-06 | 樹冠を見上げた写真。公開用に横長トリミング・軽量化済み |
 
 ## Approved Source Types
 
