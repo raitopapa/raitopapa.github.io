@@ -73,8 +73,8 @@
 
   /* === Image Asset Hooks ===
      Keep these as `none` until approved photos are added under assets/images/.
-     Example: --image-hero-home: url('../images/hero/tree-canopy.webp'); */
-  --image-hero-home: url('../images/hero/hero-tree-canopy.jpg');
+     Example: --image-hero-home: url('/assets/images/hero/tree-canopy.webp'); */
+  --image-hero-home: url('/assets/images/hero/hero-tree-canopy.jpg');
   --image-tool-diagnosis: none;
   --image-tool-pruning: none;
   --image-tool-checklist: none;
