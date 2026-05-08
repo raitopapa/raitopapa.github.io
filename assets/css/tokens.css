@@ -81,5 +81,5 @@
   --image-use-civic: none;
   --image-use-homeowner: none;
   --image-use-pro: none;
-  --photo-overlay-hero: linear-gradient(180deg, rgba(44,26,14,0.82), rgba(44,26,14,0.92));
+  --photo-overlay-hero: linear-gradient(180deg, rgba(44,26,14,0.58), rgba(44,26,14,0.76));
 }
