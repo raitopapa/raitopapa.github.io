@@ -2,7 +2,7 @@
 
 > [SPEC.md §6](SPEC.md) のタスクを実装する際、着手前にこのファイルを編集してclaim、完了時にdoneへ。詳細は [HANDOFF.md](HANDOFF.md) §1。
 
-## 🚦 現在の進行ステージ: **Phase 2（コンテンツSEO + メール）完了後のUX/実機検証**
+## 🚦 現在の進行ステージ: **Gate 計測実装完了 → G1/G3/G4 データ蓄積待ち（Phase 3 凍結中）**
 
 raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 - D1-D10 最終確定（[SPEC §8](SPEC.md)）。D4 は「樹木管理ナビ」で確定、D2/D3/D6 は Gate 後に確定
@@ -91,6 +91,28 @@ raitopapa 承認済み運用ルール（2026-05-03 v1.2）:
 | T-UX-503 | サーフェス階層トークン（--surface-page/raised/card） | claude-sonnet | done | `claude/continue-development-1xCyR` |
 | T-UX-504 | セクション gap 標準化（--gap-section トークン） | openai-codex | done | PR #23 |
 | T-UX-505 | タイポグラフィ Do/Don't 文書化（docs/TYPOGRAPHY.md） | claude-sonnet | done | PR #25 |
+| T-UX-506 | 装飾絵文字を SVG アイコン・プレーンテキストに置換（nav/footer/use-case） | claude-sonnet | done | `claude/continue-development-1xCyR` |
+| T-UX-507 | 全ページ @media print 強化（A4 レイアウト・visibility isolation・@page） | claude-sonnet | done | `claude/continue-development-1xCyR` |
+
+## Gate 計測実装（需要検証・解禁条件の計測基盤）
+
+| ID | タイトル | Owner | Status | Branch / PR |
+|---|---|---|---|---|
+| T-GA-001 | GA4 tool_complete イベント（全6ツール）— Gate G2 計測 | claude-sonnet | done | `claude/continue-development-1xCyR` |
+| T-GA-002 | スクロール深度（25/50/75/90%）・滞在時間（30/60/120/300s）トラッキング | claude-sonnet | done | `claude/continue-development-1xCyR` |
+| T-GA-003 | CTA クリック率計測（tool_card / footer_nav / header_nav）イベントデリゲーション | claude-sonnet | done | `claude/continue-development-1xCyR` |
+| T-GA-004 | Pro 機能需要検証インラインサーベイ（sessionStorage 1回制限）— Gate G5 計測 | claude-sonnet | done | `claude/continue-development-1xCyR` |
+| T-GA-005 | PWA インストール率計測（prompt_shown / clicked / outcome / installed）— Gate G6 補助 | claude-sonnet | done | `claude/continue-development-1xCyR` |
+| T-AUTO-001 | README/STATUS 同期スクリプト（scripts/sync_readme.py）+ GitHub Actions | claude-sonnet | done | `claude/continue-development-1xCyR` |
+
+> **Gate 現状（2026-05-24）**:
+> - G1 月間15,000セッション: 計測中（蓄積待ち）
+> - G2 ツール完了率40%+: **計測開始済み** ✓
+> - G3 リピート率20%+: GA4 ネイティブ計測（蓄積待ち）
+> - G4 メール購読1,000人: 蓄積待ち
+> - G5 Pro需要30%+: **計測開始済み** ✓
+> - G6 監修者ページ公開: **human タスク** → T-MENTOR-001
+> - G7 独自ドメイン取得: **human タスク** → T-DOMAIN-001
 
 ## Phase 4: 探索
 

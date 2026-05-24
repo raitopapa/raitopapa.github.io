@@ -25,6 +25,7 @@ SECTION_MAP = [
     ("Phase 1",  "Phase 1"),
     ("Phase 2",  "Phase 2"),
     ("UX/UI",    "UX/UI"),
+    ("Gate 計測", "Gate 計測"),
     ("Phase 3",  "Phase 3"),
     ("Phase 4",  "Phase 4"),
 ]
