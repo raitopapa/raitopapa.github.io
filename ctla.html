@@ -215,9 +215,13 @@ footer { margin-top: var(--gap-section); padding-top: 18px; border-top: 1px soli
   .cta-box .btn-pdf, .cta-box .btn-reset { display: block; width: 100%; margin: 6px 0; box-sizing: border-box; }
 }
 @media print {
-  nav, .ad-slot, .cta-box, .btn-calc { display: none !important; }
-  body { background: white; }
-  .result-header-gold { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: A4; margin: 15mm 12mm; }
+  body { visibility: hidden; background: white !important; }
+  #result, #result * { visibility: visible; }
+  #result { position: absolute; top: 0; left: 0; width: 100% !important; }
+  nav, .ad-slot, .cta-box, .btn-calc, .pro-survey { display: none !important; }
+  .result-header-gold, .value-item { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .value-item { break-inside: avoid; }
 }
 </style>
 </head>

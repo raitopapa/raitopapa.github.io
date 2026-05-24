@@ -278,10 +278,13 @@ footer { margin-top: var(--gap-section); padding-top: 18px; border-top: 1px soli
 }
 
 @media print {
-  nav, .ad-slot, .cta-box { display: none !important; }
-  body { background: white; }
-  .result-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .action-item { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: A4; margin: 15mm 12mm; }
+  body { visibility: hidden; background: white !important; }
+  #result, #result * { visibility: visible; }
+  #result { position: absolute; top: 0; left: 0; width: 100% !important; }
+  nav, .ad-slot, .cta-box, .pro-survey { display: none !important; }
+  .result-header, .action-item, .risk-gauge-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .action-item { break-inside: avoid; }
 }
 </style>
 </head>

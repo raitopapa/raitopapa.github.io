@@ -299,12 +299,48 @@ footer { margin-top: var(--gap-section); padding-top: 16px; border-top: 1px soli
 .pin-mode-btn.active { background: var(--amber); color: white; border-color: var(--amber); }
 .pin-mode-hint { font-size: 11px; color: var(--amber); font-family: 'DM Mono', monospace; padding: 6px 12px; background: rgba(184,120,32,0.1); border-top: 1px solid rgba(184,120,32,0.3); display: none; }
 .pin-mode-hint.show { display: block; }
-  .report-overlay { display: block !important; position: static !important; background: none !important; padding: 0 !important; }
-  .report-modal { border-radius: 0 !important; }
-  .report-btn-row { display: none !important; }
-  body { background: white !important; }
-  .report-modal-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .risk-badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+@media print {
+  @page { size: A4; margin: 15mm 12mm; }
+
+  /* hide everything, then reveal only report */
+  body { visibility: hidden; background: white !important; }
+  #report-overlay,
+  #report-overlay * { visibility: visible; }
+
+  #report-overlay {
+    display: block !important;
+    position: absolute !important;
+    top: 0; left: 0;
+    width: 100% !important;
+    background: none !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+  .report-modal {
+    max-width: 100% !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* hide interactive controls */
+  .btn-close,
+  .btn-close-report,
+  .report-btn-row,
+  .pro-survey { display: none !important; }
+
+  /* preserve colors */
+  .report-modal-header,
+  .risk-badge,
+  .rsg-item,
+  .urgent-detail-header {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* page breaks */
+  .report-section { break-inside: avoid; }
+  .report-table tr { break-inside: avoid; }
+  .urgent-detail-item { break-inside: avoid; }
 }
 
 /* Map styles */
@@ -1112,7 +1148,10 @@ function closeReport() {
 }
 
 function printReport() {
-  window.print();
+  if (document.getElementById('report-overlay').style.display !== 'block') {
+    generateReport();
+  }
+  setTimeout(() => window.print(), 100);
 }
 </script>
 <script src="assets/js/i18n.js"></script>
