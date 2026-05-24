@@ -602,22 +602,23 @@ let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  const banner = document.getElementById('pwa-banner');
-  banner.style.display = 'flex';
+  document.getElementById('pwa-banner').style.display = 'flex';
+  window.trackToolEvent && window.trackToolEvent('pwa_prompt_shown', {});
 });
 
 document.getElementById('pwa-install-btn').addEventListener('click', async () => {
   if (!deferredPrompt) return;
+  window.trackToolEvent && window.trackToolEvent('pwa_install_clicked', {});
   deferredPrompt.prompt();
   const { outcome } = await deferredPrompt.userChoice;
-  console.log('[PWA] Install outcome:', outcome);
+  window.trackToolEvent && window.trackToolEvent('pwa_install_outcome', { outcome });
   deferredPrompt = null;
   document.getElementById('pwa-banner').style.display = 'none';
 });
 
 window.addEventListener('appinstalled', () => {
   document.getElementById('pwa-banner').style.display = 'none';
-  console.log('[PWA] App installed!');
+  window.trackToolEvent && window.trackToolEvent('pwa_installed', {});
 });
 </script>
 <script src="assets/js/analytics.js" defer></script>
