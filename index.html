@@ -115,7 +115,7 @@ body { background: var(--surface-page); color: var(--ink); font-family: 'Noto Se
 .lang-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 4px 10px; border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: rgba(232,240,225,0.6); cursor: pointer; transition: all 0.15s; letter-spacing: 0.05em; }
 .lang-btn.active { background: var(--leaf); color: var(--bark); border-color: var(--leaf); font-weight: 600; }
 .lang-btn:hover { color: var(--cream); }
-.hero { background: var(--bark); color: var(--cream); padding: 72px 24px 64px; text-align: center; position: relative; overflow: hidden; }
+.hero { background-color: var(--bark); background-image: var(--photo-overlay-hero), var(--image-hero-home), url('/assets/images/hero/hero-tree-canopy.jpg'); background-size: cover, cover, cover; background-position: center, center 45%, center 45%; background-repeat: no-repeat; color: var(--cream); padding: 72px 24px 64px; text-align: center; position: relative; overflow: hidden; }
 .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(90,122,91,0.25) 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, rgba(122,174,110,0.12) 0%, transparent 45%); pointer-events: none; }
 .hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
 .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--leaf); border: 1px solid rgba(122,174,110,0.4); padding: 4px 14px; border-radius: 2px; display: inline-block; margin-bottom: 20px; }
@@ -180,7 +180,9 @@ body { background: var(--surface-page); color: var(--ink); font-family: 'Noto Se
 .use-row { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--gap-element); margin-top: var(--gap-element); }
 @media(max-width:540px){ .use-row{ grid-template-columns: 1fr; } }
 .use-item { text-align: center; padding: 20px 16px; border: 1px solid var(--mist); border-radius: 4px; background: var(--surface-card); }
-.use-icon { width: 36px; height: 36px; display: block; margin: 0 auto 12px; color: var(--moss); }
+.use-icon { width: 36px; height: 36px; display: block; margin: 0 auto 12px; color: var(--moss); stroke: currentColor; stroke-width: 1.7; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.use-item:nth-child(2) .use-icon { color: var(--leaf); }
+.use-item:nth-child(3) .use-icon { color: var(--amber); }
 .use-title { font-family: 'Shippori Mincho', serif; font-size: 13px; font-weight: 600; color: var(--bark); margin-bottom: 4px; }
 .use-desc { font-size: 11px; color: #6b7e6b; line-height: 1.65; }
 
@@ -302,6 +304,44 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
   <symbol id="icon-contact" viewBox="0 0 64 64">
     <rect x="10" y="18" width="44" height="32" rx="4"></rect>
     <path d="M10 24l22 16 22-16"></path>
+  </symbol>
+  <symbol id="icon-about" viewBox="0 0 64 64">
+    <circle cx="32" cy="32" r="22"></circle>
+    <path d="M32 29v14"></path>
+    <path d="M32 21h.01"></path>
+  </symbol>
+  <symbol id="icon-blog" viewBox="0 0 64 64">
+    <rect x="14" y="12" width="36" height="40" rx="4"></rect>
+    <path d="M22 24h20"></path>
+    <path d="M22 32h20"></path>
+    <path d="M22 40h12"></path>
+  </symbol>
+  <symbol id="icon-use-civic" viewBox="0 0 64 64">
+    <path d="M18 52V22l14-8 14 8v30"></path>
+    <path d="M12 52h40"></path>
+    <path d="M24 28h4"></path>
+    <path d="M36 28h4"></path>
+    <path d="M24 36h4"></path>
+    <path d="M36 36h4"></path>
+    <path d="M29 52V42h6v10"></path>
+    <path d="M32 14v-4"></path>
+    <path d="M27 10h10"></path>
+  </symbol>
+  <symbol id="icon-use-homeowner" viewBox="0 0 64 64">
+    <path d="M14 34l18-16 18 16"></path>
+    <path d="M20 31v21h24V31"></path>
+    <path d="M29 52V40h6v12"></path>
+    <path d="M45 52h7"></path>
+    <path d="M50 52V41"></path>
+    <path d="M44 43c0-5 3-9 6-11 3 2 6 6 6 11a6 6 0 0 1-12 0z"></path>
+  </symbol>
+  <symbol id="icon-use-pro" viewBox="0 0 64 64">
+    <circle cx="22" cy="22" r="6"></circle>
+    <circle cx="42" cy="22" r="6"></circle>
+    <path d="M26 26l22 22"></path>
+    <path d="M38 26L16 48"></path>
+    <path d="M43 43c5-1 9-5 11-10"></path>
+    <path d="M47 31c4 1 7 4 8 8"></path>
   </symbol>
 </svg>
 
@@ -459,7 +499,7 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
 
   <div class="use-row">
     <div class="use-item">
-      <svg class="use-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg class="use-icon" viewBox="0 0 36 36" aria-hidden="true">
         <path d="M3 16L18 5l15 11"/>
         <rect x="4" y="16" width="28" height="16"/>
         <rect x="9" y="21" width="5" height="4"/>
@@ -470,7 +510,7 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
       <p class="use-desc">街路樹・公園樹の定期点検に。チェックリストを印刷して現地記録に使えます。</p>
     </div>
     <div class="use-item">
-      <svg class="use-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg class="use-icon" viewBox="0 0 36 36" aria-hidden="true">
         <path d="M3 16L18 5l15 11"/>
         <path d="M7 14v18h22V14"/>
         <path d="M14 32v-9h8v9"/>
@@ -480,7 +520,7 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
       <p class="use-desc">庭木の異常に気づいたとき、まず何をすべきか。受診前の初期判断に。</p>
     </div>
     <div class="use-item">
-      <svg class="use-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg class="use-icon" viewBox="0 0 36 36" aria-hidden="true">
         <circle cx="10" cy="9" r="5"/>
         <circle cx="10" cy="27" r="5"/>
         <path d="M15 11L33 27"/>
@@ -542,6 +582,8 @@ footer { background: var(--bark); color: var(--cream); padding: 40px 24px; }
         <li><a href="survey.html"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-field-map"></use></svg>現地調査・複数樹木記録</a></li>
         <li><a href="embed.html"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-embed"></use></svg>埋め込みウィジェット</a></li>
         <li><a href="glossary/"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-glossary"></use></svg>樹木用語集</a></li>
+        <li><a href="blog/"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-blog"></use></svg>樹木管理の記事</a></li>
+        <li><a href="about.html"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-about"></use></svg>このサイトについて</a></li>
         <li><a href="privacy.html"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-privacy"></use></svg>プライバシーポリシー</a></li>
         <li><a href="contact.html"><svg class="footer-line-icon" aria-hidden="true"><use href="#icon-contact"></use></svg>お問い合わせ</a></li>
       </ul>

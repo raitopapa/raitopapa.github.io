@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://raitopapa.github.io/</loc><lastmod>2026-05-03</lastmod><priority>1.0</priority></url>
-  <url><loc>https://raitopapa.github.io/diagnosis.html</loc><lastmod>2026-05-03</lastmod><priority>0.9</priority></url>
-  <url><loc>https://raitopapa.github.io/pruning.html</loc><lastmod>2025-12-01</lastmod><priority>0.9</priority></url>
-  <url><loc>https://raitopapa.github.io/checklist.html</loc><lastmod>2025-12-01</lastmod><priority>0.9</priority></url>
-  <url><loc>https://raitopapa.github.io/traq.html</loc><lastmod>2025-12-01</lastmod><priority>0.8</priority></url>
-  <url><loc>https://raitopapa.github.io/ctla.html</loc><lastmod>2026-05-03</lastmod><priority>0.8</priority></url>
-  <url><loc>https://raitopapa.github.io/survey.html</loc><lastmod>2025-12-01</lastmod><priority>0.8</priority></url>
-  <url><loc>https://raitopapa.github.io/glossary/</loc><lastmod>2026-05-04</lastmod><priority>0.8</priority></url>
-  <url><loc>https://raitopapa.github.io/blog/</loc><lastmod>2026-05-04</lastmod><priority>0.7</priority></url>
+  <url><loc>https://raitopapa.github.io/</loc><lastmod>2026-05-11</lastmod><priority>1.0</priority></url>
+  <url><loc>https://raitopapa.github.io/about.html</loc><lastmod>2026-05-11</lastmod><priority>0.8</priority></url>
+  <url><loc>https://raitopapa.github.io/diagnosis.html</loc><lastmod>2026-05-11</lastmod><priority>0.9</priority></url>
+  <url><loc>https://raitopapa.github.io/pruning.html</loc><lastmod>2026-05-11</lastmod><priority>0.9</priority></url>
+  <url><loc>https://raitopapa.github.io/checklist.html</loc><lastmod>2026-05-11</lastmod><priority>0.9</priority></url>
+  <url><loc>https://raitopapa.github.io/traq.html</loc><lastmod>2026-05-11</lastmod><priority>0.8</priority></url>
+  <url><loc>https://raitopapa.github.io/ctla.html</loc><lastmod>2026-05-11</lastmod><priority>0.8</priority></url>
+  <url><loc>https://raitopapa.github.io/survey.html</loc><lastmod>2026-05-11</lastmod><priority>0.8</priority></url>
+  <url><loc>https://raitopapa.github.io/glossary/</loc><lastmod>2026-05-11</lastmod><priority>0.8</priority></url>
+  <url><loc>https://raitopapa.github.io/blog/</loc><lastmod>2026-05-11</lastmod><priority>0.8</priority></url>
   <url><loc>https://raitopapa.github.io/blog/2026/05/04/pruning-season-basic/</loc><lastmod>2026-05-04</lastmod><priority>0.7</priority></url>
   <url><loc>https://raitopapa.github.io/blog/2026/05/04/leaf-yellowing-check/</loc><lastmod>2026-05-04</lastmod><priority>0.7</priority></url>
   <url><loc>https://raitopapa.github.io/blog/2026/05/04/tree-inspection-record/</loc><lastmod>2026-05-04</lastmod><priority>0.7</priority></url>
-  <url><loc>https://raitopapa.github.io/embed.html</loc><lastmod>2026-05-03</lastmod><priority>0.6</priority></url>
-  <url><loc>https://raitopapa.github.io/privacy.html</loc><lastmod>2026-05-03</lastmod><priority>0.3</priority></url>
-  <url><loc>https://raitopapa.github.io/contact.html</loc><lastmod>2026-05-03</lastmod><priority>0.4</priority></url>
+  <url><loc>https://raitopapa.github.io/blog/2026/05/05/cherry-pruning-timing/</loc><lastmod>2026-05-05</lastmod><priority>0.7</priority></url>
+  <url><loc>https://raitopapa.github.io/blog/2026/05/05/maple-sap-flow-pruning/</loc><lastmod>2026-05-05</lastmod><priority>0.7</priority></url>
+  <url><loc>https://raitopapa.github.io/blog/2026/05/06/chadokuga-pest-alert/</loc><lastmod>2026-05-06</lastmod><priority>0.7</priority></url>
+  <url><loc>https://raitopapa.github.io/blog/2026/05/06/powdery-mildew-leaf-check/</loc><lastmod>2026-05-06</lastmod><priority>0.7</priority></url>
+  <url><loc>https://raitopapa.github.io/blog/2026/05/07/street-tree-inspection-photo-guide/</loc><lastmod>2026-05-07</lastmod><priority>0.7</priority></url>
+  <url><loc>https://raitopapa.github.io/blog/2026/05/07/typhoon-season-tree-danger-check/</loc><lastmod>2026-05-07</lastmod><priority>0.7</priority></url>
+  <url><loc>https://raitopapa.github.io/blog/2026/05/08/hedge-trimming-timing/</loc><lastmod>2026-05-08</lastmod><priority>0.7</priority></url>
+  <url><loc>https://raitopapa.github.io/blog/2026/05/08/mushroom-at-tree-base-risk/</loc><lastmod>2026-05-08</lastmod><priority>0.7</priority></url>
+  <url><loc>https://raitopapa.github.io/blog/2026/05/09/fruit-tree-pruning-purpose/</loc><lastmod>2026-05-09</lastmod><priority>0.7</priority></url>
+  <url><loc>https://raitopapa.github.io/blog/2026/05/09/park-tree-monitoring-record/</loc><lastmod>2026-05-09</lastmod><priority>0.7</priority></url>
+  <url><loc>https://raitopapa.github.io/blog/2026/05/10/pine-pruning-midori-tsumi/</loc><lastmod>2026-05-10</lastmod><priority>0.7</priority></url>
+  <url><loc>https://raitopapa.github.io/blog/2026/05/10/ume-plum-pruning-guide/</loc><lastmod>2026-05-10</lastmod><priority>0.7</priority></url>
+  <url><loc>https://raitopapa.github.io/blog/2026/05/11/rainy-season-disease-prevention/</loc><lastmod>2026-05-11</lastmod><priority>0.7</priority></url>
+  <url><loc>https://raitopapa.github.io/blog/2026/05/11/wood-decay-early-signs/</loc><lastmod>2026-05-11</lastmod><priority>0.7</priority></url>
+  <url><loc>https://raitopapa.github.io/embed.html</loc><lastmod>2026-05-11</lastmod><priority>0.6</priority></url>
+  <url><loc>https://raitopapa.github.io/privacy.html</loc><lastmod>2026-05-11</lastmod><priority>0.4</priority></url>
+  <url><loc>https://raitopapa.github.io/contact.html</loc><lastmod>2026-05-11</lastmod><priority>0.4</priority></url>
 </urlset>
