@@ -101,7 +101,7 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(20px, 4vw, 30px); f
 .info-field label { display: block; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; color: var(--moss); text-transform: uppercase; margin-bottom: 6px; }
 .info-field input, .info-field select, .info-field textarea {
   width: 100%; font-family: 'Noto Serif JP', serif; font-size: 13px; color: var(--ink);
-  background: var(--cream); border: 1px solid var(--mist); border-radius: 2px; padding: 7px 10px;
+  background: var(--surface-card); border: 1px solid var(--mist); border-radius: 2px; padding: 7px 10px;
   appearance: none;
 }
 .info-field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%232E5E2E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
@@ -150,7 +150,7 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(20px, 4vw, 30px); f
 .traq-body select,
 .traq-body textarea {
   width: 100%; padding: 9px 12px; font-family: 'Noto Serif JP', serif; font-size: 13px; color: var(--ink);
-  background: var(--cream); border: 1px solid var(--mist); border-radius: 3px; margin-top: 4px;
+  background: var(--surface-card); border: 1px solid var(--mist); border-radius: 3px; margin-top: 4px;
   appearance: none;
 }
 .traq-body select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%232E5E2E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
@@ -225,7 +225,7 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(20px, 4vw, 30px); f
 /* Score breakdown */
 .score-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 @media(max-width:480px){ .score-grid { grid-template-columns: 1fr 1fr; } }
-.score-card { padding: 14px; border: 1px solid var(--mist); border-radius: 3px; text-align: center; background: var(--cream); }
+.score-card { padding: 14px; border: 1px solid var(--mist); border-radius: 3px; text-align: center; background: var(--surface-page); }
 .score-card .sc-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--moss); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
 .score-card .sc-val { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: var(--forest); }
 .score-card .sc-sub { font-size: 10px; color: #8fa085; margin-top: 2px; }
@@ -278,10 +278,13 @@ footer { margin-top: var(--gap-section); padding-top: 18px; border-top: 1px soli
 }
 
 @media print {
-  nav, .ad-slot, .cta-box { display: none !important; }
-  body { background: white; }
-  .result-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .action-item { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: A4; margin: 15mm 12mm; }
+  body { visibility: hidden; background: white !important; }
+  #result, #result * { visibility: visible; }
+  #result { position: absolute; top: 0; left: 0; width: 100% !important; }
+  nav, .ad-slot, .cta-box, .pro-survey { display: none !important; }
+  .result-header, .action-item, .risk-gauge-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .action-item { break-inside: avoid; }
 }
 </style>
 </head>
@@ -863,6 +866,9 @@ function calcRisk() {
   // Show
   document.getElementById('result').style.display = 'block';
   document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  window.trackToolEvent && window.trackToolEvent('tool_complete', { tool: 'traq' });
+  window.showProSurvey && window.showProSurvey(document.getElementById('result'));
 }
 
 function exportReport() {

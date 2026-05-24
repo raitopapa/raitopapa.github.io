@@ -1,0 +1,33 @@
+name: Sync STATUS → README
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - docs/STATUS.md
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Run sync script
+        run: python3 scripts/sync_readme.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore(readme): sync status from STATUS.md [skip ci]"
+            git push
+          fi

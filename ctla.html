@@ -149,7 +149,7 @@ h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(20px, 4vw, 30px); f
 .field-desc { font-size: 11px; color: #6b8a6b; margin-bottom: 6px; line-height: 1.6; }
 input[type="number"], input[type="text"], select {
   width: 100%; padding: 10px 12px; font-family: 'Noto Serif JP', serif; font-size: 13px; color: var(--ink);
-  background: var(--cream); border: 1px solid var(--mist); border-radius: 3px; appearance: none;
+  background: var(--surface-card); border: 1px solid var(--mist); border-radius: 3px; appearance: none;
 }
 select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%232E5E2E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
 input:focus, select:focus { outline: none; border-color: var(--moss); box-shadow: 0 0 0 3px rgba(46,94,46,0.1); }
@@ -215,9 +215,13 @@ footer { margin-top: var(--gap-section); padding-top: 18px; border-top: 1px soli
   .cta-box .btn-pdf, .cta-box .btn-reset { display: block; width: 100%; margin: 6px 0; box-sizing: border-box; }
 }
 @media print {
-  nav, .ad-slot, .cta-box, .btn-calc { display: none !important; }
-  body { background: white; }
-  .result-header-gold { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: A4; margin: 15mm 12mm; }
+  body { visibility: hidden; background: white !important; }
+  #result, #result * { visibility: visible; }
+  #result { position: absolute; top: 0; left: 0; width: 100% !important; }
+  nav, .ad-slot, .cta-box, .btn-calc, .pro-survey { display: none !important; }
+  .result-header-gold, .value-item { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .value-item { break-inside: avoid; }
 }
 </style>
 </head>
@@ -676,6 +680,9 @@ function calcAppraisal() {
 
   document.getElementById('result').style.display = 'block';
   document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  window.trackToolEvent && window.trackToolEvent('tool_complete', { tool: 'ctla' });
+  window.showProSurvey && window.showProSurvey(document.getElementById('result'));
 }
 
 // ===== 生態系サービス計算（i-Tree BenefitsによるDBHベース推定） =====

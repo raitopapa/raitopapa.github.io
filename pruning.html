@@ -139,7 +139,7 @@ select {
   font-family: 'Noto Serif JP', serif;
   font-size: 14px;
   color: var(--ink);
-  background: var(--cream);
+  background: var(--surface-card);
   border: 1px solid var(--mist);
   border-radius: 3px;
   appearance: none;
@@ -452,7 +452,6 @@ footer {
 .ref-item a { color: var(--moss); text-decoration: none; border-bottom: 1px solid rgba(61,90,62,0.3); }
 .ref-item a:hover { border-bottom-color: var(--moss); }
 .ref-note { font-size: 11px; color: #8fa085; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--mist); line-height: 1.7; }
-@media print { .ref-section { display: none; } }
 .pdf-btn {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 11px 24px; background: var(--cream); color: var(--bark);
@@ -465,19 +464,17 @@ footer {
 .print-header { display: none; }
 
 @media print {
-  .ad-slot, .selector-row, .no-print { display: none !important; }
-  .wrap { padding: 0 !important; max-width: 100% !important; }
+  @page { size: A4; margin: 15mm 12mm; }
   body { background: white !important; font-size: 11px; }
+  .ad-slot, .selector-row, .no-print, .cta-box, .ref-section, .pro-survey { display: none !important; }
+  .wrap { padding: 0 !important; max-width: 100% !important; }
   #calendar-section { display: block !important; }
-  .month-cell { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .best-period-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .detail-card { break-inside: avoid; }
-  .cta-box { display: none; }
+  footer { margin-top: 20px; }
   .print-header { display: block !important; text-align: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #2C1A0E; }
   .print-header h2 { font-family: 'Shippori Mincho', serif; font-size: 16px; color: #2C1A0E; margin-bottom: 4px; }
   .print-header p { font-size: 10px; color: #6b7e6b; }
-  footer { margin-top: 20px; }
-  .legend-dot { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .month-cell, .best-period-box, .legend-dot { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 </style>
   <link rel="manifest" href="/manifest.json">
@@ -1314,6 +1311,9 @@ function generate() {
   const sec = document.getElementById('calendar-section');
   sec.style.display = 'block';
   sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  window.trackToolEvent && window.trackToolEvent('tool_complete', { tool: 'pruning' });
+  window.showProSurvey && window.showProSurvey(sec);
 }
 
 function generateAnnualCalendar(treeVal, cal, note) {

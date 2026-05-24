@@ -1,6 +1,6 @@
 {
   "index": {
-    "hero-badge": "🌿 Tree Navi Japan",
+    "hero-badge": "Tree Navi Japan",
     "hero-h1": "Tree Care, <span>Made Clear</span>",
     "hero-sub": "Support for pest checks, pruning timing, health checklists, and field surveys for garden trees, street trees, parks, and professional tree work.",
     "stat-tools": "Professional Tools",
@@ -15,7 +15,7 @@
     "pro-desc": "Tools for landscape professionals, municipal officers, and tree managers based on ISA and CTLA international standards.",
     "about-label": "About",
     "about-title": "About This Site",
-    "pwa-msg": "📲 Add to Home Screen for offline access",
+    "pwa-msg": "Add to Home Screen for offline access",
     "pwa-install": "Install",
     "tool1-tag": "Tool 01 — Diagnosis",
     "tool1-title": "Pest & Disease<br>Risk Diagnosis",
@@ -46,7 +46,7 @@
   },
   "diagnosis": {
     "title": "Pest & Disease Risk Diagnosis | Tree Navi Japan",
-    "badge": "🌿 Tree Navi Tool",
+    "badge": "Tree Navi Tool",
     "h1": "Pest & Disease<br>Risk Diagnosis",
     "sub": "Supervised by a certified arborist. Select symptoms to instantly identify<br>likely pests/diseases and recommended initial responses.",
     "q1": "Select the Tree Species",
@@ -92,7 +92,7 @@
   },
   "pruning": {
     "title": "Pruning Season Calendar | Tree Navi Japan",
-    "badge": "🌿 Tree Navi Tool",
+    "badge": "Tree Navi Tool",
     "h1": "Pruning Season<br>Calendar Calculator",
     "sub": "Select species and pruning goal to see a monthly color-coded calendar<br>with timing guidance — based on professional arboricultural standards.",
     "treeLabel": "Tree Species",
@@ -127,7 +127,7 @@
     "avoid": "Avoid",
     "neutral": "Not Suitable",
     "bestPeriod": "🗓 Best Pruning Period: ",
-    "detailCaution": "⚠️ Cautions",
+    "detailCaution": "Cautions",
     "detailTools": "🔧 Tools & Preparation",
     "detailQuality": "✨ Quality Tips",
     "annualCal": "📅 Annual Management Calendar",
@@ -143,7 +143,7 @@
   },
   "checklist": {
     "title": "Tree Health Checklist | Tree Navi Japan",
-    "badge": "🌿 Tree Navi Tool",
+    "badge": "Tree Navi Tool",
     "h1": "Tree Health<br>Checklist",
     "sub": "A field inspection sheet. Record root, trunk, branch, and foliage conditions<br>to automatically calculate a health score and action priority list.",
     "fieldTree": "Tree Name / ID",
@@ -326,7 +326,7 @@
   },
   "traq": {
     "page-title": "Tree Risk Assessment (ISA TRAQ) | Tree Navi Japan",
-    "nav-home": "🌿 Tree Navi",
+    "nav-home": "Tree Navi",
     "nav-back": "← Home",
     "page-label": "Professional Tool — ISA TRAQ Level II",
     "h1": "Tree Risk Assessment<br>(ISA TRAQ Compliant)",
@@ -436,7 +436,7 @@
   },
   "ctla": {
     "page-title": "Tree Appraisal (CTLA Method) | Tree Navi Japan",
-    "nav-home": "🌿 Tree Navi",
+    "nav-home": "Tree Navi",
     "nav-back": "← Home",
     "page-label": "Professional Tool — CTLA Method",
     "h1": "Tree Appraisal<br>(CTLA Method)",
@@ -548,7 +548,7 @@
   },
   "survey": {
     "page-title": "Field Survey — Multi-Tree Recording | Tree Navi Japan",
-    "nav-home": "🌿 Tree Navi",
+    "nav-home": "Tree Navi",
     "nav-back": "← Home",
     "page-label": "Field Survey Tool — Multi-Tree Recording",
     "h1": "Field Survey<br>Multi-Tree Recording Sheet",

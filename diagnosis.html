@@ -183,7 +183,7 @@
     font-family: 'DM Mono', monospace;
     font-size: 11px;
     color: var(--moss);
-    background: var(--pale);
+    background: var(--surface-raised);
     padding: 2px 7px;
     border-radius: 2px;
   }
@@ -202,7 +202,7 @@
     font-family: 'Noto Serif JP', serif;
     font-size: 14px;
     color: var(--ink);
-    background: var(--cream);
+    background: var(--surface-card);
     border: 1px solid var(--mist);
     border-radius: 3px;
     appearance: none;
@@ -376,7 +376,7 @@
   .result-card h3 .icon {
     width: 18px;
     height: 18px;
-    background: var(--pale);
+    background: var(--surface-raised);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -394,7 +394,7 @@
 
   .pest-item {
     padding: 12px 16px;
-    background: var(--cream);
+    background: var(--surface-page);
     border-radius: 3px;
     border-left: 3px solid var(--moss-l);
   }
@@ -534,7 +534,15 @@
   .ref-item a:hover { border-bottom-color: var(--moss); }
   .ref-note { font-size: 11px; color: #8fa085; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--mist); line-height: 1.7; }
   .cite-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--moss); border: 1px solid var(--moss-l); padding: 1px 5px; border-radius: 2px; margin-left: 4px; vertical-align: middle; cursor: help; }
-  @media print { .ref-section { display: none; } }
+  @media print {
+    @page { size: A4; margin: 15mm 12mm; }
+    body { visibility: hidden; background: white !important; }
+    #result, #result * { visibility: visible; }
+    #result { position: absolute; top: 0; left: 0; width: 100% !important; }
+    .ref-section, .pro-survey { display: none !important; }
+    .result-header, .risk-badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .result-card { break-inside: avoid; }
+  }
 
   @media (max-width: 600px) {
     .symptom-grid { grid-template-columns: 1fr 1fr; }
@@ -1333,6 +1341,9 @@ function diagnose() {
   document.getElementById('result').style.display = 'block';
   document.getElementById('progress').style.width = '100%';
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  window.trackToolEvent && window.trackToolEvent('tool_complete', { tool: 'diagnosis' });
+  window.showProSurvey && window.showProSurvey(document.getElementById('result'));
 }
 
 function renderResult(result, treeType) {
