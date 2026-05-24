@@ -107,6 +107,24 @@
     containerEl.appendChild(panel);
   };
 
+  // G4: CTA click tracking via event delegation (no HTML changes needed)
+  function initCtaTracking() {
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href]');
+      if (!link) return;
+      var href = link.getAttribute('href') || '';
+      var dest = href.replace(/^\//, '').replace(/\.html$/, '') || 'home';
+
+      if (link.classList.contains('tool-card') || link.closest('.tool-card')) {
+        window.trackToolEvent('cta_click', { cta: 'tool_card', destination: dest });
+      } else if (link.closest('.footer-links')) {
+        window.trackToolEvent('cta_click', { cta: 'footer_nav', destination: dest });
+      } else if (link.closest('nav')) {
+        window.trackToolEvent('cta_click', { cta: 'header_nav', destination: dest });
+      }
+    });
+  }
+
   // G3: scroll-depth and dwell-time engagement tracking
   function initEngagementTracking() {
     var scrollFired = {};
@@ -138,6 +156,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       if (localStorage.getItem(CONSENT_KEY) === 'granted') loadGA();
       injectBanner();
+      initCtaTracking();
       initEngagementTracking();
     });
   } else {
